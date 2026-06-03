@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HC-01. Bìa hồ sơ bệnh án</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .form-shell {
+                max-width: none;
+                padding: 0;
+            }
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f3f4f6;
+        }
+
+        input,
+        select,
+        textarea {
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.16);
+            outline: none;
+        }
+
+        input[readonly],
+        .readonly {
+            background-color: #f3f6fa;
+            color: #1f2937;
+        }
+
+        .field-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #334155;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .control {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 12px;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        .date-control {
+            display: flex;
+            height: 38px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 10px 0 12px;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        .receive-date-control {
+            position: relative;
+            display: flex;
+            height: 38px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 10px 0 12px;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .receive-date-input {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .select-pill {
+            display: flex;
+            height: 38px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 9px 0 12px;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        .clear-dot {
+            display: inline-flex;
+            width: 19px;
+            height: 19px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: #f3f4f6;
+            color: #6b7280;
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin: 0 0 12px;
+            color: #1e40af;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .section-title-badge {
+            display: flex;
+            width: 24px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            border-radius: 999px;
+            background: #1e40af;
+            color: #fff;
+            font-size: 12px;
+            line-height: 1;
+        }
+
+        .admin-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-label {
+            color: #111827;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .admin-value {
+            flex: 1;
+            min-height: 34px;
+            border-bottom: 1px dashed #9ca3af;
+            background: #f3f4f6;
+            padding: 6px 10px;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
+        .admin-value.compact {
+            flex: 0 0 auto;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .admin-datetime {
+            flex: 0 0 150px;
+            width: 150px;
+            min-height: 34px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            background: #f3f4f6;
+            padding: 6px 10px;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sub-title {
+            margin: 0 0 16px;
+            color: #111827;
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1.3;
+        }
+
+        .check-row {
+            display: flex;
+            min-height: 31px;
+            align-items: center;
+            gap: 12px;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .check-row input {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            accent-color: #6d5dfc;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans leading-normal p-4 pb-28 md:p-8 md:pb-28">
+    <main class="form-shell max-w-5xl mx-auto bg-white p-6 md:p-10 shadow-xl rounded-lg border border-gray-200">
+        <div>
+        <section class="mb-8">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr_300px]">
+                <div class="space-y-2 text-base font-medium leading-normal text-gray-800">
+                    <input type="text" value="Sở Y Tế TP. Hồ Chí Minh"
+                        class="w-full border-0 bg-transparent p-0 text-base font-medium leading-normal text-gray-800 focus:shadow-none">
+                    <div>Công ty tnhh nha khoa nhân tâm</div>
+                    <div>Khoa : Răng hàm mặt</div>
+                </div>
+
+                <div class="flex items-start justify-center pt-4">
+                    <h2 class="text-center text-xl font-bold uppercase tracking-wide text-blue-900">
+                        BÌA HỒ SƠ BỆNH ÁN
+                    </h2>
+                </div>
+
+                <div class="space-y-2 md:text-right">
+                    <div class="text-sm font-mono text-gray-600">Mã người bệnh: NT260603001</div>
+                    <div class="text-sm font-mono text-gray-600">Mã YT: 79109182606003</div>
+                    <div class="text-sm font-mono text-gray-600">Số vào viện: 260603001</div>
+                    <div class="text-sm font-mono text-gray-600">Số lưu trữ: 2606001</div>
+                </div>
+            </div>
+            <div class="mt-10 border-t-2 border-slate-300"></div>
+        </section>
+
+        <section class="mb-9">
+            <h2 class="section-title"><span class="section-title-badge">I</span>Thông tin chung</h2>
+            <div class="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-12">
+                <div class="admin-field md:col-span-4">
+                    <span class="admin-label">Họ và tên (In hoa):</span>
+                    <div class="text-sm font-semibold leading-[1.35] text-blue-900 uppercase">NGÔ THU THỦY</div>
+                </div>
+                <div class="admin-field md:col-span-4">
+                    <span class="admin-label">Ngày sinh:</span>
+                    <div class="text-sm font-semibold leading-[1.35] text-blue-900">12/12/1999</div>
+                </div>
+                <div class="admin-field md:col-span-4">
+                    <span class="admin-label">Tuổi:</span>
+                    <div class="text-sm font-semibold leading-[1.35] text-blue-900">23</div>
+                </div>
+                <div class="md:col-span-4 flex items-center space-x-4">
+                    <span class="font-medium text-sm whitespace-nowrap">Giới tính:</span>
+                    <label class="inline-flex items-center text-sm cursor-pointer">
+                        <input type="radio" name="gioi_tinh" class="form-radio text-blue-600" disabled>
+                        <span class="ml-1.5">1. Nam</span>
+                    </label>
+                    <label class="inline-flex items-center text-sm cursor-pointer">
+                        <input type="radio" name="gioi_tinh" class="form-radio text-blue-600" checked disabled>
+                        <span class="ml-1.5 font-semibold text-blue-900">2. Nữ</span>
+                    </label>
+                </div>
+                <div class="admin-field md:col-span-4">
+                    <span class="admin-label">Ngày vào viện:</span>
+                    <input class="admin-datetime" type="date" name="ngay_vao_vien" value="2024-08-16">
+                </div>
+                <div class="admin-field md:col-span-4">
+                    <span class="admin-label">Ngày ra viện:</span>
+                    <input class="admin-datetime" type="date" name="ngay_ra_vien" value="2024-08-16">
+                </div>
+                <div class="admin-field md:col-span-12">
+                    <span class="admin-label">Địa chỉ:</span>
+                    <div class="text-sm font-semibold leading-[1.35] text-blue-900">Số 99/23/34E Nguyễn Thị Minh Khai, Phường 14, Quận Bình Chánh, Thành phố Hồ Chí Minh</div>
+                </div>
+                <label class="admin-field md:col-span-6">
+                    <span class="admin-label">Phương pháp điều trị:</span>
+                    <select class="control h-8 text-sm font-semibold text-blue-900">
+                        <option selected>Ngoại trú</option>
+                        <option>Nội trú</option>
+                        <option>Ban ngày</option>
+                    </select>
+                </label>
+                <label class="admin-field md:col-span-6">
+                    <span class="admin-label">Phòng:</span>
+                    <select class="control h-8 text-sm font-semibold text-blue-900">
+                        <option selected>Điều trị</option>
+                        <option>Thủ thuật</option>
+                    </select>
+                </label>
+                <label class="admin-field md:col-span-6">
+                    <span class="admin-label">Khoa chuyển đến:</span>
+                    <input class="control h-8 text-sm font-semibold text-blue-900" type="text" value="Không">
+                </label>
+                <label class="admin-field md:col-span-6">
+                    <span class="admin-label">Giường:</span>
+                    <input class="control h-8 text-sm font-semibold text-blue-900" type="text" value="Không">
+                </label>
+            </div>
+        </section>
+
+        <section class="mb-9">
+            <h2 class="section-title"><span class="section-title-badge">II</span>Các trang cuối của hồ sơ bệnh án</h2>
+
+            <h3 class="sub-title">Phần 1: Thành phần và thứ tự sắp xếp các mẫu giấy, phiếu trong hồ sơ bệnh án</h3>
+            <div class="mb-7 grid grid-cols-1 gap-x-5 gap-y-2 text-sm md:grid-cols-[minmax(0,1fr)_170px_170px]">
+                <div class="field-label mb-1">Nội dung</div>
+                <div class="field-label mb-1">Số lượng</div>
+                <div class="field-label mb-1">Số lượng</div>
+                <div class="py-1.5">I. Thông tin hành chính, mẫu cam kết, tài liệu của cơ sở khám bệnh, chữa bệnh chuyển đến</div>
+                <input class="control h-8" type="text" value="01">
+                <input class="control h-8" type="text" value="01">
+                <div class="py-1.5">II. Các bệnh án (Nội khoa, ngoại khoa, sản khoa, nhi khoa...)</div>
+                <input class="control h-8" type="text" value="01">
+                <input class="control h-8" type="text" value="01">
+                <div class="py-1.5">III. Giấy, phiếu chỉ định xét nghiệm, cận lâm sàng, kết quả</div>
+                <input class="control h-8" type="text" value="00">
+                <input class="control h-8" type="text" value="00">
+                <div class="py-1.5">IV. Giấy, phiếu khám, đánh giá, theo dõi của bác sỹ</div>
+                <input class="control h-8" type="text" value="01">
+                <input class="control h-8" type="text" value="01">
+                <div class="py-1.5">V. Giấy, phiếu đánh giá, theo dõi, chăm sóc của điều dưỡng</div>
+                <input class="control h-8" type="text" value="01">
+                <input class="control h-8" type="text" value="01">
+                <div class="py-1.5">VI. Giấy, phiếu gây mê, phẫu thuật, thủ thuật</div>
+                <input class="control h-8" type="text" value="00">
+                <input class="control h-8" type="text" value="00">
+                <div class="py-1.5">VII. Giấy, phiếu chuyển viện, ra viện, bản tóm tắt hồ sơ bệnh án</div>
+                <input class="control h-8" type="text" value="00">
+                <input class="control h-8" type="text" value="00">
+                <div class="py-1.5">VIII. Các mẫu giấy, phiếu khác</div>
+                <input class="control h-8" type="text" value="01">
+                <input class="control h-8" type="text" value="01">
+            </div>
+
+            <h3 class="sub-title">Phần 2. Phần kiểm soát của đơn vị nhận và lưu trữ hồ sơ bệnh án</h3>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="mb-2 text-base font-bold">1.Phần hành chính</h4>
+                    <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Thông tin hành chính</label>
+                        <label class="check-row"><input type="checkbox">Thông tin khám chữa bệnh ban đầu</label>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 text-base font-bold">2.Phần tổng kết bệnh án ra viện</h4>
+                    <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Nội dung đầy đủ</label>
+                        <label class="check-row"><input type="checkbox">Mã hóa ICD đầy đủ</label>
+                        <label class="check-row"><input type="checkbox">Tình trạng ra viện</label>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 text-base font-bold">3.Cận lâm sàng</h4>
+                    <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Chỉ định</label>
+                        <label class="check-row"><input type="checkbox">Kết quả</label>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 text-base font-bold">4. Phiếu theo dõi, chăm sóc của điều dưỡng</h4>
+                    <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Đầy đủ các phiếu</label>
+                        <label class="check-row"><input type="checkbox">Xử trí, can thiệp của điều dưỡng</label>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="mb-2 text-base font-bold">5. Phẫu thuật, thủ thuật, gây mê hồi sức</h4>
+                    <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Hội chẩn phẫu thuật có sự tham gia của bác sỹ gây mê, phẫu thuật viên</label>
+                        <label class="check-row"><input type="checkbox">Đầy đủ các phiếu gây mê, hồi tỉnh</label>
+                        <label class="check-row"><input type="checkbox">Giấy cam kết chấp thuận phẫu thuật, thủ thuật và gây mê hồi sức</label>
+                        <label class="check-row"><input type="checkbox">Bảng kiểm an toàn phẫu thuật</label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-x-12 md:grid-cols-2">
+                    <label class="check-row font-bold text-gray-900">6. Thanh toán ra viện <input type="checkbox"></label>
+                    <label class="check-row"><input type="checkbox">Bảng kiểm an toàn phẫu thuật</label>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-8 grid grid-cols-1 gap-x-12 gap-y-7 md:grid-cols-2">
+            <div>
+                <h2 class="section-title mb-5"><span class="section-title-badge">III</span>Phân loại bệnh án</h2>
+                <div class="space-y-4">
+                    <label class="check-row"><input type="checkbox">Bệnh án chưa đạt lần 1: Trả lại khoa</label>
+                    <label class="check-row"><input type="checkbox">Bệnh án chưa đạt lần 2: Trả lại khoa</label>
+                    <label class="check-row"><input type="checkbox">Bệnh án đạt yêu cầu: Chuyển lưu trữ</label>
+                </div>
+            </div>
+            <div>
+                <h2 class="section-title mb-5"><span class="section-title-badge">IV</span>Ngày nhận HSBA</h2>
+                <div class="space-y-4">
+                    <label class="receive-date-control">
+                        <span class="receive-date-text text-slate-400">Chọn</span>
+                        <span aria-hidden="true">▣</span>
+                        <input class="receive-date-input" type="date" name="ngay_nhan_hsba_lan_1">
+                    </label>
+                    <label class="receive-date-control">
+                        <span class="receive-date-text text-slate-400">Chọn</span>
+                        <span aria-hidden="true">▣</span>
+                        <input class="receive-date-input" type="date" name="ngay_nhan_hsba_lan_2">
+                    </label>
+                    <label class="receive-date-control">
+                        <span class="receive-date-text">16/08/2024</span>
+                        <span aria-hidden="true">▣</span>
+                        <input class="receive-date-input" type="date" name="ngay_nhan_hsba_dat" value="2024-08-16">
+                    </label>
+                </div>
+            </div>
+            <label>
+                <span class="field-label">Người giao hồ sơ</span>
+                <span class="select-pill"><span>BS. Trần Hữu Quý</span><span class="clear-dot">×</span></span>
+            </label>
+            <label>
+                <span class="field-label">Người nhận hồ sơ</span>
+                <span class="select-pill"><span>Lê Văn Lâm</span><span class="clear-dot">×</span></span>
+            </label>
+        </section>
+
+        <section>
+            <h2 class="section-title"><span class="section-title-badge">V</span>Phương pháp gây mê hồi sức dự kiến</h2>
+            <div class="grid grid-cols-1 gap-x-10 gap-y-2 md:grid-cols-4">
+                <label class="check-row"><input type="checkbox">Mê nội khí quản</label>
+                <label class="check-row"><input type="checkbox">Mê mask thanh quản</label>
+                <label class="check-row"><input type="checkbox" checked>Mê tĩnh mạch</label>
+                <label class="check-row"><input type="checkbox">Tê tủy sống</label>
+                <label class="check-row"><input type="checkbox" checked>Tê ngoài màng cứng</label>
+                <label class="check-row"><input type="checkbox">Tê đám rối thần kinh</label>
+                <label class="check-row"><input type="checkbox" checked>Tiền mê + Tê tại chỗ</label>
+                <label class="check-row"><input type="checkbox">Khác</label>
+            </div>
+        </section>
+        </div>
+    </main>
+
+    <div class="no-print fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-8 py-4 backdrop-blur">
+        <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
+            <button type="button" class="h-9 border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-500 hover:bg-cyan-50">
+                Cập nhật dữ liệu
+            </button>
+            <span class="text-sm text-gray-500">lần lưu cuối: 03/06/2026 16:20</span>
+            <div class="flex justify-end gap-3">
+                <button type="button" class="h-9 min-w-[78px] rounded border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    Hủy
+                </button>
+                <button type="button" class="h-9 min-w-[78px] rounded border border-cyan-400 bg-white px-5 text-sm font-semibold text-cyan-500 hover:bg-cyan-50">
+                    Lưu
+                </button>
+                <button type="button" onclick="window.print()" class="h-9 min-w-[96px] rounded bg-cyan-500 px-5 text-sm font-semibold text-white hover:bg-cyan-600">
+                    Lưu và in
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const formatDateDisplay = (value) => {
+            if (!value) return 'Chọn';
+            const [year, month, day] = value.split('-');
+            return `${day}/${month}/${year}`;
+        };
+
+        document.querySelectorAll('.receive-date-control').forEach((control) => {
+            const input = control.querySelector('.receive-date-input');
+            const text = control.querySelector('.receive-date-text');
+
+            const updateDisplay = () => {
+                text.textContent = formatDateDisplay(input.value);
+                text.classList.toggle('text-slate-400', !input.value);
+            };
+
+            input.addEventListener('change', updateDisplay);
+            updateDisplay();
+        });
+    </script>
+</body>
+
+</html>
