@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BỆNH ÁN NGOẠI TRÚ CHUYÊN KHOA RĂNG HÀM MẶT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .print-border {
+                border: 1px solid #000 !important;
+            }
+        }
+
+        input[type="text"],
+        textarea {
+            background-color: #f9fafb;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus:not([readonly]),
+        textarea:focus {
+            background-color: #fff;
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        input[readonly],
+        select[disabled],
+        input[type="radio"][disabled] {
+            background-color: #f3f4f6 !important;
+            cursor: not-allowed;
+            color: #1e3a8a !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans leading-normal p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto bg-white p-6 md:p-10 shadow-xl rounded-lg border border-gray-200">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 border-b-2 border-gray-300 pb-6 mb-6">
+            <div class="space-y-2">
+                <div class="flex items-center space-x-2">
+                    <label for="chi_nhanh" class="font-medium whitespace-nowrap">Chi nhánh:</label>
+                    <select id="chi_nhanh" name="chi_nhanh"
+                        class="flex-1 border border-gray-300 rounded px-2 py-1 text-sm bg-white font-semibold text-blue-900">
+                        <option value="hcm">Nha khoa hồ chí minh</option>
+                        <option value="hanoi">Nha khoa hà nội</option>
+                    </select>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span id="so_y_te" class="font-medium min-w-[80px]">Sở Y Tế TP. Hồ Chí Minh</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="font-medium min-w-[80px]">Công ty tnhh nha khoa nhân tâm</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="font-medium min-w-[80px]">Khoa : Răng hàm mặt</span>
+
+                </div>
+            </div>
+
+            <div class="text-center space-y-1">
+                <h1 class="text-xl font-bold tracking-wide text-blue-900">BỆNH ÁN NGOẠI TRÚ</h1>
+                <h2 class="text-md font-semibold text-gray-700">CHUYÊN KHOA RĂNG HÀM MẶT</h2>
+            </div>
+
+            <div class="space-y-2 md:text-right">
+                <div class="text-sm font-mono text-gray-600">MS: 16/BV-01</div>
+                <div class="flex items-center justify-end space-x-2">
+                    <span class="text-sm">Số ngoại trú:</span>
+                    <input type="text" class="w-32 border border-gray-300 rounded px-2 py-0.5 text-sm text-center">
+                </div>
+                <div class="flex items-center justify-end space-x-2">
+                    <span class="text-sm">Số lưu trữ:</span>
+                    <input type="text" class="w-32 border border-gray-300 rounded px-2 py-0.5 text-sm text-center">
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-md font-bold text-blue-800 uppercase mb-3 flex items-center">
+                <span
+                    class="bg-blue-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">I</span>
+                Hành chính
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-y-4 gap-x-6">
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-6 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap min-w-[120px]">1. Họ và tên (In
+                            hoa):</label>
+                        <input type="text" value="BÀNH THỊ LÂU RA"
+                            class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 uppercase font-semibold text-blue-900"
+                            readonly>
+                    </div>
+
+                    <div class="md:col-span-6 flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <label class="font-medium text-sm whitespace-nowrap">2. Sinh ngày:</label>
+                            <input type="text" value="01/01/1990"
+                                class="w-28 border border-gray-300 rounded px-2 py-1 text-sm text-center font-semibold text-blue-900"
+                                readonly>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="font-medium text-sm whitespace-nowrap">Tuổi:</label>
+                            <input type="text" value="36"
+                                class="w-16 border border-gray-300 rounded px-2 py-1 text-sm text-center font-semibold text-blue-900"
+                                readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-6 flex items-center space-x-4">
+                        <span class="font-medium text-sm whitespace-nowrap">3. Giới tính:</span>
+                        <label class="inline-flex items-center text-sm cursor-pointer">
+                            <input type="radio" name="gioi_tinh" class="form-radio text-blue-600" disabled>
+                            <span class="ml-1.5">1. Nam</span>
+                        </label>
+                        <label class="inline-flex items-center text-sm cursor-pointer">
+                            <input type="radio" name="gioi_tinh" class="form-radio text-blue-600" checked disabled>
+                            <span class="ml-1.5 font-semibold text-blue-900">2. Nữ</span>
+                        </label>
+                    </div>
+
+                    <div class="md:col-span-6 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">4. Nghề nghiệp:</label>
+                        <input type="text" value="Quản trị kinh doanh" class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-semibold text-blue-900"
+                            readonly>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-6 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">5. Dân tộc:</label>
+                        <input type="text" value="Kinh"
+                            class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-semibold text-blue-900" readonly>
+                    </div>
+                    <div class="md:col-span-6 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">6. Ngoại kiều:</label>
+                        <input type="text" value="Việt Nam" class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-semibold text-blue-900"
+                            readonly>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12 flex items-center space-x-2">
+                    <label class="font-medium text-sm whitespace-nowrap">7. Địa chỉ:</label>
+                    <input type="text" value="Số nhà 4/5A Khu phố 30, Phường An Phú Đông, Quận 12, Hồ Chí Minh"
+                        class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-semibold text-blue-900" readonly>
+                </div>
+
+                <div class="md:col-span-12 border-t border-gray-100 pt-3 grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-8 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">8. Nơi làm việc:</label>
+                        <input type="text" class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-semibold text-blue-900">
+                    </div>
+                    <div class="md:col-span-4 flex items-center space-x-2">
+                        <span class="font-medium text-sm">9. Đối tượng:</span>
+                        <select class="border border-gray-300 rounded px-2 py-1 text-sm bg-white flex-1" disabled>
+                            <option>1. BHYT</option>
+                            <option>2. Thu phí</option>
+                            <option>3. Miễn</option>
+                            <option>4. Khác</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-4 mt-1">
+                    <div class="md:col-span-8 flex items-center space-x-2 flex-wrap">
+                        <span class="font-medium text-sm whitespace-nowrap">BHYT giá trị đến ngày</span>
+                        <input type="text" value="31"
+                            class="w-10 border-b border-dashed border-gray-400 px-1 py-1 text-sm text-center font-semibold text-blue-900"
+                            readonly>
+                        <span class="font-medium text-sm whitespace-nowrap">Tháng</span>
+                        <input type="text" value="12"
+                            class="w-10 border-b border-dashed border-gray-400 px-1 py-1 text-sm text-center font-semibold text-blue-900"
+                            readonly>
+                        <span class="font-medium text-sm whitespace-nowrap">năm</span>
+                        <input type="text" value="2026"
+                            class="w-14 border-b border-dashed border-gray-400 px-1 py-1 text-sm text-center font-semibold text-blue-900"
+                            readonly>
+                    </div>
+                    <div class="md:col-span-4 flex items-center space-x-2">
+                        <span class="font-medium text-sm whitespace-nowrap">Số Thẻ BHYT:</span>
+                        <input type="text" value="DN4797916569579"
+                            class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-mono tracking-wider font-semibold text-blue-900 min-w-[150px]"
+                            readonly>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-4">
+                    <div class="md:col-span-8 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">Người nhà báo tin (Họ tên, địa
+                            chỉ):</label>
+                        <input type="text" value="bành thị lo ra, địa chỉ : sài gòn, chợ lơn"
+                            class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm"
+                            readonly>
+                    </div>
+                    <div class="md:col-span-4 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">Điện thoại số:</label>
+                        <input type="text" value="0900.000.000"
+                            class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-mono" readonly>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12 grid grid-cols-1 md:grid-cols-12 gap-4 border-t border-gray-100 pt-3">
+                    <div class="md:col-span-8 flex items-center space-x-2">
+                        <label class="font-medium text-sm whitespace-nowrap">Đến khám bệnh lúc:</label>
+                        <input type="datetime-local" name="den_kham_benh_luc" value="2026-06-01T15:20"
+                            class="flex-1 border-b border-dashed border-gray-400 px-2 py-1 text-sm font-semibold text-blue-900">
+                    </div>
+                    <div class="md:col-span-4 flex items-center space-x-4">
+                        <span class="font-medium text-sm">Nơi giới thiệu:</span>
+                        <label class="inline-flex items-center text-sm cursor-pointer">
+                            <input type="radio" name="noi_gioi_thieu" class="form-radio text-blue-600">
+                            <span class="ml-1.5">1. Y tế</span>
+                        </label>
+                        <label class="inline-flex items-center text-sm cursor-pointer">
+                            <input type="radio" name="noi_gioi_thieu" class="form-radio text-blue-600">
+                            <span class="ml-1.5">2. Tự đến</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="md:col-span-12">
+                    <div class="flex flex-col space-y-1">
+                        <label class="font-medium text-sm text-gray-700">Chẩn đoán và đã xử lý của nơi giới
+                            thiệu:</label>
+                        <textarea rows="2" class="w-full border border-gray-300 rounded p-2 text-sm"
+                            placeholder="Ghi rõ chẩn đoán, thủ thuật và thuốc đã dùng của cơ sở y tế tuyến trước..."></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mb-6 border-t border-gray-200 pt-4">
+            <h3 class="text-md font-bold text-blue-800 uppercase mb-3 flex items-center">
+                <span
+                    class="bg-blue-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">II</span>
+                Lý do vào viện
+                <span class="relative group ml-2 inline-flex">
+                    <button type="button"
+                        class="w-5 h-5 rounded-full border border-blue-700 text-blue-700 bg-white flex items-center justify-center text-xs font-bold leading-none">
+                        i
+                    </button>
+                    <span
+                        class="pointer-events-none absolute left-1/2 top-7 z-30 hidden w-72 -translate-x-1/2 rounded border border-gray-200 bg-white px-3 py-2 text-left text-xs normal-case leading-snug text-gray-700 shadow-lg group-hover:block">
+                        Dữ liệu được tập hợp từ mục Bệnh án -> Thông tin khám bệnh -> Lý do vào viện, vấn đề sức khỏe trong profile khách hàng
+                    </span>
+                </span>
+            </h3>
+
+            <div>
+                <textarea rows="2" class="w-full border border-gray-300 rounded p-2 text-sm" readonly>Đau răng; Chảy máu răng; Răng lung lay; Răng mọc lệch; Mất răng; Muốn phục hồi răng thẩm mỹ; Khám định kỳ; Khác (vệ sinh răng)</textarea>
+            </div>
+        </div>
+
+        <div class="mb-6 border-t border-gray-200 pt-4">
+            <h3 class="text-md font-bold text-blue-800 uppercase mb-3 flex items-center">
+                <span
+                    class="bg-blue-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">III</span>
+                Hỏi bệnh
+                <span class="relative group ml-2 inline-flex">
+                    <button type="button"
+                        class="w-5 h-5 rounded-full border border-blue-700 text-blue-700 bg-white flex items-center justify-center text-xs font-bold leading-none">
+                        i
+                    </button>
+                    <span
+                        class="pointer-events-none absolute left-1/2 top-7 z-30 hidden w-72 -translate-x-1/2 rounded border border-gray-200 bg-white px-3 py-2 text-left text-xs normal-case leading-snug text-gray-700 shadow-lg group-hover:block">
+                        Dữ liệu được tập hợp từ mục Bệnh án -> Thông tin khám bệnh -> Hỏi bệnh trong profile khách hàng
+                    </span>
+                </span>
+            </h3>
+
+            <div class="space-y-3">
+                <div>
+                    <span class="block font-medium text-sm text-gray-600 mb-1">- Quá trình bệnh lý:</span>
+                    <textarea rows="3" class="w-full border border-gray-300 rounded p-2 text-sm"
+                        placeholder="Nhập diễn biến bệnh..." readonly>Bênh nhân thăm khám định kỷ theo hướng dẫn/lịch hẹn của bác sĩ trước đó (34); Khác (Diễn biến lâm sàn khác)</textarea>
+                </div>
+                <div>
+                    <span class="block font-medium text-sm text-gray-600 mb-1">- Tiền sử bản thân:</span>
+                    <textarea rows="2" class="w-full border border-gray-300 rounded p-2 text-sm"
+                        placeholder="Dị ứng, bệnh lý nền...">không</textarea>
+                </div>
+                <div>
+                    <span class="block font-medium text-sm text-gray-600 mb-1">- Tiền sử gia đình:</span>
+                    <textarea rows="1" class="w-full border border-gray-300 rounded p-2 text-sm">không</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-6 border-t border-gray-200 pt-4">
+            <h3 class="text-md font-bold text-blue-800 uppercase mb-3 flex items-center">
+                <span
+                    class="bg-blue-800 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2">IV</span>
+                Khám bệnh
+            </h3>
+
+            <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100 mb-4 grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="flex items-center space-x-1 bg-white p-2 rounded shadow-sm">
+                    <span class="text-xs font-medium text-gray-500 w-16">Mạch:</span>
+                    <input type="text" value="82"
+                        class="w-16 border-b border-gray-300 text-center font-bold text-blue-900 text-sm focus:border-blue-500">
+                    <span class="text-xs text-gray-400">lần/ph</span>
+                </div>
+                <div class="flex items-center space-x-1 bg-white p-2 rounded shadow-sm">
+                    <span class="text-xs font-medium text-gray-500 w-16">Nhiệt độ:</span>
+                    <input type="text" value="36"
+                        class="w-16 border-b border-gray-300 text-center font-bold text-blue-900 text-sm focus:border-blue-500">
+                    <span class="text-xs text-gray-400">°C</span>
+                </div>
+                <div class="flex items-center space-x-1 bg-white p-2 rounded shadow-sm">
+                    <span class="text-xs font-medium text-gray-500 w-16">Huyết áp:</span>
+                    <input type="text" value="110/81"
+                        class="w-20 border-b border-gray-300 text-center font-bold text-blue-900 text-sm focus:border-blue-500"
+                        placeholder="120/80">
+                    <span class="text-xs text-gray-400">mmHg</span>
+                </div>
+                <div class="flex items-center space-x-1 bg-white p-2 rounded shadow-sm">
+                    <span class="text-xs font-medium text-gray-500 w-16">Nhịp thở:</span>
+                    <input type="text" value="22"
+                        class="w-16 border-b border-gray-300 text-center font-bold text-blue-900 text-sm focus:border-blue-500">
+                    <span class="text-xs text-gray-400">lần/ph</span>
+                </div>
+                <div class="flex items-center space-x-1 bg-white p-2 rounded shadow-sm col-span-2 md:col-span-1">
+                    <span class="text-xs font-medium text-gray-500 w-16">Cân nặng:</span>
+                    <input type="text"
+                        class="w-16 border-b border-gray-300 text-center font-bold text-blue-900 text-sm focus:border-blue-500">
+                    <span class="text-xs text-gray-400">kg</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block font-medium text-sm text-gray-700 mb-1">1. Toàn thân:</label>
+                    <textarea rows="4" class="w-full border border-gray-300 rounded p-2 text-sm"
+                        placeholder="Tình trạng tri giác, niêm mạc..."></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-sm text-gray-700 mb-1">2. Bệnh chuyên khoa:</label>
+                    <textarea rows="4" class="w-full border border-gray-300 rounded p-2 text-sm"
+                        placeholder="Mô tả chi tiết tổn thương hệ thống răng, hàm, mặt..."></textarea>
+                </div>
+                <div>
+                    <label class="block font-medium text-sm text-gray-700 mb-1">3. Hình vẽ mô tả tổn thương khi vào
+                        viện:</label>
+                    <textarea rows="4" class="hidden w-full border border-gray-300 rounded p-2 text-sm"
+                        placeholder="Mô tả tổn thương..."></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-sm text-gray-700 mb-1">4. Tóm tắt bệnh án:</label>
+                    <textarea rows="3" class="w-full border border-gray-300 rounded p-2 text-sm"
+                        placeholder="Tóm tắt triệu chứng lâm sàng và cận lâm sàng chính..."></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-sm text-gray-700 mb-1">5. Chẩn đoán của khoa khám
+                            bệnh:</label>
+                        <textarea rows="2" class="w-full border border-gray-300 rounded p-2 text-sm"></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-sm text-gray-700 mb-1">6. Đã xử lý của tuyến dưới:</label>
+                        <textarea rows="2" class="w-full border border-gray-300 rounded p-2 text-sm">Chưa</textarea>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2 mt-2 flex-wrap gap-y-2">
+                    <label class="font-medium text-sm text-gray-700 whitespace-nowrap">7. Điều trị ngoại trú: từ
+                        ngày</label>
+                    <input type="datetime-local" name="dieu_tri_ngoai_tru_tu_ngay"
+                        class="w-48 border-b border-dashed border-gray-400 px-2 py-1 text-sm text-center focus:border-blue-500 outline-none bg-transparent">
+                    <span class="font-medium text-sm text-gray-700">đến ngày</span>
+                    <input type="datetime-local" name="dieu_tri_ngoai_tru_den_ngay"
+                        class="w-48 border-b border-dashed border-gray-400 px-2 py-1 text-sm text-center focus:border-blue-500 outline-none bg-transparent">
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t-2 border-gray-300 pt-4 mt-6">
+            <h3 class="text-md font-bold text-gray-800 uppercase mb-3 tracking-wider text-center">TỔNG KẾT BỆNH ÁN</h3>
+
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-sm text-gray-700 mb-1">Quá trình bệnh lý và diễn biến lâm
+                            sàng:</label>
+                        <textarea rows="4" class="w-full border border-gray-300 rounded p-2 text-sm"></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-sm text-gray-700 mb-1">Tóm tắt kết quả xét nghiệm cận lâm
+                            sàng có giá trị chẩn đoán:</label>
+                        <div class="space-y-2 rounded border border-gray-300 bg-gray-50 p-3 text-sm">
+                            <label class="flex items-start gap-2">
+                                <input type="radio" name="ket_qua_can_lam_sang" value="binh_thuong"
+                                    class="mt-1 form-radio text-blue-600">
+                                <span>Tất cả kết quả xét nghiệm, cận lâm sàng nằm trong giới hạn bình thường</span>
+                            </label>
+                            <label class="flex items-start gap-2">
+                                <input type="radio" name="ket_qua_can_lam_sang" value="khong_xet_nghiem"
+                                    class="mt-1 form-radio text-blue-600">
+                                <span>Không làm xét nghiệm, cận lâm sàng</span>
+                            </label>
+                            <label class="flex items-start gap-2">
+                                <input type="radio" name="ket_qua_can_lam_sang" value="bat_thuong"
+                                    class="mt-1 form-radio text-blue-600">
+                                <span>Bất thường</span>
+                            </label>
+                            <textarea id="ket_qua_can_lam_sang_bat_thuong" rows="2"
+                                class="hidden w-full border border-gray-300 rounded p-2 text-sm bg-white"
+                                placeholder="Nhập mô tả kết quả bất thường..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-sm text-red-900 mb-1">Chẩn đoán ra viện:</label>
+                        <div class="space-y-2">
+                            <input type="text" placeholder="Bệnh chính..."
+                                class="w-full border border-gray-300 rounded px-2 py-1 text-sm bg-white">
+                            <input type="text" placeholder="Bệnh kèm theo (nếu có)..."
+                                class="w-full border border-gray-300 rounded px-2 py-1 text-sm bg-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-sm text-gray-700 mb-1">Tình trạng người bệnh ra
+                            viện:</label>
+                        <input type="text" name="tinh_trang_nguoi_benh_ra_vien"
+                            list="tinh_trang_nguoi_benh_ra_vien_options"
+                            class="w-full border border-gray-300 rounded p-2 text-sm bg-white"
+                            placeholder="Chọn hoặc nhập tình trạng người bệnh ra viện...">
+                        <datalist id="tinh_trang_nguoi_benh_ra_vien_options">
+                            <option value="đỡ">
+                            <option value="khỏi">
+                            <option value="tử vong">
+                            <option value="không thay đổi">
+                            <option value="tiên lượng nặng xin về">
+                            <option value="nặng hơn">
+                            <option value="chưa xác định">
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-gray-50 rounded-xl border border-gray-200">
+                    <div class="mb-2 flex items-center justify-between gap-3">
+                        <label class="block font-medium text-sm text-gray-700">Phương pháp điều trị:</label>
+                        <button type="button" id="add-treatment-row"
+                            class="rounded border border-blue-600 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-50">
+                            Thêm kỹ thuật
+                        </button>
+                    </div>
+                    <div id="treatment-list" class="space-y-2">
+                        <div class="treatment-row grid grid-cols-1 gap-2 md:grid-cols-[minmax(0,1fr)_minmax(180px,260px)_auto] md:items-end">
+                            <div>
+                                <label class="mb-1 block text-xs text-gray-500">Tên danh mục kỹ thuật</label>
+                                <input type="text" name="ten_danh_muc_ky_thuat[]" list="danh_muc_ky_thuat_options"
+                                    value="Chụp sứ kim loại thường gắn bằng cement trên Implant - TT43-34"
+                                    class="w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm"
+                                    placeholder="Chọn tên danh mục kỹ thuật">
+                            </div>
+                            <div>
+                                <label class="mb-1 block text-xs text-gray-500">Vị trí răng</label>
+                                <input type="text" name="vi_tri_rang[]" value="17"
+                                    class="tooth-position-input w-full rounded border border-gray-300 bg-white px-3 py-2 text-sm"
+                                    placeholder="Chọn Số răng" readonly>
+                            </div>
+                            <button type="button"
+                                class="remove-treatment-row flex h-10 w-10 items-center justify-center rounded border border-gray-300 text-gray-600 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                                aria-label="Xóa kỹ thuật">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9 7h6m-7 0a1 1 0 001-1h6a1 1 0 001 1m-9 0h10">
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <datalist id="danh_muc_ky_thuat_options">
+                        <option value="Chụp sứ kim loại thường gắn bằng cement trên Implant - TT43-34">
+                        <option value="Cầu hợp kim thường - TT43-57">
+                        <option value="Cầu hợp kim Titanium cẩn sứ - TT43-60">
+                        <option value="Cầu kim loại cẩn nhựa - TT43-58">
+                        <option value="Cầu kim loại cẩn sứ - TT43-59">
+                        <option value="Cạo vôi răng">
+                        <option value="Trám răng thẩm mỹ">
+                        <option value="Nhổ răng">
+                        <option value="Điều trị tủy">
+                    </datalist>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-sm text-gray-700 mb-1">Hướng điều trị và các chế độ tiếp
+                        theo:</label>
+                    <textarea rows="2" class="w-full border border-gray-300 rounded p-2 text-sm"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6">
+            <label class="block font-bold text-sm text-gray-700 mb-2">HỒ SƠ, PHIM, ẢNH KÈM THEO:</label>
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+                <!-- Cột trái: Khung bảng loại tài liệu giữ nguyên -->
+                <div class="md:col-span-7 overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300 text-sm text-center">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-2 font-medium w-2/3 text-left">Loại tài liệu</th>
+                                <th class="border border-gray-300 p-2 font-medium w-1/3">Số tờ / Số phim</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 p-2 text-left">- X-quang</td>
+                                <td class="border border-gray-300 p-1"><input type="text"
+                                        class="w-full text-center bg-transparent border-0 focus:ring-0 text-sm"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-2 text-left">- CT Scanner</td>
+                                <td class="border border-gray-300 p-1"><input type="text"
+                                        class="w-full text-center bg-transparent border-0 focus:ring-0 text-sm"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-2 text-left">- Siêu âm</td>
+                                <td class="border border-gray-300 p-1"><input type="text"
+                                        class="w-full text-center bg-transparent border-0 focus:ring-0 text-sm"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-2 text-left">- Xét nghiệm</td>
+                                <td class="border border-gray-300 p-1"><input type="text"
+                                        class="w-full text-center bg-transparent border-0 focus:ring-0 text-sm"></td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-2 text-left">- Khác</td>
+                                <td class="border border-gray-300 p-1"><input type="text"
+                                        class="w-full text-center bg-transparent border-0 focus:ring-0 text-sm"></td>
+                            </tr>
+                            <tr class="bg-blue-50/40 font-semibold">
+                                <td class="border border-gray-300 p-2 text-left">- Toàn bộ hồ sơ</td>
+                                <td class="border border-gray-300 p-1"><input type="text"
+                                        class="w-full text-center bg-transparent border-0 focus:ring-0 text-sm"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Cột phải: Cập nhật lại khung thông tin giao nhận -->
+                <div class="md:col-span-5 space-y-3 text-sm bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <div>
+                        <span class="font-semibold block text-gray-700 mb-1">Người giao hồ sơ:</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs text-gray-500 w-16">Họ tên:</span>
+                            <input type="text"
+                                class="flex-1 bg-white border border-gray-300 rounded px-2 py-0.5 text-xs">
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-2">
+                        <span class="font-semibold block text-gray-700 mb-1">Người nhận hồ sơ:</span>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs text-gray-500 w-16">Họ tên:</span>
+                            <input type="text"
+                                class="flex-1 bg-white border border-gray-300 rounded px-2 py-0.5 text-xs">
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-2">
+                        <span class="font-semibold block text-gray-700 mb-1">Bác sỹ điều trị:</span>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs text-gray-500 w-16">Họ tên:</span>
+                                <div class="doctor-combobox relative flex-1">
+                                    <button type="button"
+                                        class="doctor-toggle w-full bg-white border border-gray-300 rounded px-2 py-0.5 text-xs text-left flex items-center justify-between gap-2">
+                                        <span class="doctor-selected text-gray-500">Chọn bác sĩ</span>
+                                        <span class="text-gray-400">▾</span>
+                                    </button>
+                                    <input type="hidden" name="bac_si_dieu_tri">
+                                    <div
+                                        class="doctor-menu hidden absolute z-20 mt-1 w-full rounded border border-gray-300 bg-white shadow-lg">
+                                        <input type="text"
+                                            class="doctor-search w-full border-0 border-b border-gray-200 px-2 py-1 text-xs focus:ring-0"
+                                            placeholder="Tìm bác sĩ...">
+                                        <ul class="doctor-list max-h-44 overflow-y-auto text-xs">
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Nguyễn Minh Anh">BS. Nguyễn Minh Anh</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Trần Quốc Bảo">BS. Trần Quốc Bảo</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Lê Hoàng Châu">BS. Lê Hoàng Châu</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Phạm Thị Diễm">BS. Phạm Thị Diễm</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Võ Đức Duy">BS. Võ Đức Duy</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Huỳnh Gia Hân">BS. Huỳnh Gia Hân</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Đặng Khánh Hòa">BS. Đặng Khánh Hòa</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Bùi Thanh Hương">BS. Bùi Thanh Hương</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Hồ Nhật Khang">BS. Hồ Nhật Khang</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Đỗ Lan Khuê">BS. Đỗ Lan Khuê</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Vũ Kim Long">BS. Vũ Kim Long</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Nguyễn Mai Linh">BS. Nguyễn Mai Linh</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Trương Công Minh">BS. Trương Công Minh</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Lý Phương Nam">BS. Lý Phương Nam</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Cao Thiên Phúc">BS. Cao Thiên Phúc</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Phan Ngọc Quỳnh">BS. Phan Ngọc Quỳnh</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Lâm Hữu Sơn">BS. Lâm Hữu Sơn</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Mai Xuân Thảo">BS. Mai Xuân Thảo</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Tạ Minh Tuấn">BS. Tạ Minh Tuấn</button></li>
+                                            <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Nguyễn Hải Yến">BS. Nguyễn Hải Yến</button></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-1 text-xs text-gray-600 italic pt-1">
+                                <span>Ngày</span>
+                                <input type="text"
+                                    class="w-6 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
+                                <span>tháng</span>
+                                <input type="text"
+                                    class="w-6 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
+                                <span>năm</span>
+                                <input type="text"
+                                    class="w-10 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 border-t border-gray-200 pt-6 grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+            <!-- Cột trái: Giám đốc bệnh viện -->
+            <div class="space-y-16">
+                <div>
+                    <!-- Tạo khoảng trống để cân bằng với dòng Ngày tháng bên phải -->
+                    <div class="h-6 mb-1"></div>
+                    <h4 class="font-bold text-gray-800 uppercase tracking-wide">GIÁM ĐỐC BỆNH VIỆN</h4>
+                    <span class="text-xs text-gray-400 italic">(Ký tên, đóng dấu)</span>
+                </div>
+                <div class="max-w-xs mx-auto">
+                    <input type="text" placeholder="Họ và tên Giám đốc"
+                        class="w-full text-center border-b border-gray-300 bg-transparent py-1 text-sm font-medium">
+                </div>
+            </div>
+
+            <!-- Cột phải: Bác sỹ khám bệnh -->
+            <div class="space-y-16">
+                <div>
+                    <div class="flex justify-center items-center space-x-1 text-xs text-gray-600 italic mb-1">
+                        <span>Ngày</span>
+                        <input type="text" value="01"
+                            class="w-6 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
+                        <span>tháng</span>
+                        <input type="text" value="06"
+                            class="w-6 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
+                        <span>năm</span>
+                        <input type="text" value="2026"
+                            class="w-10 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
+                    </div>
+                    <h4 class="font-bold text-gray-800 uppercase tracking-wide">BÁC SỸ KHÁM BỆNH</h4>
+                    <span class="text-xs text-gray-400 italic">(Ký và ghi rõ họ tên)</span>
+                </div>
+                <div class="max-w-xs mx-auto">
+                    <div class="doctor-combobox relative">
+                        <button type="button"
+                            class="doctor-toggle w-full border-b border-gray-300 bg-transparent py-1 text-sm font-medium text-center flex items-center justify-center gap-2">
+                            <span class="doctor-selected text-gray-500">Chọn bác sĩ</span>
+                            <span class="text-gray-400">▾</span>
+                        </button>
+                        <input type="hidden" name="bac_si_kham_benh">
+                        <div
+                            class="doctor-menu hidden absolute z-20 mt-1 w-full rounded border border-gray-300 bg-white text-left shadow-lg">
+                            <input type="text"
+                                class="doctor-search w-full border-0 border-b border-gray-200 px-2 py-1 text-xs focus:ring-0"
+                                placeholder="Tìm bác sĩ...">
+                            <ul class="doctor-list max-h-44 overflow-y-auto text-xs">
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Nguyễn Minh Anh">BS. Nguyễn Minh Anh</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Trần Quốc Bảo">BS. Trần Quốc Bảo</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Lê Hoàng Châu">BS. Lê Hoàng Châu</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Phạm Thị Diễm">BS. Phạm Thị Diễm</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Võ Đức Duy">BS. Võ Đức Duy</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Huỳnh Gia Hân">BS. Huỳnh Gia Hân</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Đặng Khánh Hòa">BS. Đặng Khánh Hòa</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Bùi Thanh Hương">BS. Bùi Thanh Hương</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Hồ Nhật Khang">BS. Hồ Nhật Khang</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Đỗ Lan Khuê">BS. Đỗ Lan Khuê</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Vũ Kim Long">BS. Vũ Kim Long</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Nguyễn Mai Linh">BS. Nguyễn Mai Linh</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Trương Công Minh">BS. Trương Công Minh</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Lý Phương Nam">BS. Lý Phương Nam</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Cao Thiên Phúc">BS. Cao Thiên Phúc</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Phan Ngọc Quỳnh">BS. Phan Ngọc Quỳnh</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Lâm Hữu Sơn">BS. Lâm Hữu Sơn</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Mai Xuân Thảo">BS. Mai Xuân Thảo</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Tạ Minh Tuấn">BS. Tạ Minh Tuấn</button></li>
+                                <li><button type="button" class="doctor-option w-full px-2 py-1 text-left hover:bg-blue-50" data-value="BS. Nguyễn Hải Yến">BS. Nguyễn Hải Yến</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tooth-picker" class="no-print fixed inset-0 z-50 hidden bg-black/20 p-4">
+            <div class="mx-auto mt-20 max-w-4xl rounded bg-white p-4 shadow-xl">
+                <div class="mb-4 flex items-center justify-between">
+                    <div class="flex items-center gap-4 text-sm text-gray-700">
+                        <label class="inline-flex items-center gap-2">
+                            <input type="radio" name="tooth_picker_age" value="adult" class="text-blue-600" checked>
+                            Người lớn
+                        </label>
+                        <label class="inline-flex items-center gap-2">
+                            <input type="radio" name="tooth_picker_age" value="child" class="text-blue-600">
+                            Trẻ em
+                        </label>
+                    </div>
+                    <button type="button" id="close-tooth-picker"
+                        class="rounded border border-gray-300 px-3 py-1 text-sm text-gray-600 hover:bg-gray-50">
+                        Đóng
+                    </button>
+                </div>
+                <div class="mb-4 flex flex-wrap gap-3">
+                    <button type="button" class="tooth-jaw-filter rounded border border-gray-300 px-8 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-50" data-jaw="upper">Hàm trên</button>
+                    <button type="button" class="tooth-jaw-filter rounded border border-gray-300 px-8 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-50" data-jaw="lower">Hàm dưới</button>
+                    <button type="button" class="tooth-jaw-filter rounded border border-gray-300 px-8 py-2 text-sm font-semibold text-gray-700 hover:bg-blue-50" data-jaw="all">Hai hàm</button>
+                </div>
+                <div id="tooth-picker-grid" class="flex flex-wrap gap-3"></div>
+            </div>
+        </div>
+
+        <div class="no-print mt-10 pt-6 border-t border-gray-200 flex justify-end space-x-3">
+            <button type="button"
+                class="px-5 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg font-medium border border-gray-300 transition text-sm">
+                Cancel
+            </button>
+            <button type="button"
+                class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium shadow-md transition text-sm">
+                Lưu
+            </button>
+            <button type="button" onclick="window.print()"
+                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-md transition text-sm flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
+                    </path>
+                </svg>
+                Lưu & In
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const branchSelect = document.getElementById('chi_nhanh');
+        const healthDepartment = document.getElementById('so_y_te');
+        const healthDepartmentByBranch = {
+            hcm: 'Sở Y Tế TP. Hồ Chí Minh',
+            hanoi: 'Sở Y Tế TP. Hà Nội',
+        };
+
+        const updateHealthDepartment = () => {
+            healthDepartment.textContent = healthDepartmentByBranch[branchSelect.value] || healthDepartmentByBranch.hcm;
+        };
+
+        branchSelect.addEventListener('change', updateHealthDepartment);
+        updateHealthDepartment();
+
+        const clinicalResultOptions = document.querySelectorAll('input[name="ket_qua_can_lam_sang"]');
+        const abnormalClinicalResult = document.getElementById('ket_qua_can_lam_sang_bat_thuong');
+        const updateAbnormalClinicalResult = () => {
+            const selectedOption = document.querySelector('input[name="ket_qua_can_lam_sang"]:checked');
+            abnormalClinicalResult.classList.toggle('hidden', selectedOption?.value !== 'bat_thuong');
+        };
+
+        clinicalResultOptions.forEach((option) => option.addEventListener('change', updateAbnormalClinicalResult));
+        updateAbnormalClinicalResult();
+
+        const treatmentList = document.getElementById('treatment-list');
+        const addTreatmentRowButton = document.getElementById('add-treatment-row');
+        const toothPicker = document.getElementById('tooth-picker');
+        const closeToothPickerButton = document.getElementById('close-tooth-picker');
+        const toothPickerGrid = document.getElementById('tooth-picker-grid');
+        const toothSets = {
+            adult: {
+                upper: ['18', '17', '16', '15', '14', '13', '12', '11', '21', '22', '23', '24', '25', '26', '27', '28'],
+                lower: ['48', '47', '46', '45', '44', '43', '42', '41', '31', '32', '33', '34', '35', '36', '37', '38'],
+            },
+            child: {
+                upper: ['55', '54', '53', '52', '51', '61', '62', '63', '64', '65'],
+                lower: ['85', '84', '83', '82', '81', '71', '72', '73', '74', '75'],
+            },
+        };
+        let activeToothInput = null;
+        let activeToothJaw = 'all';
+
+        const getSelectedToothAge = () => document.querySelector('input[name="tooth_picker_age"]:checked')?.value || 'adult';
+        const getVisibleTeeth = () => {
+            const selectedAge = getSelectedToothAge();
+            const teeth = toothSets[selectedAge];
+
+            if (activeToothJaw === 'upper') return teeth.upper;
+            if (activeToothJaw === 'lower') return teeth.lower;
+            return [...teeth.upper, ...teeth.lower];
+        };
+
+        const renderToothPicker = () => {
+            toothPickerGrid.innerHTML = '';
+            getVisibleTeeth().forEach((tooth) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.textContent = tooth;
+                button.className = 'tooth-option rounded border border-blue-200 px-3 py-2 text-sm text-gray-700 hover:bg-blue-50';
+
+                if (activeToothInput?.value === tooth) {
+                    button.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                }
+
+                button.addEventListener('click', () => {
+                    if (activeToothInput) {
+                        activeToothInput.value = tooth;
+                    }
+                    toothPicker.classList.add('hidden');
+                });
+
+                toothPickerGrid.appendChild(button);
+            });
+
+            document.querySelectorAll('.tooth-jaw-filter').forEach((button) => {
+                const isActive = button.dataset.jaw === activeToothJaw;
+                button.classList.toggle('bg-blue-600', isActive);
+                button.classList.toggle('text-white', isActive);
+                button.classList.toggle('border-blue-600', isActive);
+            });
+        };
+
+        const openToothPicker = (input) => {
+            activeToothInput = input;
+            activeToothJaw = 'all';
+            renderToothPicker();
+            toothPicker.classList.remove('hidden');
+        };
+
+        const createTreatmentRow = () => {
+            const row = treatmentList.querySelector('.treatment-row').cloneNode(true);
+            row.querySelector('input[name="ten_danh_muc_ky_thuat[]"]').value = '';
+            row.querySelector('input[name="vi_tri_rang[]"]').value = '';
+            return row;
+        };
+
+        addTreatmentRowButton.addEventListener('click', () => {
+            treatmentList.appendChild(createTreatmentRow());
+        });
+
+        treatmentList.addEventListener('click', (event) => {
+            const toothInput = event.target.closest('.tooth-position-input');
+            if (toothInput) {
+                openToothPicker(toothInput);
+                return;
+            }
+
+            const removeButton = event.target.closest('.remove-treatment-row');
+            if (removeButton) {
+                const row = removeButton.closest('.treatment-row');
+                if (treatmentList.querySelectorAll('.treatment-row').length > 1) {
+                    row.remove();
+                } else {
+                    row.querySelectorAll('input').forEach((input) => input.value = '');
+                }
+            }
+        });
+
+        document.querySelectorAll('input[name="tooth_picker_age"]').forEach((option) => {
+            option.addEventListener('change', renderToothPicker);
+        });
+
+        document.querySelectorAll('.tooth-jaw-filter').forEach((button) => {
+            button.addEventListener('click', () => {
+                activeToothJaw = button.dataset.jaw;
+                renderToothPicker();
+            });
+        });
+
+        closeToothPickerButton.addEventListener('click', () => toothPicker.classList.add('hidden'));
+        toothPicker.addEventListener('click', (event) => {
+            if (event.target === toothPicker) {
+                toothPicker.classList.add('hidden');
+            }
+        });
+
+        document.querySelectorAll('.doctor-combobox').forEach((combo) => {
+            const toggle = combo.querySelector('.doctor-toggle');
+            const selected = combo.querySelector('.doctor-selected');
+            const hiddenInput = combo.querySelector('input[type="hidden"]');
+            const menu = combo.querySelector('.doctor-menu');
+            const searchInput = combo.querySelector('.doctor-search');
+            const options = Array.from(combo.querySelectorAll('.doctor-option'));
+
+            const closeMenu = () => menu.classList.add('hidden');
+            const openMenu = () => {
+                menu.classList.remove('hidden');
+                searchInput.value = '';
+                options.forEach((option) => option.parentElement.classList.remove('hidden'));
+                searchInput.focus();
+            };
+
+            toggle.addEventListener('click', () => {
+                menu.classList.contains('hidden') ? openMenu() : closeMenu();
+            });
+
+            searchInput.addEventListener('input', () => {
+                const keyword = searchInput.value.trim().toLowerCase();
+
+                options.forEach((option) => {
+                    const isMatch = option.dataset.value.toLowerCase().includes(keyword);
+                    option.parentElement.classList.toggle('hidden', !isMatch);
+                });
+            });
+
+            options.forEach((option) => {
+                option.addEventListener('click', () => {
+                    selected.textContent = option.dataset.value;
+                    selected.classList.remove('text-gray-500');
+                    selected.classList.add('text-gray-800');
+                    hiddenInput.value = option.dataset.value;
+                    closeMenu();
+                });
+            });
+
+            document.addEventListener('click', (event) => {
+                if (!combo.contains(event.target)) {
+                    closeMenu();
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
