@@ -46,7 +46,7 @@
     </style>
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans leading-normal p-4 md:p-8">
+<body class="bg-gray-100 text-gray-800 font-sans leading-normal p-4 pb-28 md:p-8 md:pb-28">
 
     <div class="max-w-5xl mx-auto bg-white p-6 md:p-10 shadow-xl rounded-lg border border-gray-200">
 
@@ -740,24 +740,29 @@
             </div>
         </div>
 
-        <div class="no-print mt-10 pt-6 border-t border-gray-200 flex justify-end space-x-3">
-            <button type="button"
-                class="px-5 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg font-medium border border-gray-300 transition text-sm">
-                Cancel
-            </button>
-            <button type="button"
-                class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium shadow-md transition text-sm">
-                Lưu
-            </button>
-            <button type="button" onclick="window.print()"
-                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-md transition text-sm flex items-center">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
-                    </path>
-                </svg>
-                Lưu & In
-            </button>
+        <div class="no-print fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-4 py-3 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] backdrop-blur">
+            <div class="mx-auto flex max-w-5xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <span class="text-sm text-gray-500">lần lưu cuối: 03/06/2026 16:20</span>
+                <div class="flex justify-end space-x-3">
+                    <button type="button"
+                        class="px-5 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-lg font-medium border border-gray-300 transition text-sm">
+                        Cancel
+                    </button>
+                    <button type="button"
+                        class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium shadow-md transition text-sm">
+                        Lưu
+                    </button>
+                    <button type="button" onclick="window.print()"
+                        class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium shadow-md transition text-sm flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z">
+                            </path>
+                        </svg>
+                        Lưu & In
+                    </button>
+                </div>
+            </div>
         </div>
 
     </div>
