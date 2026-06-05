@@ -5,7 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HC-01. Bìa hồ sơ bệnh án</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&subset=vietnamese&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         @media print {
             body {
@@ -235,16 +249,26 @@
         <section class="mb-8">
             <div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr_300px]">
                 <div class="space-y-2 text-base font-medium leading-normal text-gray-800">
+                    <div class="flex items-center space-x-2">
+                        <label for="chi_nhanh" class="font-medium whitespace-nowrap">Chi nhánh:</label>
+                        <select id="chi_nhanh" name="chi_nhanh"
+                            class="flex-1 border border-gray-300 rounded px-2 py-1 text-sm bg-white font-semibold text-blue-900">
+                            <option value="hcm">Nha khoa hồ chí minh</option>
+                            <option value="hanoi">Nha khoa hà nội</option>
+                        </select>
+                    </div>
                     <input type="text" value="Sở Y Tế TP. Hồ Chí Minh"
+                        id="so_y_te"
                         class="w-full border-0 bg-transparent p-0 text-base font-medium leading-normal text-gray-800 focus:shadow-none">
                     <div>Công ty tnhh nha khoa nhân tâm</div>
                     <div>Khoa : Răng hàm mặt</div>
                 </div>
 
-                <div class="flex items-start justify-center pt-4">
+                <div class="flex flex-col items-center justify-start pt-4">
                     <h2 class="text-center text-xl font-bold uppercase tracking-wide text-blue-900">
                         BÌA HỒ SƠ BỆNH ÁN
                     </h2>
+                    <span class="mt-1 text-sm font-medium text-gray-500">lần lưu cuối: 03/06/2026 16:20</span>
                 </div>
 
                 <div class="space-y-2 md:text-right">
@@ -433,11 +457,11 @@
             </div>
             <label>
                 <span class="field-label">Người giao hồ sơ</span>
-                <span class="select-pill"><span>BS. Trần Hữu Quý</span><span class="clear-dot">×</span></span>
+                <input class="control font-semibold text-blue-900" type="text" value="BS. Trần Hữu Quý">
             </label>
             <label>
                 <span class="field-label">Người nhận hồ sơ</span>
-                <span class="select-pill"><span>Lê Văn Lâm</span><span class="clear-dot">×</span></span>
+                <input class="control font-semibold text-blue-900" type="text" value="Lê Văn Lâm">
             </label>
         </section>
 
@@ -459,11 +483,10 @@
 
     <div class="no-print fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-8 py-4 backdrop-blur">
         <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
-            <button type="button" class="h-9 border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-500 hover:bg-cyan-50">
+            <button type="button" class="hidden h-9 border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-500 hover:bg-cyan-50">
                 Cập nhật dữ liệu
             </button>
-            <span class="text-sm text-gray-500">lần lưu cuối: 03/06/2026 16:20</span>
-            <div class="flex justify-end gap-3">
+            <div class="flex justify-end gap-3 ml-auto">
                 <button type="button" class="h-9 min-w-[78px] rounded border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                     Hủy
                 </button>
@@ -478,6 +501,21 @@
     </div>
 
     <script>
+        const branchSelect = document.getElementById('chi_nhanh');
+        const healthDepartment = document.getElementById('so_y_te');
+        const healthDepartmentByBranch = {
+            hcm: 'Sở Y Tế TP. Hồ Chí Minh',
+            hanoi: 'Sở Y Tế TP. Hà Nội',
+        };
+
+        const updateHealthDepartment = () => {
+            if (!branchSelect || !healthDepartment) return;
+            healthDepartment.value = healthDepartmentByBranch[branchSelect.value] || healthDepartmentByBranch.hcm;
+        };
+
+        branchSelect?.addEventListener('change', updateHealthDepartment);
+        updateHealthDepartment();
+
         const formatDateDisplay = (value) => {
             if (!value) return 'Chọn';
             const [year, month, day] = value.split('-');
