@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TD-01. Phiếu theo dõi điều trị</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&subset=vietnamese&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .form-shell {
+                max-width: none;
+                padding: 0;
+            }
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f3f4f6;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input,
+        select,
+        textarea,
+        button,
+        p,
+        span,
+        div,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input,
+        select,
+        textarea {
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.16);
+            outline: none;
+        }
+
+        input[readonly],
+        .readonly {
+            background-color: #f3f6fa;
+            color: #1f2937;
+        }
+
+        .field-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #334155;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .control {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 12px;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        textarea.control {
+            height: auto;
+        }
+
+        .date-control {
+            display: flex;
+            height: 38px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 10px 0 12px;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin: 0 0 12px;
+            color: #1e40af;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .admin-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-label {
+            color: #111827;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Toggle Checkbox */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #3b82f6;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #3b82f6;
+        }
+
+        /* Custom scrollbar for textareas */
+        textarea::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans leading-normal p-4 pb-28 md:p-8 md:pb-28">
+    <main class="form-shell max-w-5xl mx-auto bg-white p-6 md:p-10 shadow-xl rounded-lg border border-gray-200">
+        <div>
+            <!-- Header Section -->
+            <section class="mb-8">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr_300px]">
+                    <div class="space-y-2 text-base font-medium leading-normal text-gray-800">
+                        <div class="flex items-center space-x-2">
+                            <label for="chi_nhanh" class="font-medium whitespace-nowrap">Chi nhánh:</label>
+                            <select id="chi_nhanh" name="chi_nhanh"
+                                class="flex-1 border border-gray-300 rounded px-2 py-1 text-sm bg-white font-semibold text-blue-900 focus:outline-none">
+                                <option value="hcm">Nha khoa hồ chí minh</option>
+                                <option value="hanoi">Nha khoa hà nội</option>
+                            </select>
+                        </div>
+                        <input type="text" value="Sở Y Tế TP. Hồ Chí Minh" id="so_y_te"
+                            class="w-full border-0 bg-transparent p-0 text-base font-medium leading-normal text-gray-800 focus:shadow-none focus:outline-none">
+                        <div>Công ty tnhh nha khoa nhân tâm</div>
+                        <div>Khoa : Răng hàm mặt</div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-start pt-4">
+                        <h2 class="text-center text-xl font-bold uppercase tracking-wide text-gray-900">
+                            PHIẾU THEO DÕI ĐIỀU TRỊ
+                        </h2>
+                        <div class="mt-2 flex items-center justify-center gap-2 text-sm font-medium text-gray-700">
+                            <span>Tờ số:</span>
+                            <input type="text" value="1"
+                                class="w-12 border border-gray-300 rounded px-2 py-1 text-center focus:outline-none focus:border-blue-500" />
+                        </div>
+                        <span class="mt-1 text-sm font-medium text-gray-500">Lần lưu cuối: 03/06/2026 16:02</span>
+                    </div>
+
+                    <div class="space-y-2 md:text-right">
+                        <div class="text-sm font-mono text-gray-600">MS: 36/BV2</div>
+                        <div class="text-sm font-mono text-gray-600">Số vào viện: 260603001</div>
+                        <div class="text-sm font-mono text-gray-600">Mã người bệnh: NT260603001</div>
+                    </div>
+                </div>
+                <div class="mt-10 border-t-2 border-slate-300"></div>
+            </section>
+
+            <!-- General Info Section -->
+            <section class="mb-9">
+                <h2 class="section-title">Thông tin chung</h2>
+                <div class="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-12 mb-8">
+                    <div class="admin-field md:col-span-4">
+                        <span class="admin-label">Họ và tên (In hoa):</span>
+                        <div class="text-sm font-semibold leading-[1.35] text-blue-900 uppercase">NGÔ THU THỦY</div>
+                    </div>
+                    <div class="admin-field md:col-span-4">
+                        <span class="admin-label">Tuổi:</span>
+                        <div class="text-sm font-semibold leading-[1.35] text-blue-900">23</div>
+                    </div>
+                    <div class="md:col-span-4 flex items-center space-x-4">
+                        <span class="admin-label">Giới tính:</span>
+                        <div class="text-sm font-semibold leading-[1.35] text-blue-900">Nữ</div>
+                    </div>
+
+                    <label class="admin-field md:col-span-4">
+                        <span class="admin-label">Phòng:</span>
+                        <select class="control h-8 text-sm font-semibold text-blue-900">
+                            <option selected>Điều trị</option>
+                            <option>Thủ thuật</option>
+                        </select>
+                    </label>
+                    <label class="admin-field md:col-span-4">
+                        <span class="admin-label">Giường:</span>
+                        <input class="control h-8 text-sm font-semibold text-blue-900" type="text" value="không">
+                    </label>
+                    <label class="admin-field md:col-span-4">
+                        <span class="admin-label">Chuẩn đoán:</span>
+                        <input class="control h-8 text-sm font-semibold text-blue-900" type="text" value="Nhổ răng 8">
+                    </label>
+
+                    <label class="admin-field md:col-span-12">
+                        <span class="admin-label">Chuẩn đoán phân biệt:</span>
+                        <input class="control h-8 text-sm font-semibold text-blue-900" type="text" value="Không">
+                    </label>
+                </div>
+            </section>
+
+            <!-- Tracking Info Section -->
+            <section class="mb-9">
+                <h2 class="section-title">Thông tin theo dõi</h2>
+
+                <!-- Accordion 1 (Collapsed) -->
+                <div class="mb-2">
+                    <div class="flex items-center justify-between py-2 border-b border-gray-300 cursor-pointer">
+                        <div class="flex items-center gap-2 font-bold text-gray-800 text-sm">
+                            <svg class="w-4 h-4 transform -rotate-90 text-gray-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            Diễn biến 1
+                        </div>
+                        <button class="text-red-500 text-sm font-medium hover:underline">Xóa</button>
+                    </div>
+                </div>
+
+                <!-- Accordion 2 (Expanded) -->
+                <div class="mb-2">
+                    <div class="flex items-center justify-between py-2 border-b border-gray-400 cursor-pointer">
+                        <div class="flex items-center gap-2 font-bold text-gray-800 text-sm">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            Diễn biến 2
+                        </div>
+                        <button class="text-red-500 text-sm font-medium hover:underline">Xóa</button>
+                    </div>
+
+                    <div class="pt-4 pb-6 space-y-6">
+                        <!-- Entry 1 -->
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-[1fr_1fr_1.5fr] gap-4">
+                                <label>
+                                    <span class="field-label">Ngày đến</span>
+                                    <div class="date-control">
+                                        <input type="text" value="02/06/2026"
+                                            class="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-semibold outline-none text-gray-700">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                </label>
+                                <label>
+                                    <span class="field-label">Giờ đến</span>
+                                    <div class="date-control">
+                                        <input type="text" value="10:20"
+                                            class="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-semibold outline-none text-gray-700">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                </label>
+                                <label>
+                                    <span class="field-label">Chữ ký bác sĩ</span>
+                                    <div class="control flex items-center gap-2">
+                                        <div
+                                            class="w-6 h-6 rounded bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600 flex-shrink-0">
+                                            B</div>
+                                        <select
+                                            class="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-semibold outline-none text-gray-700">
+                                            <option>Bs điều trị B</option>
+                                        </select>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-x-8">
+                                <!-- Left column -->
+                                <div class="space-y-4">
+                                    <div class="relative">
+                                        <span class="field-label text-gray-500">S (Hỏi bệnh)</span>
+                                        <textarea
+                                            class="control min-h-[100px] overflow-hidden py-2 resize-none text-[13px] leading-relaxed text-gray-700 auto-expand">ghi lại các thông tin của người bệnh tự khai như triệu chứng, bệnh sử, bối cảnh xuất hiện bệnh, tiến triển</textarea>
+                                        <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">106 /
+                                            1000</div>
+                                    </div>
+
+                                    <div class="relative mt-6">
+                                        <span class="field-label text-gray-500">O (Kết quả khám)</span>
+                                        <textarea
+                                            class="control min-h-[150px] overflow-hidden py-2 resize-none text-[13px] leading-relaxed text-gray-700 auto-expand">Tỉnh táo tiếp xúc tốt
+Da, niêm mạc hồng
+Mạch: 80 lần/phút
+Nhiệt độ: 37 °C
+Huyết áp: 120/90 mmHg
+Nhịp thở: 20 lần/ph
+Phổi trong, không ran</textarea>
+                                        <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">139 /
+                                            1000</div>
+                                    </div>
+
+                                    <div class="relative mt-6">
+                                        <span class="field-label text-gray-500">A (Đánh giá)</span>
+                                        <textarea
+                                            class="control min-h-[80px] overflow-hidden py-2 resize-none text-[13px] leading-relaxed text-gray-700 auto-expand">Đánh giá, phân tích kết quả và chẩn đoán trên cơ sở thông tin tự khai của người bệnh và kết quả khám bệnh.</textarea>
+                                        <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">107 /
+                                            1000</div>
+                                    </div>
+
+                                    <div class="relative mt-6">
+                                        <span class="field-label text-gray-500">P (Kế hoạch điều trị)</span>
+                                        <textarea
+                                            class="control min-h-[80px] overflow-hidden py-2 resize-none text-[13px] leading-relaxed text-gray-700 auto-expand">tóm tắt tình hình, diễn biến bệnh, đưa ra nhận định, đưa ra hướng xử trí tiếp theo.</textarea>
+                                        <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">84 / 1000
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right column -->
+                                <div class="space-y-4 pt-1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[13px] font-medium text-gray-600">Hỗ trợ bác sĩ ghi phiếu tư
+                                            vấn</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" class="sr-only peer" checked>
+                                            <div
+                                                class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Hướng dẫn bệnh nhân chụp
+                                                phim</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <select class="control text-sm text-gray-400 outline-none bg-gray-50">
+                                            <option>Chọn</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Điều trị</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <select class="control text-sm text-gray-400 outline-none bg-gray-50">
+                                            <option>Chọn</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Cho bệnh nhân súc miệng
+                                                bằng dung dịch</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <select
+                                            class="control text-[13px] font-medium text-gray-700 outline-none bg-white">
+                                            <option>Súc miệng bằng dung dịch - Povidine 10%</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="space-y-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Gây tê tại chỗ
+                                                bằng</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <select class="control text-sm text-gray-400 outline-none bg-gray-50">
+                                            <option>Chọn</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="space-y-1 relative mt-4">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Khác</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <textarea
+                                            class="control min-h-[80px] overflow-hidden py-2 resize-none text-[13px] text-gray-700 bg-white auto-expand">Ghi chú tiến trình điều trị của bác sĩ</textarea>
+                                        <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">38 / 1500
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Entry 2 (gray background) -->
+                        <div class="bg-gray-100 -mx-4 px-4 py-6 md:-mx-6 md:px-6 mt-8">
+                            <div class="space-y-6">
+                                <div class="grid grid-cols-[1fr_1fr_1.5fr] gap-4">
+                                    <label>
+                                        <span class="field-label">Ngày về</span>
+                                        <div class="date-control bg-white">
+                                            <input type="text" value="03/06/2026"
+                                                class="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-semibold outline-none text-gray-700">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                    <label>
+                                        <span class="field-label">Giờ về</span>
+                                        <div class="date-control bg-white">
+                                            <input type="text" value="10:20"
+                                                class="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-semibold outline-none text-gray-700">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        </div>
+                                    </label>
+                                    <label>
+                                        <span class="field-label">Chữ ký bác sĩ</span>
+                                        <div class="control bg-white flex items-center gap-2">
+                                            <div
+                                                class="w-6 h-6 rounded-full bg-cyan-400 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">
+                                                B</div>
+                                            <select
+                                                class="w-full bg-transparent border-0 focus:ring-0 p-0 text-sm font-semibold outline-none text-gray-700">
+                                                <option>Bs điều trị B</option>
+                                            </select>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-x-8">
+                                    <!-- Left column -->
+                                    <div class="space-y-4">
+
+
+                                        <div class="relative mt-6">
+                                            <span class="field-label text-gray-500">O (Kết quả khám)</span>
+                                            <textarea
+                                                class="control bg-white min-h-[150px] overflow-hidden py-2 resize-none text-[13px] leading-relaxed text-gray-700 auto-expand">Tỉnh táo tiếp xúc tốt
+Da, niêm mạc hồng
+Mạch: 80 lần/phút
+Nhiệt độ: 37 °C
+Huyết áp: 120/90 mmHg
+Nhịp thở: 20 lần/ph
+Phổi trong, không ran</textarea>
+                                            <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">139 /
+                                                1000</div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <!-- Right column -->
+                                    <div class="space-y-4 pt-1">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Cho bệnh nhân ra
+                                                về</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Vệ sinh răng miệng theo
+                                                hướng dẫn</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-[13px] font-medium text-gray-600">Bệnh nhân uống thuốc
+                                                theo toa</span>
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div
+                                                    class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="space-y-1 pt-1">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[13px] font-medium text-gray-600">Hẹn cắt chỉ
+                                                    ngày</span>
+                                                <label class="relative inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" class="sr-only peer">
+                                                    <div
+                                                        class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="date-control bg-gray-50">
+                                                <input type="text" value="Chọn thời điểm" readonly
+                                                    class="w-full bg-transparent border-0 focus:ring-0 p-0 text-[13px] font-medium outline-none text-gray-400">
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-y-1">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[13px] font-medium text-gray-600">Hẹn ngày điều trị
+                                                    tiếp theo</span>
+                                                <label class="relative inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" class="sr-only peer">
+                                                    <div
+                                                        class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="date-control bg-gray-50">
+                                                <input type="text" value="Chọn thời điểm" readonly
+                                                    class="w-full bg-transparent border-0 focus:ring-0 p-0 text-[13px] font-medium outline-none text-gray-400">
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2"
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                        <div class="space-y-1 relative mt-4">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[13px] font-medium text-gray-600">Lưu ý thêm (nếu
+                                                    có)</span>
+                                                <label class="relative inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" class="sr-only peer">
+                                                    <div
+                                                        class="w-9 h-5 bg-gray-300 rounded-full peer peer-checked:after:translate-x-full after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-500">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <textarea
+                                                class="control min-h-[80px] overflow-hidden py-2 resize-none text-[13px] text-gray-400 bg-gray-50 auto-expand">Nhập</textarea>
+                                            <div class="absolute bottom-[-18px] right-0 text-[11px] text-gray-400">0 /
+                                                1500</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Accordion 3 (Collapsed) -->
+                <div class="mb-4">
+                    <div class="flex items-center justify-between py-2 border-b border-gray-300 cursor-pointer">
+                        <div class="flex items-center gap-2 font-bold text-gray-800 text-sm">
+                            <svg class="w-4 h-4 transform -rotate-90 text-gray-500" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                            Diễn biến 3
+                        </div>
+                        <button class="text-red-500 text-sm font-medium hover:underline">Xóa</button>
+                    </div>
+                </div>
+
+                <button
+                    class="w-full mt-4 py-2 border border-cyan-400 text-cyan-500 text-sm font-semibold rounded hover:bg-cyan-50 transition">
+                    Thêm diễn biến
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <div
+        class="no-print fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-8 py-4 backdrop-blur shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div class="mx-auto flex max-w-5xl items-center justify-between gap-4">
+            <div class="flex gap-3">
+                <button type="button"
+                    class="h-9 min-w-[78px] rounded border border-red-500 bg-white px-5 text-sm font-semibold text-red-500 hover:bg-red-50 transition">
+                    Xóa
+                </button>
+                <button type="button"
+                    class="h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-500 hover:bg-cyan-50 transition">
+                    Cập nhật dữ liệu
+                </button>
+            </div>
+            <div class="flex justify-end gap-3 ml-auto">
+                <button type="button"
+                    class="h-9 min-w-[78px] rounded border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
+                    Hủy
+                </button>
+                <button type="button"
+                    class="h-9 min-w-[78px] rounded border border-cyan-400 bg-white px-5 text-sm font-semibold text-cyan-500 hover:bg-cyan-50 transition">
+                    Lưu
+                </button>
+                <button type="button" onclick="window.print()"
+                    class="h-9 min-w-[96px] rounded bg-cyan-500 px-5 text-sm font-semibold text-white hover:bg-cyan-600 transition shadow-md shadow-cyan-500/20">
+                    Lưu và in
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Branch to Health Department logic (similar to hc01_new.html)
+        const branchSelect = document.getElementById('chi_nhanh');
+        const healthDepartment = document.getElementById('so_y_te');
+        const healthDepartmentByBranch = {
+            hcm: 'Sở Y Tế TP. Hồ Chí Minh',
+            hanoi: 'Sở Y Tế TP. Hà Nội',
+        };
+
+        const updateHealthDepartment = () => {
+            if (!branchSelect || !healthDepartment) return;
+            healthDepartment.value = healthDepartmentByBranch[branchSelect.value] || healthDepartmentByBranch.hcm;
+        };
+
+        branchSelect?.addEventListener('change', updateHealthDepartment);
+        updateHealthDepartment();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textareas = document.querySelectorAll('textarea.auto-expand');
+            textareas.forEach(textarea => {
+                const adjustHeight = () => {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = textarea.scrollHeight + 'px';
+                };
+                textarea.addEventListener('input', adjustHeight);
+                setTimeout(adjustHeight, 0);
+            });
+        });
+    </script>
+</body>
+
+</html>
