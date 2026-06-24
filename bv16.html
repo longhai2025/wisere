@@ -5,8 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BỆNH ÁN NGOẠI TRÚ CHUYÊN KHOA RĂNG HÀM MẶT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        body {
+            font-family: "Roboto", sans-serif;
+        }
+
         @media print {
             body {
                 background: #fff;
@@ -44,6 +53,19 @@
             color: #1e3a8a !important;
         }
 
+        .medical-sketch-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+        }
+
+        .medical-sketch svg {
+            width: 100%;
+            height: auto;
+            stroke: #111827;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
 
     </style>
 </head>
@@ -66,10 +88,10 @@
                     <span id="so_y_te" class="font-medium min-w-[80px]">Sở Y Tế TP. Hồ Chí Minh</span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <span class="font-medium min-w-[80px]">Công ty tnhh nha khoa nhân tâm</span>
+                    <span class="font-medium min-w-[80px]">Công ty TNHH Nha khoa Nhân Tâm</span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <span class="font-medium min-w-[80px]">Khoa : Răng hàm mặt</span>
+                    <span class="font-medium min-w-[80px]">Khoa: Răng hàm mặt</span>
 
                 </div>
             </div>
@@ -126,6 +148,10 @@
                         <label class="inline-flex items-center text-sm cursor-pointer">
                             <input type="radio" name="gioi_tinh" class="form-radio text-blue-600" checked disabled>
                             <span class="ml-1.5 font-semibold text-blue-900">2. Nữ</span>
+                        </label>
+                        <label class="inline-flex items-center text-sm cursor-pointer">
+                            <input type="radio" name="gioi_tinh" class="form-radio text-blue-600" disabled>
+                            <span class="ml-1.5">3. Khác</span>
                         </label>
                     </div>
 
@@ -271,9 +297,9 @@
             <div class="space-y-3">
                 <div>
 
-                    <div class="w-full text-sm font-semibold leading-[1.35] text-blue-900"> - Quá trình bệnh lý: Bênh
-                        nhân thăm khám định kỷ
-                        theo hướng dẫn/lịch hẹn của bác sĩ trước đó (34); Khác (Diễn biến lâm sàn khác)</div>
+                    <div class="w-full text-sm font-semibold leading-[1.35] text-blue-900"> - Quá trình bệnh lý: Bệnh
+                        nhân thăm khám định kỳ
+                        theo hướng dẫn/lịch hẹn của bác sĩ trước đó (34); Khác (Diễn biến lâm sàng khác)</div>
                 </div>
                 <div>
                     <span class="block font-medium text-sm text-gray-600 mb-1">- Tiền sử bản thân: Không</span>
@@ -341,8 +367,94 @@
                 </div>
                 <div>
                     <label class="block font-medium text-sm text-gray-700 mb-1">3. Hình vẽ mô tả tổn thương khi vào viện:</label>
-                    <div class="mb-4 bg-gray-50 p-4 rounded-xl border border-gray-200 overflow-hidden flex justify-center">
-                        <img src="rang.png" alt="Mô tả tổn thương bộ răng" class="max-w-full h-auto mx-auto" />
+                    <div class="medical-sketch mb-4 rounded-xl border border-gray-200 bg-slate-50 p-4">
+                        <div class="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+                            <div class="medical-sketch-card rounded-lg border border-gray-200 p-3">
+                                <svg viewBox="0 0 160 140" aria-label="Mặt nghiêng trái">
+                                    <path d="M42 124C38 95 42 62 58 34C68 17 84 12 98 16C112 20 125 33 130 48C135 63 131 74 130 83C128 96 123 104 114 109C107 112 101 117 96 123" />
+                                    <path d="M103 39C99 48 100 59 95 66C91 73 82 77 79 85C76 93 78 102 75 108" />
+                                    <path d="M108 74C114 72 121 74 126 78" />
+                                    <path d="M105 84C111 86 117 86 122 84" />
+                                    <path d="M86 113C91 115 95 118 98 123" />
+                                    <path d="M65 77C63 83 64 89 68 93" />
+                                </svg>
+                            </div>
+                            <div class="medical-sketch-card rounded-lg border border-gray-200 p-3">
+                                <svg viewBox="0 0 160 140" aria-label="Mặt chính diện">
+                                    <path d="M44 33C46 18 61 11 80 11C99 11 114 18 116 33C121 61 120 97 109 117C101 131 91 136 80 136C69 136 59 131 51 117C40 97 39 61 44 33Z" />
+                                    <path d="M57 34C64 41 75 43 80 41C85 43 96 41 103 34" />
+                                    <path d="M60 57C64 54 70 54 74 57" />
+                                    <path d="M86 57C90 54 96 54 100 57" />
+                                    <path d="M60 61C65 64 70 64 74 61" />
+                                    <path d="M86 61C91 64 96 64 100 61" />
+                                    <path d="M79 63C78 72 77 80 80 88" />
+                                    <path d="M70 98C77 96 83 96 90 98" />
+                                    <path d="M65 107C75 112 85 112 95 107" />
+                                    <path d="M47 84C42 85 38 88 36 93" />
+                                    <path d="M113 84C118 85 122 88 124 93" />
+                                </svg>
+                            </div>
+                            <div class="medical-sketch-card rounded-lg border border-gray-200 p-3">
+                                <svg viewBox="0 0 160 140" aria-label="Mặt nghiêng phải">
+                                    <path d="M118 124C122 95 118 62 102 34C92 17 76 12 62 16C48 20 35 33 30 48C25 63 29 74 30 83C32 96 37 104 46 109C53 112 59 117 64 123" />
+                                    <path d="M57 39C61 48 60 59 65 66C69 73 78 77 81 85C84 93 82 102 85 108" />
+                                    <path d="M52 74C46 72 39 74 34 78" />
+                                    <path d="M55 84C49 86 43 86 38 84" />
+                                    <path d="M74 113C69 115 65 118 62 123" />
+                                    <path d="M95 77C97 83 96 89 92 93" />
+                                </svg>
+                            </div>
+                            <div class="medical-sketch-card rounded-lg border border-gray-200 p-3">
+                                <svg viewBox="0 0 160 140" aria-label="Cung răng">
+                                    <path d="M26 92C35 40 60 20 80 20C100 20 125 40 134 92" />
+                                    <path d="M44 102C52 118 63 128 80 132C97 128 108 118 116 102" />
+                                    <path d="M44 64C48 52 59 42 70 39C76 37 84 37 90 39C101 42 112 52 116 64" />
+                                    <path d="M41 63C34 54 31 43 31 31C31 24 37 19 43 22C49 25 52 35 49 42C46 49 41 55 41 63Z" />
+                                    <path d="M119 63C126 54 129 43 129 31C129 24 123 19 117 22C111 25 108 35 111 42C114 49 119 55 119 63Z" />
+                                    <path d="M52 43C50 47 50 52 53 55" />
+                                    <path d="M62 36C60 42 61 48 65 52" />
+                                    <path d="M73 33C72 39 73 45 77 49" />
+                                    <path d="M84 33C85 39 84 45 80 49" />
+                                    <path d="M95 36C97 42 96 48 92 52" />
+                                    <path d="M106 43C108 47 108 52 105 55" />
+                                </svg>
+                            </div>
+                            <div class="medical-sketch-card rounded-lg border border-gray-200 p-3">
+                                <svg viewBox="0 0 160 140" aria-label="Xương hàm dưới">
+                                    <path d="M50 20C43 34 47 53 53 68C57 79 57 95 62 108C67 121 75 130 80 130C85 130 93 121 98 108C103 95 103 79 107 68C113 53 117 34 110 20" />
+                                    <path d="M63 90C69 98 74 102 80 104C86 102 91 98 97 90" />
+                                    <path d="M57 53C61 48 64 43 64 37" />
+                                    <path d="M103 53C99 48 96 43 96 37" />
+                                </svg>
+                            </div>
+                            <div class="medical-sketch-card rounded-lg border border-gray-200 p-3">
+                                <svg viewBox="0 0 160 140" aria-label="Phân vùng tổn thương">
+                                    <text x="36" y="20" fill="#111827" font-size="18" font-weight="500">P</text>
+                                    <text x="117" y="20" fill="#111827" font-size="18" font-weight="500">T</text>
+                                    <path d="M48 25H112L106 72H54Z" />
+                                    <path d="M64 25V72" />
+                                    <path d="M96 25V72" />
+                                    <path d="M48 41H112" />
+                                    <path d="M54 56C65 69 76 77 80 77C84 77 95 69 106 56" />
+                                    <path d="M72 72V132" />
+                                    <path d="M88 72V132" />
+                                    <path d="M72 92H88" />
+                                    <path d="M72 112H88" />
+                                    <text x="58" y="38" fill="#111827" font-size="14">1</text>
+                                    <text x="86" y="38" fill="#111827" font-size="14">4</text>
+                                    <text x="60" y="56" fill="#111827" font-size="14">2</text>
+                                    <text x="91" y="56" fill="#111827" font-size="14">5</text>
+                                    <text x="74" y="70" fill="#111827" font-size="14">3</text>
+                                    <text x="85" y="70" fill="#111827" font-size="14">6</text>
+                                    <text x="77" y="89" fill="#111827" font-size="14">7</text>
+                                    <text x="77" y="109" fill="#111827" font-size="14">8</text>
+                                    <text x="77" y="129" fill="#111827" font-size="14">9</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4 overflow-hidden rounded-xl border border-gray-200 bg-gray-50 p-4">
+                        <img src="rang.png" alt="Sơ đồ răng mô tả tổn thương" class="mx-auto h-auto max-w-full" />
                     </div>
                     <textarea id="mo_ta_ton_thuong" name="mo_ta_ton_thuong" rows="4" class="hidden w-full border border-gray-300 rounded p-2 text-sm"
                         placeholder="Mô tả tổn thương..."></textarea>
@@ -396,8 +508,8 @@ Biến chứng (nếu có): test biến chứng (18); biến chứng thúi răng
                         <label class="block font-medium text-sm text-gray-700 mb-1">Quá trình bệnh lý và diễn biến lâm
                             sàng:</label>
                         <div class="w-full text-sm font-semibold leading-[1.35] text-blue-900 space-y-1">
-                            <div>- Quá trình bệnh lý: Bênh nhân thăm khám định kỷ theo hướng dẫn/lịch hẹn của bác sĩ
-                                trước đó (34); Khác (Diễn biến lâm sàn khác)</div>
+                        <div>- Quá trình bệnh lý: Bệnh nhân thăm khám định kỳ theo hướng dẫn/lịch hẹn của bác sĩ
+                                trước đó (34); Khác (Diễn biến lâm sàng khác)</div>
                             <div>- Tiền sử bản thân: Không</div>
                         </div>
                     </div>
@@ -586,7 +698,7 @@ Biến chứng (nếu có): test biến chứng (18); biến chứng thúi răng
                     </div>
 
                     <div class="border-t border-gray-200 pt-2">
-                        <span class="font-semibold block text-gray-700 mb-1">Bác sỹ điều trị:</span>
+                        <span class="font-semibold block text-gray-700 mb-1">Bác sĩ điều trị:</span>
                         <div class="space-y-2">
                             <div class="flex items-center space-x-2">
                                 <span class="text-xs text-gray-500 w-16">Họ tên:</span>
@@ -699,7 +811,7 @@ Biến chứng (nếu có): test biến chứng (18); biến chứng thúi răng
                 </div>
             </div>
 
-            <!-- Cột phải: Bác sỹ khám bệnh -->
+            <!-- Cột phải: Bác sĩ khám bệnh -->
             <div class="space-y-16">
                 <div>
                     <div class="flex justify-center items-center space-x-1 text-xs text-gray-600 italic mb-1">
@@ -713,7 +825,7 @@ Biến chứng (nếu có): test biến chứng (18); biến chứng thúi răng
                         <input type="text" value="2026"
                             class="w-10 border-b border-dashed border-gray-400 bg-transparent text-center focus:outline-none focus:border-blue-500">
                     </div>
-                    <h4 class="font-bold text-gray-800 uppercase tracking-wide">BÁC SỸ KHÁM BỆNH</h4>
+                    <h4 class="font-bold text-gray-800 uppercase tracking-wide">BÁC SĨ KHÁM BỆNH</h4>
                     <span class="text-xs text-gray-400 italic">(Ký và ghi rõ họ tên)</span>
                 </div>
                 <div class="max-w-xs mx-auto">
@@ -1038,14 +1150,7 @@ Biến chứng (nếu có): test biến chứng (18); biến chứng thúi răng
                     closeMenu();
                 }
             });
-        });
 
-
-            document.addEventListener('click', (event) => {
-                if (!combo.contains(event.target)) {
-                    closeMenu();
-                }
-            });
         });
     </script>
 
