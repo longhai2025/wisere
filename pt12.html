@@ -180,6 +180,42 @@
             gap: 8px;
         }
 
+        /* Editable fields use one consistent layout: label above, control below. */
+        .stacked-field,
+        .diagram-fields .admin-field,
+        .completion-fields .admin-field {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 7px;
+            min-width: 0;
+        }
+
+        .stacked-field .admin-label,
+        .diagram-fields .admin-label,
+        .completion-fields .admin-label {
+            min-height: 17px;
+            white-space: normal;
+        }
+
+        .stacked-field .control,
+        .stacked-field .admin-datetime,
+        .diagram-fields .control,
+        .diagram-fields .admin-datetime,
+        .completion-fields .control,
+        .completion-fields .admin-datetime {
+            width: 100%;
+            flex: none;
+        }
+
+        .stacked-field textarea.control {
+            height: auto;
+            min-height: 92px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            line-height: 1.5;
+        }
+
         .admin-label {
             color: #111827;
             font-size: 14px;
@@ -334,15 +370,15 @@
                     <span class="admin-label">Địa chỉ:</span>
                     <div class="text-sm font-semibold leading-[1.35] text-blue-900">Số 99/23/34E Nguyễn Thị Minh Khai, Phường 14, Quận Bình Chánh, Thành phố Hồ Chí Minh</div>
                 </div>
-                <div class="admin-field md:col-span-4">
+                <div class="admin-field stacked-field md:col-span-4">
                     <span class="admin-label">Ngày vào viện:</span>
-                    <input class="admin-datetime" type="datetime-local" name="ngay_vao_vien" value="2024-08-16T08:00">
+                    <input class="admin-datetime" style="background-color: #fff;" type="datetime-local" name="ngay_vao_vien" value="2024-08-16T08:00">
                 </div>
-                <div class="admin-field md:col-span-4">
+                <div class="admin-field stacked-field md:col-span-4">
                     <span class="admin-label">Ngày phẫu thuật:</span>
-                    <input class="admin-datetime" type="datetime-local" name="ngay_phau_thuat" value="2024-08-16T08:00">
+                    <input class="admin-datetime" style="background-color: #fff;" type="datetime-local" name="ngay_phau_thuat" value="2024-08-16T08:00">
                 </div>
-                <label class="admin-field md:col-span-4">
+                <label class="admin-field stacked-field md:col-span-4">
                     <span class="admin-label">Loại phẫu thuật:</span>
                     <select class="control h-8 text-sm font-semibold text-blue-900">
                         <option selected>Loại 1</option>
@@ -350,23 +386,23 @@
                         <option>Loại 3</option>
                     </select>
                 </label>
-                <label class="admin-field md:col-span-12">
-                    <span class="admin-label">Chuẩn đoán trước phẩu thuật:</span>
+                <label class="admin-field stacked-field md:col-span-12">
+                    <span class="admin-label">Chẩn đoán trước phẫu thuật:</span>
                     <textarea class="control min-h-20 flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="3">Sâu ngà răng - K02.1 - (42), Sâu ngà răng - K02.1 - (41), Hoại tử tuỷ răng - K04.1 - (28), Răng đốm màu - K00.3 - (25, 26), Răng đốm màu - K00.3 - (22, 23), Rối loạn tạo răng - K00.4 - (34), Răng đốm màu - K00.3 - (44)</textarea>
                 </label>
-                <label class="admin-field md:col-span-12">
-                    <span class="admin-label">Chuẩn đoán sau phẩu thuật:</span>
+                <label class="admin-field stacked-field md:col-span-12">
+                    <span class="admin-label">Chẩn đoán sau phẫu thuật:</span>
                     <textarea class="control min-h-20 flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="3">Sâu ngà răng - K02.1 - (42), Sâu ngà răng - K02.1 - (41), Hoại tử tuỷ răng - K04.1 - (28), Răng đốm màu - K00.3 - (25, 26), Răng đốm màu - K00.3 - (22, 23), Rối loạn tạo răng - K00.4 - (34), Răng đốm màu - K00.3 - (44)</textarea>
                 </label>
-                <label class="admin-field md:col-span-12">
-                    <span class="admin-label">Phương pháp phẩu thuật:</span>
+                <label class="admin-field stacked-field md:col-span-4">
+                    <span class="admin-label">Phương pháp phẫu thuật:</span>
                     <select class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900">
                         <option selected>Phương pháp 1</option>
                         <option>Phương pháp 2</option>
                         <option>Phương pháp 3</option>
                     </select>
                 </label>
-                <label class="admin-field md:col-span-6">
+                <label class="admin-field stacked-field md:col-span-4">
                     <span class="admin-label">Bác sĩ phẫu thuật/thủ thuật:</span>
                     <select class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900">
                         <option selected>Không</option>
@@ -374,7 +410,7 @@
                         <option>Bác sĩ 2</option>
                     </select>
                 </label>
-                <label class="admin-field md:col-span-6">
+                <label class="admin-field stacked-field md:col-span-4">
                     <span class="admin-label">Bác sĩ gây mê hồi sức:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" value="Không">
                 </label>
@@ -386,7 +422,7 @@
 
             <h3 class="sub-title">Lược đồ phẫu thuật / thủ thuật</h3>
             <div class="diagram-fields mb-6 grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-2">
-                <label class="admin-field md:col-span-2">
+                <label class="admin-field">
                     <span class="admin-label">Phương pháp hướng dẫn phẫu thuật:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phuong-phap-huong-dan" placeholder="Chọn 1">
                     <datalist id="phuong-phap-huong-dan">
@@ -396,7 +432,7 @@
                         <option value="Yake Bot">
                     </datalist>
                 </label>
-                <label class="admin-field md:col-span-2">
+                <label class="admin-field">
                     <span class="admin-label">Thời điểm cấy ghép:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="thoi-diem-cay-ghep" placeholder="Chọn 1">
                     <datalist id="thoi-diem-cay-ghep">
@@ -405,7 +441,7 @@
                         <option value="Trì hoãn">
                     </datalist>
                 </label>
-                <label class="admin-field md:col-span-2">
+                <label class="admin-field">
                     <span class="admin-label">Phẫu thuật:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phau-thuat" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
                     <datalist id="phau-thuat">
@@ -414,7 +450,7 @@
                         <option value="Phẫu thuật cấy ghép implant">
                     </datalist>
                 </label>
-                <label class="admin-field md:col-span-2">
+                <label class="admin-field">
                     <span class="admin-label">Phẫu thuật tái tạo xương sống hàm / ổ răng:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="tai-tao-xuong" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
                     <datalist id="tai-tao-xuong">
@@ -425,7 +461,7 @@
                         <option value="Vật liệu hỗn hợp: Boss">
                     </datalist>
                 </label>
-                <label class="admin-field md:col-span-2">
+                <label class="admin-field">
                     <span class="admin-label">Đặt màng sinh học:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="mang-sinh-hoc" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
                     <datalist id="mang-sinh-hoc">
@@ -434,7 +470,7 @@
                         <option value="OsteoBiol">
                     </datalist>
                 </label>
-                <label class="admin-field md:col-span-2">
+                <label class="admin-field">
                     <span class="admin-label">Khâu chỉ:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="khau-chi" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
                     <datalist id="khau-chi">
@@ -454,11 +490,11 @@
                 </label>
                 <label class="admin-field">
                     <span class="admin-label">Ngày rút:</span>
-                    <input class="admin-datetime flex-1 min-w-0" type="datetime-local">
+                    <input class="admin-datetime flex-1 min-w-0" style="background-color: #fff;" type="datetime-local">
                 </label>
                 <label class="admin-field">
                     <span class="admin-label">Ngày cắt chỉ:</span>
-                    <input class="admin-datetime flex-1 min-w-0" type="datetime-local">
+                    <input class="admin-datetime flex-1 min-w-0" style="background-color: #fff;" type="datetime-local">
                 </label>
                 <label class="admin-field md:col-span-2">
                     <span class="admin-label">Khác:</span>
@@ -560,8 +596,8 @@
             <button type="button" id="add-implant-row" class="mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50">
                 + Thêm dòng
             </button>
-            <div class="mt-6 flex flex-col items-end gap-3">
-                <label class="admin-field w-full justify-end md:w-1/2">
+            <div class="completion-fields mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                <label class="admin-field w-full">
                     <span class="admin-label">Phẫu thuật / thủ thuật viên:</span>
                     <select class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900">
                         <option selected disabled>Chọn phẫu thuật / thủ thuật viên</option>
@@ -570,9 +606,9 @@
                         <option>Bác sĩ 2</option>
                     </select>
                 </label>
-                <label class="admin-field w-full justify-end md:w-1/2">
+                <label class="admin-field w-full">
                     <span class="admin-label">Kết thúc phẫu thuật lúc:</span>
-                    <input class="admin-datetime flex-1 min-w-0" type="datetime-local" name="ket_thuc_phau_thuat">
+                    <input class="admin-datetime flex-1 min-w-0" style="background-color: #fff;" type="datetime-local" name="ket_thuc_phau_thuat">
                 </label>
             </div>
         </section>
