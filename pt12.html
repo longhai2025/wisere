@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HC-01. Bìa hồ sơ bệnh án</title>
+    <title>PT12: PHIẾU PHẨU THUẬT / THỦ THUẬT</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&subset=vietnamese&display=swap" rel="stylesheet">
@@ -40,6 +40,7 @@
         body {
             min-height: 100vh;
             background: #f3f4f6;
+            font-family: 'Roboto', sans-serif;
         }
 
         input,
@@ -349,21 +350,13 @@
                         <option>Loại 3</option>
                     </select>
                 </label>
-                <label class="admin-field md:col-span-6">
+                <label class="admin-field md:col-span-12">
                     <span class="admin-label">Chuẩn đoán trước phẩu thuật:</span>
-                    <select class="control h-8 text-sm font-semibold text-blue-900">
-                        <option selected>Chuẩn đoán 1</option>
-                        <option>Chuẩn đoán 2</option>
-                        <option>Chuẩn đoán 3</option>
-                    </select>
+                    <textarea class="control min-h-20 flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="3">Sâu ngà răng - K02.1 - (42), Sâu ngà răng - K02.1 - (41), Hoại tử tuỷ răng - K04.1 - (28), Răng đốm màu - K00.3 - (25, 26), Răng đốm màu - K00.3 - (22, 23), Rối loạn tạo răng - K00.4 - (34), Răng đốm màu - K00.3 - (44)</textarea>
                 </label>
-                <label class="admin-field md:col-span-6">
+                <label class="admin-field md:col-span-12">
                     <span class="admin-label">Chuẩn đoán sau phẩu thuật:</span>
-                    <select class="control h-8 text-sm font-semibold text-blue-900">
-                        <option selected>Chuẩn đoán 1</option>
-                        <option>Chuẩn đoán 2</option>
-                        <option>Chuẩn đoán 3</option>
-                    </select>
+                    <textarea class="control min-h-20 flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="3">Sâu ngà răng - K02.1 - (42), Sâu ngà răng - K02.1 - (41), Hoại tử tuỷ răng - K04.1 - (28), Răng đốm màu - K00.3 - (25, 26), Răng đốm màu - K00.3 - (22, 23), Rối loạn tạo răng - K00.4 - (34), Răng đốm màu - K00.3 - (44)</textarea>
                 </label>
                 <label class="admin-field md:col-span-12">
                     <span class="admin-label">Phương pháp phẩu thuật:</span>
@@ -472,22 +465,22 @@
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text">
                 </label>
                 <label class="check-row procedure-check md:col-span-2">
-                    <input type="checkbox">Người bệnh được đánh răng, súc miệng bằng Chlorhexidine (thường nồng độ 0.12% - 0.2%)
+                    <input type="checkbox" checked>Người bệnh được đánh răng, súc miệng bằng Chlorhexidine (thường nồng độ 0.12% - 0.2%)
                 </label>
                 <label class="check-row procedure-check md:col-span-2">
-                    <input type="checkbox">Người bệnh nằm ngửa trên ghế nha khoa
+                    <input type="checkbox" checked>Người bệnh nằm ngửa trên ghế nha khoa
                 </label>
                 <label class="check-row procedure-check md:col-span-2">
-                    <input type="checkbox">Sát trùng tại chỗ bằng Povidine
+                    <input type="checkbox" checked>Sát trùng tại chỗ bằng Povidine
                 </label>
                 <label class="check-row procedure-check md:col-span-2">
-                    <input type="checkbox">Người bệnh được gây tê tại chỗ
+                    <input type="checkbox" checked>Người bệnh được gây tê tại chỗ
                 </label>
                 <label class="check-row procedure-check md:col-span-2">
-                    <input type="checkbox">Rạch nướu và bóc tách nướu bộc lộ vùng phẫu thuật
+                    <input type="checkbox" checked>Rạch nướu và bóc tách nướu bộc lộ vùng phẫu thuật
                 </label>
                 <label class="check-row procedure-complete md:col-span-2">
-                    <input type="checkbox">Hoàn tất ca thủ thuật. Kiểm tra vật tư đủ.
+                    <input type="checkbox" checked>Hoàn tất ca thủ thuật. Kiểm tra vật tư đủ.
                 </label>
             </div>
 
@@ -496,41 +489,47 @@
                 <table class="w-full border-collapse border border-slate-700 text-sm">
                     <thead>
                         <tr class="bg-slate-100 text-center font-bold text-gray-900">
-                            <th class="border border-slate-700 px-2 py-2">TT</th>
+                            <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
                             <th class="border border-slate-700 px-2 py-2">Loại cấy ghép</th>
                             <th class="border border-slate-700 px-2 py-2">Số lượng</th>
-                            <th class="border border-slate-700 px-2 py-2">Kích thước</th>
                             <th class="border border-slate-700 px-2 py-2">Hãng</th>
+                            <th class="border border-slate-700 px-2 py-2">Kích thước</th>
                             <th class="border border-slate-700 px-2 py-2">Ghi chú</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="border border-slate-700 px-2 py-2 text-center">1</td>
+                            <td class="border border-slate-700 px-2 py-2 text-center">
+                                <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                    </svg>
+                                </button>
+                            </td>
                             <td class="border border-slate-700 p-1">
-                                <select class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
-                                    <option selected disabled>Chọn loại cấy ghép</option>
-                                    <option>Link P trong TD-01 (Theo đúng dm kỹ thuật)</option>
-                                    <option>Loại cấy ghép khác</option>
-                                </select>
+                                <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập loại cấy ghép">
                             </td>
                             <td class="border border-slate-700 p-1">
                                 <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="number" min="0">
                             </td>
                             <td class="border border-slate-700 p-1">
-                                <select class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
-                                    <option selected disabled>Chọn kích thước</option>
-                                    <option>Kích thước 1</option>
-                                    <option>Kích thước 2</option>
-                                    <option>Kích thước 3</option>
+                                <select class="implant-brand h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                    <option selected disabled>Chọn hãng</option>
+                                    <option value="DiO - Hàn Quốc">DiO - Hàn Quốc</option>
+                                    <option value="Anthogyr - Pháp">Anthogyr - Pháp</option>
+                                    <option value="Nobel Active - Mỹ">Nobel Active - Mỹ</option>
+                                    <option value="Nobel Active TiUltra - Mỹ">Nobel Active TiUltra - Mỹ</option>
+                                    <option value="NobelParallel - Mỹ">NobelParallel - Mỹ</option>
+                                    <option value="NobelParallel TiUltra - Mỹ">NobelParallel TiUltra - Mỹ</option>
+                                    <option value="Straumann BLT - Thuỵ Sỹ">Straumann BLT - Thuỵ Sỹ</option>
+                                    <option value="Straumann BLX - Thuỵ Sỹ">Straumann BLX - Thuỵ Sỹ</option>
+                                    <option value="AnyRidge Megagen - Hàn Quốc">AnyRidge Megagen - Hàn Quốc</option>
+                                    <option value="Zygoma Implant">Zygoma Implant</option>
                                 </select>
                             </td>
                             <td class="border border-slate-700 p-1">
-                                <select class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
-                                    <option selected disabled>Chọn hãng</option>
-                                    <option>Hãng 1</option>
-                                    <option>Hãng 2</option>
-                                    <option>Hãng 3</option>
+                                <select class="implant-size h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" disabled>
+                                    <option selected value="">Chọn hãng trước</option>
                                 </select>
                             </td>
                             <td class="border border-slate-700 p-1">
@@ -538,15 +537,25 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="border border-slate-700 px-2 py-3 text-center">2</td>
-                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
+                            <td class="border border-slate-700 px-2 py-3 text-center">
+                                <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                    </svg>
+                                </button>
+                            </td>
+                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập"></td>
                             <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="number" min="0"></td>
-                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
-                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
+                            <td class="border border-slate-700 p-1"><select class="implant-brand h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0"></select></td>
+                            <td class="border border-slate-700 p-1"><select class="implant-size h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" disabled><option value="">Chọn hãng trước</option></select></td>
                             <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
                         </tr>
                     </tbody>
                 </table>
+                <datalist id="implant-type-options">
+                    <option value="Link P trong TD-01 (Theo đúng dm kỹ thuật)">
+                    <option value="Loại cấy ghép khác">
+                </datalist>
             </div>
             <button type="button" id="add-implant-row" class="mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50">
                 + Thêm dòng
@@ -628,20 +637,60 @@
 
         const implantTableBody = document.querySelector('table tbody');
         const addImplantRowButton = document.getElementById('add-implant-row');
-        let implantRowNumber = implantTableBody?.rows.length || 0;
+
+        const deleteRowButtonHtml = `
+            <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                </svg>
+            </button>
+        `;
+
+        const implantSizeData = {"DiO - Hàn Quốc":["3.0 x 6","3.0 x 7","3.0 x 8.5","3.0 x 10","3.0 x 11.5","3.0 x 13","3.0 x 15","3.0 x 16","3.0 x 18","3.3 x 6","3.3 x 7","3.3 x 8.5","3.3 x 10","3.3 x 11.5","3.3 x 13","3.3 x 15","3.3 x 16","3.3 x 18","3.8 x 6","3.8 x 7","3.8 x 8.5","3.8 x 10","3.8 x 11.5","3.8 x 13","3.8 x 15","3.8 x 16","3.8 x 18","4.0 x 6","4.0 x 7","4.0 x 8.5","4.0 x 10","4.0 x 11.5","4.0 x 13","4.0 x 15","4.0 x 16","4.0 x 18","4.5 x 6","4.5 x 7","4.5 x 8.5","4.5 x 10","4.5 x 11.5","4.5 x 13","4.5 x 15","4.5 x 16","4.5 x 18","5.0 x 6","5.0 x 7","5.0 x 8.5","5.0 x 10","5.0 x 11.5","5.0 x 13","5.0 x 15","5.0 x 16","5.0 x 18","5.5 x 6","5.5 x 7","5.5 x 8.5","5.5 x 10","5.5 x 11.5","5.5 x 13","5.5 x 15","5.5 x 16","5.5 x 18","5.9/6.0 x 6","5.9/6.0 x 7","5.9/6.0 x 8.5","5.9/6.0 x 10","5.9/6.0 x 11.5","5.9/6.0 x 13","5.9/6.0 x 15","5.9/6.0 x 16","5.9/6.0 x 18"],"Anthogyr - Pháp":["3.4 x 6.5","3.4 x 8","3.4 x 10","3.4 x 12","3.4 x 14","3.4 x 16","3.4 x 18","4.0 x 6.5","4.0 x 8","4.0 x 10","4.0 x 12","4.0 x 14","4.0 x 16","4.0 x 18","4.6 x 6.5","4.6 x 8","4.6 x 10","4.6 x 12","4.6 x 14","4.6 x 16","4.6 x 18","5.2 x 6.5","5.2 x 8","5.2 x 10","5.2 x 12","5.2 x 14","5.2 x 16","5.2 x 18"],"Nobel Active - Mỹ":["3.0 x 6","3.0 x 7","3.0 x 8.5","3.0 x 10","3.0 x 11.5","3.0 x 13","3.0 x 15","3.0 x 18","3.5 x 6","3.5 x 7","3.5 x 8.5","3.5 x 10","3.5 x 11.5","3.5 x 13","3.5 x 15","3.5 x 18","4.3 x 6","4.3 x 7","4.3 x 8.5","4.3 x 10","4.3 x 11.5","4.3 x 13","4.3 x 15","4.3 x 18","5.0 x 6","5.0 x 7","5.0 x 8.5","5.0 x 10","5.0 x 11.5","5.0 x 13","5.0 x 15","5.0 x 18","5.5 x 6","5.5 x 7","5.5 x 8.5","5.5 x 10","5.5 x 11.5","5.5 x 13","5.5 x 15","5.5 x 18"],"Nobel Active TiUltra - Mỹ":["3.0 x 6","3.0 x 7","3.0 x 8.5","3.0 x 10","3.0 x 11.5","3.0 x 13","3.0 x 15","3.0 x 18","3.5 x 6","3.5 x 7","3.5 x 8.5","3.5 x 10","3.5 x 11.5","3.5 x 13","3.5 x 15","3.5 x 18","4.3 x 6","4.3 x 7","4.3 x 8.5","4.3 x 10","4.3 x 11.5","4.3 x 13","4.3 x 15","4.3 x 18","5.0 x 6","5.0 x 7","5.0 x 8.5","5.0 x 10","5.0 x 11.5","5.0 x 13","5.0 x 15","5.0 x 18","5.5 x 6","5.5 x 7","5.5 x 8.5","5.5 x 10","5.5 x 11.5","5.5 x 13","5.5 x 15","5.5 x 18"],"NobelParallel - Mỹ":["3.0 x 6","3.0 x 7","3.0 x 8.5","3.0 x 10","3.0 x 11.5","3.0 x 13","3.0 x 15","3.0 x 18","3.5 x 6","3.5 x 7","3.5 x 8.5","3.5 x 10","3.5 x 11.5","3.5 x 13","3.5 x 15","3.5 x 18","4.3 x 6","4.3 x 7","4.3 x 8.5","4.3 x 10","4.3 x 11.5","4.3 x 13","4.3 x 15","4.3 x 18","5.0 x 6","5.0 x 7","5.0 x 8.5","5.0 x 10","5.0 x 11.5","5.0 x 13","5.0 x 15","5.0 x 18","5.5 x 6","5.5 x 7","5.5 x 8.5","5.5 x 10","5.5 x 11.5","5.5 x 13","5.5 x 15","5.5 x 18"],"NobelParallel TiUltra - Mỹ":["3.0 x 6","3.0 x 7","3.0 x 8.5","3.0 x 10","3.0 x 11.5","3.0 x 13","3.0 x 15","3.0 x 18","3.5 x 6","3.5 x 7","3.5 x 8.5","3.5 x 10","3.5 x 11.5","3.5 x 13","3.5 x 15","3.5 x 18","4.3 x 6","4.3 x 7","4.3 x 8.5","4.3 x 10","4.3 x 11.5","4.3 x 13","4.3 x 15","4.3 x 18","5.0 x 6","5.0 x 7","5.0 x 8.5","5.0 x 10","5.0 x 11.5","5.0 x 13","5.0 x 15","5.0 x 18","5.5 x 6","5.5 x 7","5.5 x 8.5","5.5 x 10","5.5 x 11.5","5.5 x 13","5.5 x 15","5.5 x 18"],"Straumann BLT - Thuỵ Sỹ":["2.9 x 6","2.9 x 8","2.9 x 10","2.9 x 12","2.9 x 14","2.9 x 16","3.3 x 6","3.3 x 8","3.3 x 10","3.3 x 12","3.3 x 14","3.3 x 16","4.1 x 6","4.1 x 8","4.1 x 10","4.1 x 12","4.1 x 14","4.1 x 16","4.8 x 6","4.8 x 8","4.8 x 10","4.8 x 12","4.8 x 14","4.8 x 16"],"Straumann BLX - Thuỵ Sỹ":["3.5 x 6","3.5 x 8","3.5 x 10","3.5 x 12","3.5 x 14","3.5 x 16","3.5 x 18","3.75 x 6","3.75 x 8","3.75 x 10","3.75 x 12","3.75 x 14","3.75 x 16","3.75 x 18","4.0 x 6","4.0 x 8","4.0 x 10","4.0 x 12","4.0 x 14","4.0 x 16","4.0 x 18","4.5 x 6","4.5 x 8","4.5 x 10","4.5 x 12","4.5 x 14","4.5 x 16","4.5 x 18","5.0 x 6","5.0 x 8","5.0 x 10","5.0 x 12","5.0 x 14","5.0 x 16","5.0 x 18","5.5 x 6","5.5 x 8","5.5 x 10","5.5 x 12","5.5 x 14","5.5 x 16","5.5 x 18","6.5 x 6","6.5 x 8","6.5 x 10","6.5 x 12","6.5 x 14","6.5 x 16","6.5 x 18"],"AnyRidge Megagen - Hàn Quốc":["3.5 x 7","3.5 x 8.5","3.5 x 10","3.5 x 11.5","3.5 x 13","3.5 x 15","4.0 x 7","4.0 x 8.5","4.0 x 10","4.0 x 11.5","4.0 x 13","4.0 x 15","4.5 x 7","4.5 x 8.5","4.5 x 10","4.5 x 11.5","4.5 x 13","4.5 x 15","5.0 x 7","5.0 x 8.5","5.0 x 10","5.0 x 11.5","5.0 x 13","5.0 x 15","5.5 x 7","5.5 x 8.5","5.5 x 10","5.5 x 11.5","5.5 x 13","5.5 x 15","6.0 x 7","6.0 x 8.5","6.0 x 10","6.0 x 11.5","6.0 x 13","6.0 x 15","6.5 x 10","6.5 x 11.5","7.0 x 8.5","7.0 x 10","7.0 x 11.5","8.0 x 10"],"Zygoma Implant":["30 mm","32,5mm","35 mm","37.5 mm","40 mm","42.5 mm","45 mm","47.5 mm","50 mm","52 mm"]};
+
+        const populateBrandSelect = (select) => {
+            const currentValue = select.value;
+            select.innerHTML = '<option value="">Chọn hãng</option>' + Object.keys(implantSizeData)
+                .map((brand) => `<option value="${brand}">${brand}</option>`)
+                .join('');
+            select.value = currentValue;
+        };
+
+
+        const updateSizeSelect = (brandSelect) => {
+            const sizeSelect = brandSelect.closest('tr')?.querySelector('.implant-size');
+            if (!sizeSelect) return;
+            const sizes = implantSizeData[brandSelect.value] || [];
+            sizeSelect.innerHTML = sizes.length
+                ? '<option value="">Chọn kích thước</option>' + sizes.map((size) => `<option value="${size}">${size}</option>`).join('')
+                : '<option value="">Chọn hãng trước</option>';
+            sizeSelect.disabled = sizes.length === 0;
+        };
+
+        document.querySelectorAll('.implant-brand').forEach(populateBrandSelect);
 
         addImplantRowButton?.addEventListener('click', () => {
-            implantRowNumber += 1;
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td class="border border-slate-700 px-2 py-3 text-center">${implantRowNumber}</td>
-                <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
+                <td class="border border-slate-700 px-2 py-3 text-center">${deleteRowButtonHtml}</td>
+                <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập"></td>
                 <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="number" min="0"></td>
-                <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
-                <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
+                <td class="border border-slate-700 p-1"><select class="implant-brand h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0"></select></td>
+                <td class="border border-slate-700 p-1"><select class="implant-size h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" disabled><option value="">Chọn hãng trước</option></select></td>
                 <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
             `;
             implantTableBody?.appendChild(row);
+            populateBrandSelect(row.querySelector('.implant-brand'));
+        });
+
+        implantTableBody?.addEventListener('change', (event) => {
+            if (event.target.matches('.implant-brand')) updateSizeSelect(event.target);
+        });
+
+        implantTableBody?.addEventListener('click', (event) => {
+            const deleteButton = event.target.closest('.delete-implant-row');
+            if (!deleteButton) return;
+            deleteButton.closest('tr')?.remove();
         });
     </script>
 </body>
