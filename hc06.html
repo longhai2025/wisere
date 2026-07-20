@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HC-06. Giấy cam kết chấp thuận phẫu thuật, thủ thuật và gây mê hồi sức</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&subset=vietnamese&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Roboto', 'sans-serif'] } } } };
+    </script>
+    <style>
+        body { min-height: 100vh; background: #f3f4f6; }
+        input, select, textarea { transition: border-color .2s, box-shadow .2s; }
+        input:focus, select:focus, textarea:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,.16); outline: none; }
+        .control { width: 100%; min-height: 38px; border: 1px solid #b8c5d6; border-radius: 3px; background: #fff; padding: 8px 12px; color: #111827; font-size: 14px; }
+        .field-label { display: block; margin-bottom: 7px; color: #334155; font-size: 12px; line-height: 1.2; }
+        .section-title { display: flex; align-items: center; margin-bottom: 16px; color: #1e40af; font-size: 16px; font-weight: 700; line-height: 1.5; text-transform: uppercase; }
+        .section-title-badge { display: flex; width: 28px; height: 28px; flex: 0 0 28px; align-items: center; justify-content: center; margin-right: 9px; border-radius: 999px; background: #1e40af; color: white; font-size: 12px; }
+        .check-row { display: flex; min-height: 32px; align-items: flex-start; gap: 9px; color: #334155; font-size: 14px; line-height: 1.5; }
+        .check-row input { width: 16px; height: 16px; flex: 0 0 16px; margin-top: 3px; accent-color: #2563eb; }
+        .text-block { color: #334155; font-size: 14px; line-height: 1.75; text-align: justify; }
+        .signature { min-height: 150px; text-align: center; font-size: 14px; }
+        @media print {
+            @page { size: A4; margin: 12mm; }
+            body { background: #fff; color: #000; padding: 0 !important; }
+            .no-print { display: none !important; }
+            .form-shell { max-width: none; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+            .section-break { break-before: page; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4 pb-28 font-sans text-gray-800 md:p-8 md:pb-28">
+    <main class="form-shell mx-auto max-w-5xl rounded-lg border border-gray-200 bg-white p-6 shadow-xl md:p-10">
+        <header class="mb-8">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-[1fr_1.25fr_120px]">
+                <div class="text-center text-sm leading-6">
+                    <div class="font-medium uppercase">Sở Y tế TP. Hồ Chí Minh</div>
+                    <select class="mt-2 w-full rounded border border-gray-300 bg-white px-2 py-1 text-sm font-semibold text-blue-900">
+                        <option>CTY TNHH Nha khoa Nhân Tâm</option>
+                        <option>CTY TNHH Nha khoa Quốc tế Nhân Tâm</option>
+                    </select>
+                </div>
+                <div class="text-center text-sm leading-6">
+                    <div class="font-bold uppercase">Cộng hòa xã hội chủ nghĩa Việt Nam</div>
+                    <div class="font-semibold">Độc lập - Tự do - Hạnh phúc</div>
+                    <div class="mx-auto mt-1 w-36 border-t border-gray-800"></div>
+                </div>
+                <div class="text-right text-sm font-medium">MS: 01/BV2</div>
+            </div>
+            <div class="mt-9 text-center">
+                <h1 class="text-xl font-extrabold uppercase leading-8 text-blue-900">Giấy cam kết chấp thuận<br>phẫu thuật, thủ thuật và gây mê hồi sức</h1>
+                <div class="mt-4 flex flex-wrap justify-center gap-6 text-sm">
+                    <label class="check-row"><input type="radio" name="muc_do">Cấp cứu</label>
+                    <label class="check-row"><input type="radio" name="muc_do">Bán cấp</label>
+                    <label class="check-row"><input type="radio" name="muc_do" checked>Chương trình/Phiên</label>
+                </div>
+            </div>
+            <div class="mt-7 border-t-2 border-slate-300"></div>
+        </header>
+
+        <section class="mb-9">
+            <h2 class="section-title"><span class="section-title-badge">I</span>Bác sĩ phẫu thuật / thủ thuật / gây mê hồi sức</h2>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-12">
+                <label class="md:col-span-6"><span class="field-label">Họ và tên bác sĩ</span><select class="control"><option>BS. Trần Hữu Quý</option><option>Chọn bác sĩ</option></select></label>
+                <label class="md:col-span-3"><span class="field-label">Chức danh</span><input class="control font-semibold text-blue-900" value="Bác sĩ phẫu thuật"></label>
+                <label class="md:col-span-3"><span class="field-label">Khoa</span><input class="control font-semibold text-blue-900" value="Răng hàm mặt"></label>
+                <label class="md:col-span-6"><span class="field-label">Bác sĩ phối hợp (không bắt buộc)</span><select class="control"><option value="">Chọn bác sĩ</option><option>BS. Nguyễn Văn An</option></select></label>
+                <label class="md:col-span-3"><span class="field-label">Chức danh</span><input class="control" value="Bác sĩ"></label>
+                <label class="md:col-span-3"><span class="field-label">Khoa</span><input class="control" value="Răng hàm mặt"></label>
+                <div class="flex items-center gap-2 md:col-span-12">
+                    <span class="text-sm font-medium text-slate-700">Người bệnh được thực hiện phẫu thuật/thủ thuật/gây mê:</span>
+                    <span class="text-sm font-semibold uppercase text-blue-900">NGÔ THU THỦY</span>
+                </div>
+                <label class="md:col-span-12"><span class="field-label">Chẩn đoán (ICD-10)</span><input class="control" placeholder="Nhập hoặc chọn chẩn đoán"></label>
+            </div>
+
+            <div class="mt-7">
+                <p class="text-block mb-3">Chúng tôi đã tư vấn, giải thích đầy đủ, rõ ràng những thông tin liên quan đến cuộc phẫu thuật/thủ thuật/gây mê hồi sức cho người bệnh/thân nhân người bệnh về các vấn đề sau:</p>
+                <div class="grid grid-cols-1 gap-x-8 md:grid-cols-2">
+                    <label class="check-row"><input type="checkbox">Chẩn đoán</label>
+                    <label class="check-row"><input type="checkbox">Lý do phẫu thuật/thủ thuật</label>
+                    <label class="check-row"><input type="checkbox">Rủi ro, nguy cơ nếu không thực hiện</label>
+                    <label class="check-row"><input type="checkbox" data-toggle="ket_qua">Kết quả sau phẫu thuật/thủ thuật (dự kiến)</label>
+                </div>
+                <textarea id="ket_qua" class="control mt-2 min-h-20" placeholder="Nhập kết quả dự kiến..."></textarea>
+            </div>
+
+            <div class="mt-7 grid grid-cols-1 gap-7 md:grid-cols-2">
+                <div>
+                    <h3 class="mb-3 font-bold">Phương pháp phẫu thuật/thủ thuật dự kiến</h3>
+                    <div class="space-y-1">
+                        <label class="check-row"><input type="checkbox">Phẫu thuật mở</label>
+                        <label class="check-row"><input type="checkbox">Phẫu thuật nội soi</label>
+                        <label class="check-row"><input type="checkbox" checked>Thủ thuật</label>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="mb-3 font-bold">Phương pháp gây mê hồi sức dự kiến</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Mê nội khí quản</label>
+                        <label class="check-row"><input type="checkbox">Mê mask thanh quản</label>
+                        <label class="check-row"><input type="checkbox">Mê tĩnh mạch</label>
+                        <label class="check-row"><input type="checkbox">Tê tủy sống</label>
+                        <label class="check-row"><input type="checkbox">Tê ngoài màng cứng</label>
+                        <label class="check-row"><input type="checkbox">Tê đám rối thần kinh</label>
+                        <label class="check-row"><input type="checkbox" checked>Tiền mê + Tê tại chỗ</label>
+                        <label class="check-row"><input type="checkbox">Khác</label>
+                    </div>
+                    <input class="control mt-2" placeholder="Ghi rõ phương pháp khác">
+                </div>
+            </div>
+
+            <div class="mt-7 grid grid-cols-1 gap-7 md:grid-cols-2">
+                <div>
+                    <h3 class="mb-3 font-bold">Các phương pháp điều trị khác ngoài phẫu thuật/thủ thuật</h3>
+                    <label class="check-row"><input type="radio" name="dieu_tri_khac" checked>Không</label>
+                    <label class="check-row"><input type="radio" name="dieu_tri_khac">Có, cụ thể:</label>
+                    <input class="control mt-2" placeholder="Nhập phương pháp điều trị khác">
+                </div>
+                <div>
+                    <h3 class="mb-3 font-bold">Nguy cơ, tai biến có thể xảy ra</h3>
+                    <div class="grid grid-cols-2">
+                        <label class="check-row"><input type="checkbox">Phản ứng thuốc</label>
+                        <label class="check-row"><input type="checkbox">Suy hô hấp - tuần hoàn</label>
+                        <label class="check-row"><input type="checkbox">Chảy máu</label>
+                        <label class="check-row"><input type="checkbox">Nhiễm trùng</label>
+                        <label class="check-row"><input type="checkbox">Tử vong</label>
+                        <label class="check-row"><input type="checkbox">Nguy cơ/rủi ro khác</label>
+                    </div>
+                    <input class="control mt-2" placeholder="Ghi rõ nguy cơ/rủi ro khác">
+                </div>
+            </div>
+
+            <div class="mt-7 space-y-3 text-block">
+                <p>Chúng tôi đã dành đủ thời gian để người bệnh/thân nhân đặt các câu hỏi liên quan đến phẫu thuật/thủ thuật/gây mê sẽ được thực hiện hoặc các mối quan tâm khác và chúng tôi đã trả lời tất cả các câu hỏi đó.</p>
+                <p>Chúng tôi cam kết phục vụ người bệnh bằng lương tâm và trách nhiệm của người thầy thuốc cùng với tất cả kiến thức, sự hiểu biết về chuyên môn và phương tiện hiện có của <strong>CTY TNHH Nha khoa Nhân Tâm</strong> để nỗ lực đem lại kết quả tốt nhất cho người bệnh.</p>
+            </div>
+        </section>
+
+        <section class="section-break mb-9">
+            <h2 class="section-title"><span class="section-title-badge">II</span>Người bệnh / thân nhân</h2>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-12">
+                <label class="md:col-span-8"><span class="field-label">Họ và tên người bệnh</span><input class="control cursor-not-allowed bg-slate-100 font-semibold uppercase text-blue-900" value="NGÔ THU THỦY" disabled></label>
+                <label class="md:col-span-4"><span class="field-label">Năm sinh</span><input class="control cursor-not-allowed bg-slate-100 font-semibold text-blue-900" value="1999" disabled></label>
+                <label class="md:col-span-8"><span class="field-label">Họ và tên thân nhân</span><input class="control" placeholder="Nhập họ và tên thân nhân"></label>
+                <label class="md:col-span-4"><span class="field-label">Năm sinh</span><input class="control" type="number" placeholder="Năm sinh"></label>
+                <label class="md:col-span-6"><span class="field-label">Quan hệ với người bệnh</span><select class="control"><option value="">Chọn mối quan hệ</option><option>Bố/Mẹ ruột</option><option>Bố/Mẹ nuôi</option><option>Vợ/chồng</option><option>Con ruột</option><option>Con nuôi</option><option>Anh/Chị/Em ruột</option><option>Khác</option></select></label>
+                <label class="md:col-span-6"><span class="field-label">Quan hệ khác</span><input class="control" placeholder="Nhập nếu chọn Khác"></label>
+            </div>
+
+            <div class="mt-7 space-y-4 text-block">
+                <p>Tôi đã được nghe các Bác sĩ giải thích và đã trao đổi với các Bác sĩ về tất cả các thông tin của cuộc phẫu thuật/thủ thuật/gây mê, những nguy cơ thường gặp có thể xảy ra, bao gồm: <strong>chẩn đoán, lý do thủ thuật, rủi ro, nguy cơ</strong> và mức độ thành công. Tôi đã hiểu lý do phải thực hiện và đồng ý để Bác sĩ phẫu thuật/thủ thuật/gây mê cho tôi/thân nhân của tôi.</p>
+                <p>Tôi đã được tư vấn những thông tin về chi phí phẫu thuật/thủ thuật/gây mê, vật tư y tế tiêu hao dự kiến sử dụng; tôi cam kết chi trả chi phí khám bệnh, chữa bệnh ngoài phạm vi được hưởng và mức hưởng theo quy định của pháp luật về bảo hiểm y tế và các quy định khác.</p>
+                <p>Tôi đồng ý để các Bác sĩ thực hiện các phẫu thuật/thủ thuật/gây mê/kiểm tra/điều trị nếu việc đó là cần thiết để cứu tính mạng hoặc ngăn ngừa tác hại nghiêm trọng cho sức khỏe của tôi/thân nhân của tôi.</p>
+                <p>Tôi hiểu rằng các Bác sĩ của <strong>CTY TNHH Nha khoa Nhân Tâm</strong> sẽ làm hết lương tâm, trách nhiệm cùng kiến thức và phương tiện hiện có để nỗ lực đem lại kết quả tốt nhất. Tuy nhiên, không thể đảm bảo hoàn toàn rằng phẫu thuật/thủ thuật sẽ cải thiện tình trạng hoặc không làm tình trạng trở nên xấu đi.</p>
+                <p>Tôi đã đọc bản cam kết với tinh thần hoàn toàn minh mẫn và hiểu biết. Tôi xin hoàn toàn chịu trách nhiệm với quyết định đồng ý cho Bác sĩ phẫu thuật/thủ thuật cho tôi/thân nhân của tôi.</p>
+                <p>Sau khi nghe các Bác sĩ cho biết tình trạng bệnh, những nguy hiểm nếu không thực hiện và những rủi ro có thể xảy ra, tôi tự nguyện viết giấy cam đoan này:</p>
+                <ol class="list-decimal space-y-2 pl-6 font-medium text-gray-800">
+                    <li>Đồng ý xin phẫu thuật, thủ thuật, gây mê hồi sức và để giấy này làm bằng chứng.</li>
+                    <li>Không đồng ý phẫu thuật, thủ thuật, gây mê hồi sức và để giấy này làm bằng chứng.</li>
+                </ol>
+                <p class="italic">(Câu 1 và câu 2 do người bệnh, thân nhân của người bệnh tự viết dưới đây)</p>
+                <div class="space-y-5 pt-2"><div class="border-b border-dashed border-gray-500"></div><div class="border-b border-dashed border-gray-500"></div></div>
+            </div>
+        </section>
+
+        <section>
+            <div class="mb-8 flex justify-end">
+                <label class="w-full md:w-72"><span class="field-label">Ngày xác nhận</span><input id="ngay_xac_nhan" class="control font-semibold text-blue-900" type="date"></label>
+            </div>
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <div class="signature"><div class="font-bold uppercase">Phẫu thuật viên / Bác sĩ thực hiện thủ thuật</div><div class="mt-1 italic">(Ký, ghi rõ họ tên)</div><div class="mt-24 font-semibold text-blue-900">BS. Trần Hữu Quý</div></div>
+                <div class="signature"><div class="font-bold uppercase">Bác sĩ gây mê</div><div class="mt-1 italic">(Ký, ghi rõ họ tên)</div></div>
+                <div class="signature"><div class="font-bold uppercase">Người bệnh / Thân nhân</div><div class="mt-1 italic">(Ký, ghi rõ họ tên)</div><div class="mt-24 font-semibold uppercase text-blue-900">NGÔ THU THỦY</div></div>
+            </div>
+        </section>
+    </main>
+
+    <div class="no-print fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-8 py-4 backdrop-blur">
+        <div class="mx-auto flex max-w-[1400px] justify-end gap-3">
+            <button type="button" class="h-9 min-w-20 rounded border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50">Hủy</button>
+            <button type="button" class="h-9 min-w-20 rounded border border-cyan-400 bg-white px-5 text-sm font-semibold text-cyan-500 hover:bg-cyan-50">Lưu</button>
+            <button type="button" onclick="window.print()" class="h-9 min-w-24 rounded bg-cyan-500 px-5 text-sm font-semibold text-white hover:bg-cyan-600">Lưu và in</button>
+        </div>
+    </div>
+
+    <script>
+        const confirmationDate = document.getElementById('ngay_xac_nhan');
+        if (confirmationDate && !confirmationDate.value) {
+            const now = new Date();
+            const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+            confirmationDate.value = localDate.toISOString().split('T')[0];
+        }
+    </script>
+</body>
+</html>
