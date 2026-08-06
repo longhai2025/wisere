@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#087f73">
+  <title>Wisere - Khảo sát trải nghiệm</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500&family=Manrope:wght@500&display=swap');
+
+    :root {
+      --ink: #17312e;
+      --muted: #6c817d;
+      --line: #dce9e6;
+      --page: #edf6f3;
+      --panel: #ffffff;
+      --soft: #f4f9f7;
+      --teal: #087f73;
+      --teal-dark: #06675e;
+      --teal-soft: #e5f5f1;
+      --coral: #de6853;
+      --coral-soft: #fff0ed;
+      --gold: #b17a24;
+      --gold-soft: #fff7e8;
+      --shadow: 0 20px 54px rgba(20, 77, 70, .13);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-width: 320px; color-scheme: light; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 5%, rgba(38, 185, 165, .15), transparent 24rem),
+        radial-gradient(circle at 92% 90%, rgba(76, 122, 220, .10), transparent 28rem),
+        var(--page);
+      font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; opacity: .5; }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 68px;
+      padding: 12px max(20px, calc((100% - 1040px) / 2));
+      border-bottom: 1px solid rgba(220, 233, 230, .9);
+      background: rgba(255, 255, 255, .88);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 10px; font-family: "Manrope", sans-serif; font-size: 18px; font-weight: 500; }
+    .brand-mark { position: relative; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(145deg, #0a9486, #08756b); color: white; box-shadow: 0 7px 15px rgba(8, 127, 115, .24); }
+    .brand-mark svg { width: 23px; height: 23px; }
+    .secure-label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; }
+    .secure-label svg { width: 15px; height: 15px; color: var(--teal); }
+
+    .page-shell { width: min(100% - 32px, 880px); margin: 28px auto 42px; }
+    .survey-window { overflow: hidden; border: 1px solid var(--line); border-radius: 24px; background: var(--panel); box-shadow: var(--shadow); }
+    .survey-top { padding: 16px 24px 13px; border-bottom: 1px solid var(--line); background: var(--soft); }
+    .survey-meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 11px; color: var(--muted); font-size: 12px; }
+    .survey-meta strong { color: var(--ink); font-weight: 500; }
+    .step-label { white-space: nowrap; }
+    .progress-track { height: 5px; overflow: hidden; border-radius: 999px; background: #dce9e6; }
+    .progress-value { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--teal), #32b9aa); transition: width .28s ease; }
+
+    .survey-body { min-height: 500px; padding: 42px 48px 34px; }
+    .screen { max-width: 670px; margin: 0 auto; animation: enter .28s ease both; }
+    .eyebrow { margin: 0 0 9px; color: var(--teal); font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
+    h1 { margin: 0; font-family: "Manrope", sans-serif; font-size: clamp(27px, 5vw, 40px); line-height: 1.24; font-weight: 500; letter-spacing: -.035em; }
+    .intro { max-width: 590px; margin: 12px 0 25px; color: var(--muted); }
+
+    .appointment-card { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 19px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--soft); }
+    .appointment-card h2 { margin: 0 0 7px; font-size: 17px; font-weight: 500; }
+    .appointment-details { display: grid; gap: 5px; color: var(--muted); font-size: 13px; }
+    .appointment-details span { display: flex; align-items: center; gap: 7px; }
+    .appointment-details svg { flex: 0 0 auto; width: 15px; height: 15px; color: var(--teal); }
+    .appointment-time { min-width: 130px; padding-left: 18px; border-left: 1px solid var(--line); text-align: right; }
+    .appointment-time strong, .appointment-time span { display: block; }
+    .appointment-time strong { color: var(--teal); font-family: "Manrope", sans-serif; font-size: 22px; font-weight: 500; }
+    .appointment-time span { margin-top: 3px; color: var(--muted); font-size: 12px; }
+
+    .privacy-note, .notice { display: flex; align-items: flex-start; gap: 9px; margin-top: 15px; padding: 12px 14px; border-radius: 12px; font-size: 12px; }
+    .privacy-note { background: var(--teal-soft); color: var(--teal-dark); }
+    .notice { background: var(--gold-soft); color: var(--gold); }
+    .notice.error { background: var(--coral-soft); color: var(--coral); }
+    .privacy-note svg, .notice svg { flex: 0 0 auto; width: 16px; height: 16px; margin-top: 1px; }
+
+    .actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 27px; }
+    .primary-button, .secondary-button, .ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 44px;
+      padding: 10px 17px;
+      border-radius: 11px;
+      font-weight: 500;
+    }
+    .primary-button { border: 1px solid var(--teal); background: var(--teal); color: white; box-shadow: 0 7px 16px rgba(8, 127, 115, .2); }
+    .primary-button:hover { border-color: var(--teal-dark); background: var(--teal-dark); }
+    .secondary-button { border: 1px solid var(--line); background: var(--panel); color: var(--ink); }
+    .secondary-button:hover { border-color: var(--teal); color: var(--teal); }
+    .ghost-button { padding-inline: 8px; border: 0; background: transparent; color: var(--muted); }
+    .ghost-button:hover { color: var(--teal); }
+    .primary-button svg, .secondary-button svg, .ghost-button svg { width: 17px; height: 17px; }
+
+    .emotion-scale { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 25px 0 10px; }
+    .emotion-option { min-width: 0; min-height: 114px; padding: 15px 5px 11px; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); color: var(--muted); transition: border-color .18s, background .18s, transform .18s, box-shadow .18s; }
+    .emotion-option:hover { border-color: #94cfc7; transform: translateY(-2px); }
+    .emotion-option.selected { border-color: var(--teal); background: var(--teal-soft); color: var(--ink); box-shadow: inset 0 0 0 1px var(--teal); transform: translateY(-3px); }
+    .emotion { display: block; margin-bottom: 7px; font-size: 34px; line-height: 1; }
+    .emotion-option strong { display: block; font-size: 12px; font-weight: 500; }
+    .emotion-option small { display: block; margin-top: 3px; color: var(--muted); font-size: 10px; }
+    .question-context { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+    .context-chip { padding: 5px 9px; border-radius: 999px; background: var(--soft); color: var(--muted); font-size: 11px; }
+
+    .reason-grid { display: flex; flex-wrap: wrap; gap: 9px; margin: 22px 0; }
+    .reason-option { padding: 10px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel); color: var(--ink); }
+    .reason-option:hover { border-color: #9ccfc8; }
+    .reason-option.selected { border-color: var(--teal); background: var(--teal); color: white; }
+
+    .touchpoint-list { display: grid; gap: 11px; margin-top: 22px; }
+    .touchpoint { display: grid; grid-template-columns: minmax(150px, 1fr) minmax(270px, 1.8fr); align-items: center; gap: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 15px; background: var(--soft); }
+    .touchpoint-label strong { display: block; font-weight: 500; }
+    .touchpoint-label span { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .number-scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .score-button { height: 38px; padding: 0; border: 1px solid var(--line); border-radius: 9px; background: var(--panel); color: var(--muted); }
+    .score-button:hover { border-color: #9ccfc8; }
+    .score-button.selected { border-color: var(--teal); background: var(--teal); color: white; }
+
+    .field { display: grid; gap: 7px; margin-top: 20px; }
+    .field label { font-weight: 500; }
+    .field label span { color: var(--muted); font-size: 12px; font-weight: 400; }
+    textarea { width: 100%; min-height: 130px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 13px; outline: none; resize: vertical; background: var(--panel); color: var(--ink); }
+    textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(8, 127, 115, .11); }
+    .consent { display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; padding: 14px; border: 1px solid var(--line); border-radius: 13px; background: var(--soft); cursor: pointer; }
+    .consent input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--teal); }
+    .consent strong, .consent span { display: block; }
+    .consent strong { font-weight: 500; }
+    .consent span { margin-top: 3px; color: var(--muted); font-size: 11px; }
+
+    .review-list { display: grid; gap: 9px; margin-top: 21px; }
+    .review-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 13px; background: var(--soft); }
+    .review-row span { color: var(--muted); font-size: 12px; }
+    .review-row strong { font-weight: 500; text-align: right; }
+    .review-score { color: var(--teal); }
+
+    .center-state { display: grid; min-height: 385px; place-content: center; justify-items: center; text-align: center; }
+    .state-icon { display: grid; place-items: center; width: 74px; height: 74px; margin-bottom: 20px; border-radius: 50%; background: var(--teal); color: white; box-shadow: 0 13px 28px rgba(8, 127, 115, .2); }
+    .state-icon.error { background: var(--coral); box-shadow: 0 13px 28px rgba(222, 104, 83, .2); }
+    .state-icon.warn { background: var(--gold); box-shadow: 0 13px 28px rgba(177, 122, 36, .2); }
+    .state-icon svg { width: 34px; height: 34px; }
+    .center-state h1 { max-width: 560px; }
+    .center-state p { max-width: 520px; margin: 12px auto 0; color: var(--muted); }
+    .completion-code { margin-top: 17px; padding: 7px 11px; border-radius: 8px; background: var(--soft); color: var(--muted); font-size: 11px; }
+    .demo-link { margin-top: 22px; padding: 7px; border: 0; background: transparent; color: var(--teal); font-size: 11px; text-decoration: underline; }
+
+    .site-footer { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 15px; padding: 0 16px 25px; color: var(--muted); font-size: 11px; text-align: center; }
+    .site-footer span { display: inline-flex; align-items: center; gap: 5px; }
+    .site-footer svg { width: 13px; height: 13px; }
+    .loading { display: grid; min-height: 500px; place-content: center; justify-items: center; color: var(--muted); }
+    .loader { width: 34px; height: 34px; margin-bottom: 14px; border: 3px solid var(--line); border-top-color: var(--teal); border-radius: 50%; animation: spin .8s linear infinite; }
+
+    @keyframes enter { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+    @media (max-width: 720px) {
+      .site-header { min-height: 60px; padding: 10px 16px; }
+      .brand { font-size: 16px; }
+      .brand-mark { width: 34px; height: 34px; }
+      .secure-label span { display: none; }
+      .page-shell { width: min(100% - 20px, 880px); margin: 12px auto 25px; }
+      .survey-window { border-radius: 18px; }
+      .survey-top { padding: 13px 15px 11px; }
+      .survey-body { min-height: 535px; padding: 29px 18px 24px; }
+      .appointment-card { grid-template-columns: 1fr; }
+      .appointment-time { padding: 12px 0 0; border-top: 1px solid var(--line); border-left: 0; text-align: left; }
+      .emotion-scale { gap: 6px; }
+      .emotion-option { min-height: 93px; padding: 12px 2px 8px; }
+      .emotion { font-size: 28px; }
+      .emotion-option strong { font-size: 10px; }
+      .emotion-option small { display: none; }
+      .touchpoint { grid-template-columns: 1fr; gap: 10px; }
+    }
+
+    @media (max-width: 460px) {
+      .survey-meta strong { max-width: 190px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .actions { align-items: stretch; flex-direction: column-reverse; }
+      .primary-button, .secondary-button { width: 100%; }
+      .ghost-button { align-self: center; }
+      .emotion-option { min-height: 78px; }
+      .emotion { font-size: 24px; }
+      .emotion-option strong { font-size: 9px; }
+      .review-row { grid-template-columns: 1fr; gap: 3px; }
+      .review-row strong { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.5 3.8c1.5 0 2.6.8 4.5.8s3-.8 4.5-.8c2.7 0 4.5 2.1 4.5 5.1 0 4.2-2.3 11.3-5.1 11.3-1.5 0-1.8-2.7-3.9-2.7s-2.4 2.7-3.9 2.7C5.3 20.2 3 13.1 3 8.9c0-3 1.8-5.1 4.5-5.1Z"/><path d="M9 7.7c1.1.5 2.1.7 3 .7s1.9-.2 3-.7"/></svg></span><span>Wisere</span></div>
+    <div class="secure-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>survey.wisere.com · Kết nối bảo mật</span></div>
+  </header>
+
+  <main class="page-shell">
+    <section class="survey-window" aria-live="polite">
+      <div class="survey-top">
+        <div class="survey-meta"><strong id="survey-name">CSAT sau lịch hẹn điều trị</strong><span class="step-label" id="step-label">Đang tải...</span></div>
+        <div class="progress-track"><span class="progress-value" id="progress-value"></span></div>
+      </div>
+      <div class="survey-body" id="survey-body"><div class="loading"><span class="loader"></span><span>Đang kiểm tra liên kết khảo sát...</span></div></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Thông tin được bảo mật</span><span>Hỗ trợ: 1900 6868</span><span>© 2026 Wisere</span></footer>
+
+  <script>
+    (() => {
+      const body = document.getElementById('survey-body');
+      const stepLabel = document.getElementById('step-label');
+      const progress = document.getElementById('progress-value');
+      const state = {
+        step: 0,
+        csat: null,
+        reasons: [],
+        touchpoints: { reception: null, waiting: null, doctor: null, payment: null },
+        comment: '',
+        consent: false,
+        completed: false
+      };
+
+      const icons = {
+        arrowRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>',
+        arrowLeft: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>',
+        calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>',
+        map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2"/></svg>',
+        stethoscope: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v2M5 2v2M5 3H3v5a5 5 0 0 0 10 0V3h-2"/><path d="M8 13a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="8" r="2"/></svg>',
+        shield: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>',
+        check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 4 4L19 6"/></svg>',
+        clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+        alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.6 2.4 17.2A2 2 0 0 0 4.1 20h15.8a2 2 0 0 0 1.7-2.8L13.7 3.6a2 2 0 0 0-3.4 0Z"/></svg>'
+      };
+
+      const positiveReasons = ['Bác sĩ tận tâm', 'Tư vấn rõ ràng', 'Điều trị nhẹ nhàng', 'Nhân viên thân thiện', 'Đúng giờ', 'Không gian sạch sẽ'];
+      const negativeReasons = ['Thời gian chờ lâu', 'Đau hoặc khó chịu', 'Chưa rõ chi phí', 'Tư vấn chưa đầy đủ', 'Thái độ phục vụ', 'Khác'];
+
+      function setHeader(label, percent) {
+        stepLabel.textContent = label;
+        progress.style.width = `${percent}%`;
+      }
+
+      function render() {
+        const renderers = [renderConfirm, renderCsat, renderReasons, renderTouchpoints, renderComment, renderReview, renderSuccess];
+        renderers[state.step]();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function renderConfirm() {
+        setHeader('Bước 1/6', 12);
+        body.innerHTML = `<div class="screen"><p class="eyebrow">Xác nhận lịch hẹn</p><h1>Đây có phải buổi điều trị của bạn?</h1><p class="intro">Thông tin đã được che bớt để bảo vệ quyền riêng tư. Vui lòng xác nhận trước khi bắt đầu đánh giá.</p><div class="appointment-card"><div><h2>Nguyễn A.</h2><div class="appointment-details"><span>${icons.stethoscope}Trám răng · BS. Nguyễn Minh</span><span>${icons.map}Nha khoa Wisere I</span><span>${icons.calendar}Mã lịch hẹn LH-240805</span></div></div><div class="appointment-time"><strong>15:30</strong><span>05/08/2026</span></div></div><div class="privacy-note">${icons.shield}<span>Khảo sát chỉ được sử dụng một lần và có hiệu lực đến 08/08/2026.</span></div><div class="actions"><button class="secondary-button" id="wrong-appointment" type="button">Không phải lịch hẹn của tôi</button><button class="primary-button" id="confirm-appointment" type="button">Đúng, tiếp tục ${icons.arrowRight}</button></div></div>`;
+        document.getElementById('confirm-appointment').onclick = () => { state.step = 1; render(); };
+        document.getElementById('wrong-appointment').onclick = renderWrongAppointment;
+      }
+
+      function renderWrongAppointment() {
+        setHeader('Xác minh không thành công', 0);
+        body.innerHTML = `<div class="screen center-state"><span class="state-icon warn">${icons.alert}</span><h1>Cảm ơn bạn đã thông báo</h1><p>Chúng tôi đã xóa thông tin lịch hẹn khỏi phiên này. Vui lòng liên hệ lễ tân Wisere nếu bạn cần nhận lại đúng đường dẫn khảo sát.</p><button class="secondary-button demo-link" id="demo-reset" type="button">Quay lại bản mô phỏng</button></div>`;
+        document.getElementById('demo-reset').onclick = () => { state.step = 0; render(); };
+      }
+
+      function renderCsat() {
+        setHeader('Bước 2/6', 28);
+        const options = [
+          [1, '😣', 'Rất không hài lòng'], [2, '🙁', 'Không hài lòng'], [3, '😐', 'Bình thường'], [4, '🙂', 'Hài lòng'], [5, '🤩', 'Rất hài lòng']
+        ];
+        body.innerHTML = `<div class="screen"><p class="eyebrow">Đánh giá tổng thể</p><h1>Bạn hài lòng thế nào về buổi điều trị vừa rồi?</h1><p class="intro">Chọn một mức điểm phù hợp nhất với trải nghiệm của bạn.</p><div class="emotion-scale" role="group" aria-label="Thang điểm CSAT">${options.map(([score, face, label]) => `<button class="emotion-option ${state.csat === score ? 'selected' : ''}" data-csat="${score}" type="button"><span class="emotion">${face}</span><strong>${label}</strong><small>${score}/5</small></button>`).join('')}</div><div class="question-context"><span class="context-chip">Lịch hẹn LH-240805</span><span class="context-chip">Dịch vụ Trám răng</span><span class="context-chip">BS. Nguyễn Minh</span></div><div class="actions"><button class="ghost-button" id="back" type="button">${icons.arrowLeft} Quay lại</button><button class="primary-button" id="continue" type="button" ${state.csat ? '' : 'disabled'}>Tiếp tục ${icons.arrowRight}</button></div></div>`;
+        body.querySelectorAll('[data-csat]').forEach(button => button.onclick = () => { state.csat = Number(button.dataset.csat); renderCsat(); });
+        document.getElementById('back').onclick = () => { state.step = 0; render(); };
+        document.getElementById('continue').onclick = () => { if (state.csat) { state.step = 2; state.reasons = []; render(); } };
+      }
+
+      function renderReasons() {
+        setHeader('Bước 3/6', 44);
+        const positive = state.csat >= 4;
+        const reasons = positive ? positiveReasons : negativeReasons;
+        body.innerHTML = `<div class="screen"><p class="eyebrow">Tìm hiểu thêm</p><h1>${positive ? 'Điều gì khiến bạn hài lòng?' : 'Điều gì cần được Wisere cải thiện?'}</h1><p class="intro">Bạn có thể chọn một hoặc nhiều nội dung.</p><div class="reason-grid">${reasons.map(reason => `<button class="reason-option ${state.reasons.includes(reason) ? 'selected' : ''}" data-reason="${reason}" type="button">${reason}</button>`).join('')}</div><div class="actions"><button class="ghost-button" id="back" type="button">${icons.arrowLeft} Quay lại</button><button class="primary-button" id="continue" type="button">${state.reasons.length ? 'Tiếp tục' : 'Bỏ qua'} ${icons.arrowRight}</button></div></div>`;
+        body.querySelectorAll('[data-reason]').forEach(button => button.onclick = () => {
+          const reason = button.dataset.reason;
+          state.reasons = state.reasons.includes(reason) ? state.reasons.filter(item => item !== reason) : [...state.reasons, reason];
+          renderReasons();
+        });
+        document.getElementById('back').onclick = () => { state.step = 1; render(); };
+        document.getElementById('continue').onclick = () => { state.step = 3; render(); };
+      }
+
+      function scoreButtons(key) {
+        return `<div class="number-scale" role="group" aria-label="Điểm ${key}">${[1,2,3,4,5].map(score => `<button class="score-button ${state.touchpoints[key] === score ? 'selected' : ''}" data-touchpoint="${key}" data-score="${score}" type="button">${score}</button>`).join('')}</div>`;
+      }
+
+      function renderTouchpoints() {
+        setHeader('Bước 4/6', 61);
+        const complete = Object.values(state.touchpoints).every(Boolean);
+        body.innerHTML = `<div class="screen"><p class="eyebrow">Đánh giá điểm chạm</p><h1>Mỗi trải nghiệm hôm nay như thế nào?</h1><p class="intro">Điểm 1 là rất không hài lòng, điểm 5 là rất hài lòng.</p><div class="touchpoint-list"><div class="touchpoint"><div class="touchpoint-label"><strong>Lễ tân và tiếp đón</strong><span>Thái độ và hướng dẫn</span></div>${scoreButtons('reception')}</div><div class="touchpoint"><div class="touchpoint-label"><strong>Thời gian chờ</strong><span>Thời gian trước khi được phục vụ</span></div>${scoreButtons('waiting')}</div><div class="touchpoint"><div class="touchpoint-label"><strong>Bác sĩ điều trị</strong><span>Giao tiếp và chuyên môn</span></div>${scoreButtons('doctor')}</div><div class="touchpoint"><div class="touchpoint-label"><strong>Thanh toán</strong><span>Tốc độ và sự rõ ràng</span></div>${scoreButtons('payment')}</div></div><div class="actions"><button class="ghost-button" id="back" type="button">${icons.arrowLeft} Quay lại</button><button class="primary-button" id="continue" type="button" ${complete ? '' : 'disabled'}>Tiếp tục ${icons.arrowRight}</button></div></div>`;
+        body.querySelectorAll('[data-touchpoint]').forEach(button => button.onclick = () => { state.touchpoints[button.dataset.touchpoint] = Number(button.dataset.score); renderTouchpoints(); });
+        document.getElementById('back').onclick = () => { state.step = 2; render(); };
+        document.getElementById('continue').onclick = () => { if (complete) { state.step = 4; render(); } };
+      }
+
+      function renderComment() {
+        setHeader('Bước 5/6', 78);
+        const lowScore = state.csat <= 2 || Object.values(state.touchpoints).some(score => score <= 2);
+        body.innerHTML = `<div class="screen"><p class="eyebrow">Chia sẻ thêm</p><h1>Bạn muốn Wisere cải thiện thêm điều gì?</h1><p class="intro">Góp ý là không bắt buộc nhưng sẽ giúp chúng tôi hiểu rõ hơn trải nghiệm của bạn.</p><div class="field"><label for="comment">Nội dung góp ý <span>(không bắt buộc)</span></label><textarea id="comment" maxlength="1000" placeholder="Ví dụ: Mong phòng khám thông báo sớm hơn khi lịch bị chậm...">${escapeHtml(state.comment)}</textarea></div>${lowScore ? `<label class="consent"><input id="consent" type="checkbox" ${state.consent ? 'checked' : ''}><span><strong>Tôi đồng ý để Wisere liên hệ hỗ trợ</strong><span>Thông tin liên hệ trong hồ sơ chỉ được sử dụng để xử lý phản hồi này.</span></span></label>` : ''}<div class="actions"><button class="ghost-button" id="back" type="button">${icons.arrowLeft} Quay lại</button><button class="primary-button" id="continue" type="button">Xem lại đánh giá ${icons.arrowRight}</button></div></div>`;
+        const comment = document.getElementById('comment');
+        comment.oninput = () => { state.comment = comment.value; };
+        const consent = document.getElementById('consent');
+        if (consent) consent.onchange = () => { state.consent = consent.checked; };
+        document.getElementById('back').onclick = () => { state.comment = comment.value; state.step = 3; render(); };
+        document.getElementById('continue').onclick = () => { state.comment = comment.value; state.step = 5; render(); };
+      }
+
+      function renderReview() {
+        setHeader('Bước 6/6', 92);
+        const average = (Object.values(state.touchpoints).reduce((sum, score) => sum + score, 0) / 4).toFixed(1);
+        body.innerHTML = `<div class="screen"><p class="eyebrow">Xác nhận gửi</p><h1>Kiểm tra lại đánh giá của bạn</h1><p class="intro">Sau khi gửi, đường dẫn này sẽ được đánh dấu đã hoàn tất và không thể khảo sát lại.</p><div class="review-list"><div class="review-row"><span>CSAT tổng thể</span><strong class="review-score">${state.csat}/5</strong></div><div class="review-row"><span>Điểm chạm trung bình</span><strong class="review-score">${average}/5</strong></div><div class="review-row"><span>Nội dung đã chọn</span><strong>${state.reasons.length ? state.reasons.join(', ') : 'Không có'}</strong></div><div class="review-row"><span>Góp ý thêm</span><strong>${state.comment.trim() ? escapeHtml(state.comment.trim()) : 'Không có'}</strong></div><div class="review-row"><span>Đồng ý liên hệ</span><strong>${state.consent ? 'Có' : 'Không'}</strong></div></div><div class="privacy-note">${icons.shield}<span>Phản hồi được gắn với lịch hẹn LH-240805 để Wisere phân tích đúng dịch vụ, bác sĩ và chi nhánh.</span></div><div class="actions"><button class="ghost-button" id="back" type="button">${icons.arrowLeft} Chỉnh sửa</button><button class="primary-button" id="submit" type="button">Gửi đánh giá ${icons.check}</button></div></div>`;
+        document.getElementById('back').onclick = () => { state.step = 4; render(); };
+        document.getElementById('submit').onclick = submitSurvey;
+      }
+
+      function submitSurvey() {
+        const button = document.getElementById('submit');
+        button.disabled = true;
+        button.textContent = 'Đang ghi nhận...';
+        setTimeout(() => { state.completed = true; state.step = 6; render(); }, 650);
+      }
+
+      function renderSuccess() {
+        setHeader('Đã hoàn tất', 100);
+        body.innerHTML = `<div class="screen center-state"><span class="state-icon">${icons.check}</span><p class="eyebrow">Phản hồi đã được ghi nhận</p><h1>Cảm ơn bạn đã chia sẻ!</h1><p>Ý kiến của bạn giúp Wisere cải thiện chất lượng dịch vụ và mang đến trải nghiệm tốt hơn trong những lần thăm khám tiếp theo.</p><span class="completion-code">Mã phản hồi: RES-20260805-48291</span><button class="demo-link" id="reopen" type="button">Mô phỏng mở lại cùng đường dẫn</button></div>`;
+        document.getElementById('reopen').onclick = renderAlreadyCompleted;
+      }
+
+      function renderAlreadyCompleted() {
+        setHeader('Đã hoàn tất', 100);
+        body.innerHTML = `<div class="screen center-state"><span class="state-icon">${icons.check}</span><p class="eyebrow">Đường dẫn đã được sử dụng</p><h1>Bạn đã hoàn tất khảo sát này</h1><p>Khảo sát được ghi nhận lúc 16:42 ngày 05/08/2026. Mỗi lời mời chỉ được gửi một phản hồi để bảo đảm kết quả chính xác.</p><span class="completion-code">Mã phản hồi: RES-20260805-48291</span><button class="demo-link" id="restart-demo" type="button">Đặt lại bản mô phỏng</button></div>`;
+        document.getElementById('restart-demo').onclick = resetDemo;
+      }
+
+      function resetDemo() {
+        state.step = 0;
+        state.csat = null;
+        state.reasons = [];
+        state.touchpoints = { reception: null, waiting: null, doctor: null, payment: null };
+        state.comment = '';
+        state.consent = false;
+        state.completed = false;
+        render();
+      }
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+      }
+
+      setTimeout(render, 500);
+    })();
+  </script>
+</body>
+</html>
