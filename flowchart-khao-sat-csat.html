@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flowchart khảo sát CSAT theo lịch hẹn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--paper:#edf6f3;--ink:#17312e;--muted:#6c817d;--soft:#8ba29d;--rule:rgba(23,49,46,.16);--accent:#087f73;--accent-tint:rgba(8,127,115,.10);--link:#2e6f9e;--white:#fff}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:Geist,sans-serif} main{max-width:1080px;margin:0 auto;padding:48px 36px 32px} .eyebrow{margin:0 0 8px;color:var(--muted);font:500 8px 'Geist Mono',monospace;letter-spacing:.18em;text-transform:uppercase} h1{margin:0;font:400 32px 'Instrument Serif',serif;letter-spacing:-.01em} .subtitle{margin:10px 0 24px;color:var(--muted);font-size:13px} .figure{margin:0;overflow:auto} svg{display:block;width:100%;min-width:900px;height:auto}
+    .footer{margin-top:20px;padding-top:12px;border-top:1px solid var(--rule);color:var(--muted);font:400 8px 'Geist Mono',monospace;letter-spacing:.08em}
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">WISERE · PROCESS FLOW</p>
+  <h1>Khảo sát CSAT theo lịch hẹn</h1>
+  <p class="subtitle">Từ lúc lịch hẹn hoàn tất đến khi ghi nhận một phản hồi hợp lệ.</p>
+  <figure class="figure">
+    <svg viewBox="0 0 1000 1080" role="img" aria-labelledby="csat-flow-title csat-flow-desc">
+      <title id="csat-flow-title">Flowchart khảo sát CSAT theo lịch hẹn</title>
+      <desc id="csat-flow-desc">Sơ đồ mô tả việc tạo lời mời khảo sát, gửi Zalo ZNS, kiểm tra URL và lưu một phản hồi CSAT duy nhất.</desc>
+      <defs>
+        <marker id="csat-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#6c817d"/></marker>
+        <marker id="csat-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#087f73"/></marker>
+        <marker id="csat-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2e6f9e"/></marker>
+      </defs>
+      <rect width="1000" height="1080" fill="#edf6f3"/>
+
+      <!-- connectors first -->
+      <path d="M500 104 V136" fill="none" stroke="#087f73" stroke-width="1.2" marker-end="url(#csat-arrow-accent)"/>
+      <path d="M500 220 V252" fill="none" stroke="#6c817d" stroke-width="1.2" marker-end="url(#csat-arrow)"/>
+      <path d="M500 340 V372" fill="none" stroke="#6c817d" stroke-width="1.2" marker-end="url(#csat-arrow)"/>
+      <path d="M500 460 V492" fill="none" stroke="#2e6f9e" stroke-width="1.2" marker-end="url(#csat-arrow-link)"/>
+      <path d="M500 580 V612" fill="none" stroke="#6c817d" stroke-width="1.2" marker-end="url(#csat-arrow)"/>
+      <path d="M500 700 V736 H760 V772" fill="none" stroke="#6c817d" stroke-width="1.2" marker-end="url(#csat-arrow)"/>
+      <path d="M420 660 H272 V772" fill="none" stroke="#6c817d" stroke-width="1.2" marker-end="url(#csat-arrow)"/>
+      <path d="M760 856 V900 H500 V932" fill="none" stroke="#087f73" stroke-width="1.2" marker-end="url(#csat-arrow-accent)"/>
+      <path d="M272 856 V900 H500" fill="none" stroke="#6c817d" stroke-width="1.2" stroke-dasharray="5,4" marker-end="url(#csat-arrow)"/>
+
+      <!-- connector labels with masks -->
+      <rect x="520" y="704" width="48" height="16" rx="2" fill="#edf6f3"/><text x="544" y="716" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace">HỢP LỆ</text>
+      <rect x="304" y="664" width="56" height="16" rx="2" fill="#edf6f3"/><text x="332" y="676" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace">KHÔNG HỢP LỆ</text>
+      <rect x="630" y="872" width="64" height="16" rx="2" fill="#edf6f3"/><text x="662" y="884" text-anchor="middle" fill="#087f73" font-size="8" font-family="'Geist Mono',monospace">GHI NHẬN</text>
+
+      <!-- nodes -->
+      <ellipse cx="500" cy="64" rx="132" ry="40" fill="rgba(8,127,115,.10)" stroke="#087f73" stroke-width="1.2"/>
+      <text x="500" y="60" text-anchor="middle" fill="#17312e" font-size="16" font-weight="600" font-family="Geist,sans-serif">Lịch hẹn hoàn tất</text>
+      <text x="500" y="80" text-anchor="middle" fill="#087f73" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">TRIGGER</text>
+
+      <rect x="356" y="136" width="288" height="84" rx="6" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="500" y="164" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">BƯỚC 01</text>
+      <text x="500" y="188" text-anchor="middle" fill="#17312e" font-size="16" font-weight="600" font-family="Geist,sans-serif">Đọc cấu hình khảo sát</text>
+      <text x="500" y="208" text-anchor="middle" fill="#6c817d" font-size="9" font-family="'Geist Mono',monospace">ZNS · mẫu tin · mẫu khảo sát</text>
+
+      <polygon points="500,252 608,296 500,340 392,296" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="500" y="292" text-anchor="middle" fill="#17312e" font-size="13" font-weight="600" font-family="Geist,sans-serif">Đủ điều kiện?</text>
+      <text x="500" y="308" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace">khách hàng · lịch hẹn · mẫu Active</text>
+
+      <rect x="356" y="372" width="288" height="88" rx="6" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="500" y="400" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">BƯỚC 02</text>
+      <text x="500" y="424" text-anchor="middle" fill="#17312e" font-size="16" font-weight="600" font-family="Geist,sans-serif">Tạo lời mời khảo sát</text>
+      <text x="500" y="444" text-anchor="middle" fill="#6c817d" font-size="9" font-family="'Geist Mono',monospace">CREATED · token · expiredAt</text>
+
+      <rect x="356" y="492" width="288" height="88" rx="6" fill="#fff" stroke="#2e6f9e" stroke-width="1"/>
+      <text x="500" y="520" text-anchor="middle" fill="#2e6f9e" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">EXTERNAL</text>
+      <text x="500" y="544" text-anchor="middle" fill="#17312e" font-size="16" font-weight="600" font-family="Geist,sans-serif">Gửi Zalo ZNS</text>
+      <text x="500" y="564" text-anchor="middle" fill="#6c817d" font-size="9" font-family="'Geist Mono',monospace">URL + nút “Đánh giá”</text>
+
+      <rect x="356" y="612" width="288" height="88" rx="6" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="500" y="640" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">BƯỚC 03</text>
+      <text x="500" y="664" text-anchor="middle" fill="#17312e" font-size="16" font-weight="600" font-family="Geist,sans-serif">Khách mở URL</text>
+      <text x="500" y="684" text-anchor="middle" fill="#6c817d" font-size="9" font-family="'Geist Mono',monospace">kiểm tra token · thời hạn · trạng thái</text>
+
+      <polygon points="420,772 500,736 580,772 500,808" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="500" y="776" text-anchor="middle" fill="#17312e" font-size="13" font-weight="600" font-family="Geist,sans-serif">Có thể gửi?</text>
+
+      <rect x="156" y="772" width="232" height="84" rx="6" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="272" y="800" text-anchor="middle" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">NGOẠI LỆ</text>
+      <text x="272" y="824" text-anchor="middle" fill="#17312e" font-size="15" font-weight="600" font-family="Geist,sans-serif">Từ chối khảo sát</text>
+      <text x="272" y="844" text-anchor="middle" fill="#6c817d" font-size="9" font-family="'Geist Mono',monospace">invalid · expired · completed</text>
+
+      <rect x="644" y="772" width="232" height="84" rx="6" fill="rgba(8,127,115,.10)" stroke="#087f73" stroke-width="1.2"/>
+      <text x="760" y="800" text-anchor="middle" fill="#087f73" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">BƯỚC 04</text>
+      <text x="760" y="824" text-anchor="middle" fill="#17312e" font-size="15" font-weight="600" font-family="Geist,sans-serif">Lưu phản hồi CSAT</text>
+      <text x="760" y="844" text-anchor="middle" fill="#6c817d" font-size="9" font-family="'Geist Mono',monospace">một phản hồi · liên kết nghiệp vụ</text>
+
+      <ellipse cx="500" cy="972" rx="132" ry="40" fill="rgba(8,127,115,.10)" stroke="#087f73" stroke-width="1.2"/>
+      <text x="500" y="968" text-anchor="middle" fill="#17312e" font-size="16" font-weight="600" font-family="Geist,sans-serif">Hoàn tất</text>
+      <text x="500" y="988" text-anchor="middle" fill="#087f73" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".08em">COMPLETED</text>
+
+      <line x1="40" y1="1032" x2="960" y2="1032" stroke="rgba(23,49,46,.12)" stroke-width=".8"/>
+      <text x="40" y="1052" fill="#6c817d" font-size="8" font-family="'Geist Mono',monospace" letter-spacing=".14em">LEGEND</text>
+      <ellipse cx="150" cy="1048" rx="18" ry="9" fill="rgba(8,127,115,.10)" stroke="#087f73" stroke-width="1"/>
+      <text x="178" y="1052" fill="#6c817d" font-size="9" font-family="Geist,sans-serif">Bắt đầu / kết thúc</text>
+      <rect x="328" y="1040" width="36" height="16" rx="4" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="380" y="1052" fill="#6c817d" font-size="9" font-family="Geist,sans-serif">Bước xử lý</text>
+      <polygon points="500,1040 516,1048 500,1056 484,1048" fill="#fff" stroke="#17312e" stroke-width="1"/>
+      <text x="532" y="1052" fill="#6c817d" font-size="9" font-family="Geist,sans-serif">Quyết định</text>
+      <path d="M660 1048 H700" fill="none" stroke="#2e6f9e" stroke-width="1.2" marker-end="url(#csat-arrow-link)"/>
+      <text x="716" y="1052" fill="#6c817d" font-size="9" font-family="Geist,sans-serif">Tích hợp ngoài</text>
+    </svg>
+  </figure>
+  <div class="footer">Wisere · Khảo sát CSAT theo lịch hẹn · Flowchart tổng quan</div>
+</main>
+</body>
+</html>
