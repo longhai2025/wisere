@@ -21,11 +21,11 @@
     .meta { text-align:right; line-height:2; color:#53606d; }
     .meta b { color:#174a80; }
     .patient { margin:18px 0; padding:16px 20px; border:1px solid #dfe4ea; border-radius:7px; background:#f8f9fc; }
-    .patient-grid { display:grid; grid-template-columns:2.2fr .7fr 1.4fr 1.7fr; gap:12px 28px; align-items:center; }
+    .patient-grid { display:grid; grid-template-columns:2.2fr 1fr 1fr; gap:12px 28px; align-items:center; }
     .patient-row { display:flex; align-items:center; gap:5px; }
     .patient-row strong { white-space:nowrap; }
     .patient input, .patient select { height:31px; border:1px solid #c6ced8; border-radius:4px; padding:0 8px; min-width:0; width:100%; background:#fff; }
-    .wide { grid-column:span 2; }
+    .wide { grid-column:auto; }
     .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:stretch; }
     .card { border:1px solid #cdd5dc; border-top:5px solid var(--blue); border-radius:8px; overflow:hidden; box-shadow:0 1px 2px #0000000d; }
     .card:nth-child(3) { border-top-color:#3f42a2; }
@@ -38,7 +38,7 @@
     .group-title { font-weight:700; line-height:1.35; margin-bottom:7px; }
     .check { display:flex; align-items:flex-start; gap:8px; margin:7px 0; line-height:1.42; }
     input[type=checkbox], input[type=radio] { accent-color:var(--purple); width:16px; height:16px; flex:0 0 auto; margin-top:1px; }
-    .sub { margin-left:8px; }
+    .sub { margin-left:0; }
     .options { display:flex; gap:20px; flex-wrap:wrap; }
     textarea { width:100%; min-height:98px; resize:vertical; border:1px solid #aeb7c1; border-radius:4px; padding:9px; }
     .signatures { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:22px; padding-top:14px; border-top:2px solid #d5dbe1; }
@@ -66,7 +66,7 @@
     </section>
     <section class="patient"><div class="patient-grid">
       <div class="patient-row"><strong>Họ và tên:</strong><b class="text-blue-900">KHÁCH HÀNG 28/08</b></div><div class="patient-row"><strong>Tuổi:</strong><b class="text-blue-900">27</b></div>
-      <div class="patient-row"><strong>Giới tính:</strong><label><input type="radio" name="sex"> Nam</label><label><input type="radio" name="sex"> Nữ</label></div><div class="patient-row"><strong>Mã NB:</strong><b class="text-blue-900">MNB260827001</b></div>
+      <div class="patient-row"><strong>Giới tính:</strong><label>Nam</label></div>
       <div class="patient-row wide"><strong>Chẩn đoán:</strong><input placeholder="Nhập chẩn đoán"></div><div class="patient-row"><strong>Phòng mổ:</strong><input value="Điều trị"></div><div class="patient-row"><strong>Ngày:</strong><input type="date" value="2026-08-27"></div>
     </div></section>
     <section class="cards">
