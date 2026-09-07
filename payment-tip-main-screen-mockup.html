@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beelia POS - Waiting for customer tip</title>
+  <style>
+    :root{
+      --orange:#f45f20;--orange-soft:#fff1e9;--orange-pale:#fff8f4;
+      --ink:#171522;--muted:#73717a;--line:#e4e6eb;--surface:#fff;
+      --canvas:#f8f9fb;--green:#169669;--green-soft:#eaf8f3;--shadow:0 18px 50px rgba(22,25,36,.16)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;overflow:hidden;background:var(--canvas);color:var(--ink);font-family:"Avenir Next","Century Gothic","Segoe UI",sans-serif;font-size:14px}
+    button,input{font:inherit}.app{display:grid;grid-template-columns:270px 1fr;min-height:100vh;background:#fff}
+    .sidebar{position:relative;z-index:1;padding:15px 14px;background:#fff;border-right:1px solid #e6e7eb;box-shadow:3px 0 11px rgba(26,30,42,.08)}
+    .logo{height:43px;padding-left:6px;color:var(--orange);font-size:43px;font-weight:300;line-height:1;letter-spacing:-4px}.collapse{position:absolute;right:22px;top:24px;font-size:22px}
+    .nav{margin-top:10px}.nav-item{display:flex;align-items:center;gap:13px;min-height:51px;padding:0 12px;border-radius:8px;font-size:16px}.nav-item.active{color:var(--orange);background:#fff0e7}.nav-icon{width:21px;text-align:center;font-size:20px}.sub{padding-left:8px;margin:21px 0 9px}.sub .nav-item{font-size:15px}.nav-divider{height:1px;margin:10px -14px;background:#f1f1f3}.setting{position:absolute;left:22px;bottom:21px;display:flex;gap:18px;align-items:center;color:#666;font-size:16px}
+    .workspace{min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;height:49px;padding:0 20px;border-bottom:1px solid #ececf0}.page-title{font-size:24px;font-weight:800;letter-spacing:-.6px}.location{display:flex;gap:8px}.select{height:34px;padding:0 13px;border:1px solid #d6dbe3;border-radius:8px;background:#fff;color:#34323d;font-size:12px}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;padding:7px 10px}.filters,.actions{display:flex;align-items:center;gap:8px}.btn{height:37px;padding:0 14px;border:1px solid #dce0e7;border-radius:8px;background:#fff;color:#272530}.btn.icon{width:38px;padding:0;font-size:20px}.btn.primary{border-color:var(--orange);background:var(--orange);color:#fff;font-weight:700}.search{width:260px;height:37px;padding:0 14px;border:1px solid #dce0e7;border-radius:8px;color:#999}
+    .tabs{display:flex;gap:28px;height:49px;padding:10px 10px 0}.tab{position:relative;padding:0 0 12px}.tab.active{color:var(--orange)}.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--orange)}.badge{display:inline-grid;place-items:center;min-width:20px;height:18px;margin-left:5px;padding:0 5px;border-radius:4px;background:#fff0ea;color:var(--orange);font-size:11px;font-weight:700}.tab.active .badge{background:var(--orange);color:#fff}
+    .table-wrap{margin:0 10px;border:1px solid #dfe3ea;border-radius:8px;overflow:hidden}.table{width:100%;border-collapse:collapse;font-size:12px}.table th{height:36px;padding:0 9px;background:#f8f9fb;border-right:1px solid #e7e9ee;text-align:left;white-space:nowrap}.table td{height:53px;padding:0 9px;border-top:1px solid #dfe3ea;border-right:1px solid #e7e9ee;white-space:nowrap}.table tr:nth-child(even) td{background:#fafafa}.service{display:inline-block;margin-right:5px;padding:4px 7px;border:1px solid #8cbcff;border-radius:5px;background:#eef6ff;color:#3982ff}.appointment{color:var(--orange)}.assignee{padding:4px 8px;border:1px dashed #5ca743;border-radius:7px;color:#46972e}.ellipsis{color:#888;font-size:18px;letter-spacing:2px}
+    .scrim{position:fixed;inset:0 540px 0 270px;background:rgba(246,247,249,.68);backdrop-filter:blur(1.2px);z-index:3}.scrim-note{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:12px;padding:13px 18px;border:1px solid rgba(218,220,226,.85);border-radius:12px;background:rgba(255,255,255,.88);box-shadow:0 10px 28px rgba(27,29,38,.08);color:#686671;font-size:13px}.mini-spinner{width:18px;height:18px;border:2px solid #ffd6c4;border-top-color:var(--orange);border-radius:50%;animation:spin .9s linear infinite}
+    .checkout{position:fixed;z-index:5;top:0;right:0;width:540px;height:100vh;display:flex;flex-direction:column;background:var(--surface);box-shadow:var(--shadow)}
+    .checkout-head{display:flex;justify-content:space-between;align-items:center;height:66px;padding:0 24px;border-bottom:1px solid var(--line)}.checkout-title{font-size:20px;font-weight:800}.ticket-id{color:var(--muted);font-size:12px}.close{width:34px;height:34px;border:0;border-radius:50%;background:#f3f4f6;color:#777;font-size:20px}
+    .checkout-body{flex:1;overflow:auto;padding:22px 24px}.customer{display:flex;justify-content:space-between;align-items:center;margin-bottom:19px}.customer strong{display:block;font-size:15px}.customer span{color:var(--muted);font-size:12px}.pill{padding:5px 9px;border-radius:20px;background:#f4f5f7;color:#686671;font-size:11px}
+    .items{border:1px solid var(--line);border-radius:11px;overflow:hidden}.item{display:flex;justify-content:space-between;padding:14px 15px;border-bottom:1px solid var(--line)}.item:last-child{border:0}.item-name{font-weight:700}.item-tech{margin-top:4px;color:var(--muted);font-size:11px}.price{font-weight:700}.totals{padding:18px 2px}.row{display:flex;justify-content:space-between;margin:9px 0;color:#64616a}.row strong{color:var(--ink)}.row.tip-row{display:none}.row.grand{margin-top:15px;padding-top:15px;border-top:1px dashed #dcdde1;color:var(--ink);font-size:17px;font-weight:800}.row.grand strong{color:var(--orange);font-size:25px;letter-spacing:-.7px}
+    .status-card{margin-top:8px;padding:20px;border:1px solid #ffd6c4;border-radius:14px;background:linear-gradient(145deg,#fffaf7,#fff3ec);text-align:center}.status-icon{position:relative;width:54px;height:54px;margin:0 auto 12px;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--orange);box-shadow:0 7px 20px rgba(244,95,32,.15);font-size:24px}.status-icon:after{content:"";position:absolute;inset:-5px;border:1px solid #ffc5aa;border-radius:50%;animation:pulse 1.8s ease-out infinite}.status-card h2{margin:0;font-size:18px}.status-card p{max-width:370px;margin:7px auto 0;color:var(--muted);font-size:12px;line-height:1.55}.status-meta{display:flex;justify-content:center;gap:7px;margin-top:13px}.status-meta span{padding:5px 9px;border-radius:20px;background:#fff;color:#625e66;font-size:11px}
+    .confirmed{border-color:#bfe7d7;background:linear-gradient(145deg,#f7fffb,#eaf8f3)}.confirmed .status-icon{color:var(--green);box-shadow:0 7px 20px rgba(22,150,105,.14)}.confirmed .status-icon:after{display:none}.confirmed .status-icon{background:#fff}.confirmed h2{color:#137c59}
+    .prototype{margin-top:17px;padding:12px;border:1px dashed #d7d9df;border-radius:10px;background:#fafbfc}.prototype-label{margin-bottom:8px;color:#8a8790;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.prototype-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.prototype button{min-height:35px;border:1px solid #dedfe4;border-radius:7px;background:#fff;color:#55515d;font-size:11px}.prototype button:hover{border-color:var(--orange);color:var(--orange)}
+    .checkout-foot{padding:17px 24px 20px;border-top:1px solid var(--line);background:#fff}.cancel-tip{width:100%;height:42px;border:1px solid #d8d9de;border-radius:9px;background:#fff;color:#595660;font-weight:700}.pay{display:none;width:100%;height:48px;border:0;border-radius:9px;background:var(--orange);color:#fff;font-weight:800;box-shadow:0 8px 18px rgba(244,95,32,.23)}.foot-hint{margin:9px 0 0;text-align:center;color:#8b8991;font-size:10px}
+    @keyframes spin{to{transform:rotate(360deg)}}@keyframes pulse{0%{transform:scale(.9);opacity:.8}75%,100%{transform:scale(1.35);opacity:0}}
+    @media(max-width:900px){.app{grid-template-columns:78px 1fr}.sidebar{padding:15px 10px}.logo{font-size:0}.logo:after{content:"b";font-size:42px}.collapse,.nav-item span:not(.nav-icon),.sub,.setting span{display:none}.nav-item{justify-content:center;padding:0}.setting{left:30px}.scrim{left:78px}.checkout{width:min(540px,75vw)}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="sidebar">
+      <div class="logo">beelia</div><div class="collapse">☰</div>
+      <nav class="nav">
+        <div class="nav-item active"><span class="nav-icon">▣</span><span>Check-in</span></div>
+        <div class="sub"><div class="nav-item"><span>Technician report</span></div><div class="nav-item"><span>Report Check in</span></div></div>
+        <div class="nav-divider"></div>
+        <div class="nav-item"><span class="nav-icon">◫</span><span>Turn</span></div><div class="nav-item"><span class="nav-icon">□</span><span>Calendar</span></div><div class="nav-item"><span class="nav-icon">▣</span><span>Customers</span></div><div class="nav-item"><span class="nav-icon">◇</span><span>Catalog</span></div><div class="nav-item"><span class="nav-icon">♧</span><span>Team</span></div><div class="nav-item"><span class="nav-icon">▥</span><span>Reports</span></div><div class="nav-item"><span class="nav-icon">▱</span><span>Marketing</span></div>
+      </nav>
+      <div class="setting"><b>⚙</b><span>Setting</span></div>
+    </aside>
+    <section class="workspace">
+      <header class="topbar"><div class="page-title">Check-in</div><div class="location"><button class="select">📍 Lewis Center　⌄</button><button class="select">CloudPrint_0081 - ce4fe - <span style="color:#f05b4f">(Offline)</span></button><button class="select">S</button></div></header>
+      <div class="toolbar"><div class="filters"><button class="btn icon">‹</button><button class="btn">Today</button><button class="btn">Monday, Sep 07, 2026　▣</button><button class="btn">Date range</button><button class="btn icon">›</button></div><div class="actions"><input class="search" placeholder="⌕ Search by name, phone number, ID"><button class="btn icon">▦</button><button class="btn primary">+ Create ticket</button><button class="btn icon">⚙</button></div></div>
+      <div class="tabs"><div class="tab active">Sign-in <span class="badge">8</span></div><div class="tab">Waiting List <span class="badge">0</span></div><div class="tab">Archived <span class="badge">0</span></div><div class="tab">Tech Total: 0</div></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>ID</th><th>Customers</th><th>Phone</th><th>Time</th><th>Created</th><th>Source</th><th>Services</th><th>Requested</th><th>Assignee</th><th>Note</th><th>Actions</th></tr></thead><tbody id="tableRows"></tbody></table></div>
+    </section>
+  </main>
+
+  <div class="scrim" id="scrim"><div class="scrim-note"><span class="mini-spinner" id="miniSpinner"></span><span id="scrimText">Checkout is waiting for customer input</span></div></div>
+
+  <aside class="checkout" aria-label="Checkout panel">
+    <header class="checkout-head"><div><div class="checkout-title">Checkout</div><div class="ticket-id">Ticket #A7 · ID 8</div></div><button class="close" aria-label="Close">×</button></header>
+    <div class="checkout-body">
+      <div class="customer"><div><strong>First name Last name</strong><span>••••••1272 · Guest checkout</span></div><span class="pill">2 services</span></div>
+      <section class="items"><div class="item"><div><div class="item-name">Test 2808</div><div class="item-tech">Technician · 001 Nguyen Thao</div></div><div class="price">$12.00</div></div><div class="item"><div><div class="item-name">Service002 LC</div><div class="item-tech">Technician · 001 Nguyen Thao</div></div><div class="price">$20.00</div></div></section>
+      <div class="totals"><div class="row"><span>Service total</span><strong>$32.00</strong></div><div class="row tip-row" id="tipRow"><span id="tipLabel">Card tip</span><strong id="tipAmount">$5.76</strong></div><div class="row grand"><span>Amount to charge</span><strong id="chargeAmount">$32.00</strong></div></div>
+      <section class="status-card" id="statusCard" aria-live="polite"><div class="status-icon" id="statusIcon">◷</div><h2 id="statusTitle">Waiting for customer to select tip…</h2><p id="statusText">The tip screen is active on the customer display. Payment controls will unlock after the customer confirms a selection.</p><div class="status-meta"><span>Customer display connected</span><span id="elapsed">Waiting · 00:00</span></div></section>
+      <section class="prototype"><div class="prototype-label">Prototype controls</div><div class="prototype-actions"><button data-confirm="Card">Simulate Card tip · $5.76</button><button data-confirm="Cash">Simulate Cash tip · $6.40</button></div></section>
+    </div>
+    <footer class="checkout-foot"><button class="cancel-tip" id="cancelTip">Cancel tip request</button><button class="pay" id="payButton">Pay $37.76</button><p class="foot-hint" id="footHint">Pay is temporarily disabled while the customer is choosing a tip.</p></footer>
+  </aside>
+
+  <script>
+    const rows=[['8','First name Last name','*******1272','04:52 AM','04:52 AM'],['7','First name Last name','*******1272','03:51 AM','03:51 AM'],['6','test create','*******7635','03:30 PM','12:37 AM'],['5','test create','*******7635','12:28 AM','12:28 AM'],['4','etes','*******6678','02:15 PM','12:21 AM'],['3','123','*******9999','02:15 PM','12:21 AM'],['2','123','*******9999','11:45 AM','12:21 AM'],['1','123','*******9999','12:12 AM','12:12 AM']];
+    document.getElementById('tableRows').innerHTML=rows.map((r,i)=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td class="appointment">Appointment⌄</td><td><span class="service">${i<2?'Service002 LC':'Service_001'}</span><span class="service">${i<2?'Test 2808':'+ 1...'}</span></td><td>001 Nguyen Thao</td><td><span class="assignee">＋ Unassignee</span></td><td>--</td><td class="ellipsis">▱ ▣ …</td></tr>`).join('');
+
+    let seconds=0, timer=setInterval(()=>{seconds++;document.getElementById('elapsed').textContent=`Waiting · ${String(Math.floor(seconds/60)).padStart(2,'0')}:${String(seconds%60).padStart(2,'0')}`},1000);
+    const statusCard=document.getElementById('statusCard'), tipRow=document.getElementById('tipRow'), cancelTip=document.getElementById('cancelTip'), payButton=document.getElementById('payButton'), footHint=document.getElementById('footHint');
+    function confirmTip(method){
+      clearInterval(timer);const tip=method==='Card'?5.76:6.40;statusCard.classList.add('confirmed');
+      document.getElementById('statusIcon').textContent='✓';document.getElementById('statusTitle').textContent='Tip confirmed';
+      document.getElementById('statusText').textContent=method==='Card'?`Customer added a $${tip.toFixed(2)} card tip. Review the total and continue payment.`:`Customer will pay a $${tip.toFixed(2)} tip in cash. Do not add it to the card charge.`;
+      document.getElementById('elapsed').textContent=`${method} tip · Confirmed`;document.getElementById('tipLabel').textContent=`${method} tip`;document.getElementById('tipAmount').textContent=`$${tip.toFixed(2)}`;tipRow.style.display='flex';
+      document.getElementById('chargeAmount').textContent=method==='Card'?'$37.76':'$32.00';payButton.textContent=method==='Card'?'Pay $37.76':'Pay $32.00';cancelTip.style.display='none';payButton.style.display='block';footHint.textContent=method==='Cash'?'Cash tip is recorded separately from this payment.':'Card tip is included in the amount to charge.';
+      document.getElementById('scrim').style.display='none';
+    }
+    document.querySelectorAll('[data-confirm]').forEach(button=>button.addEventListener('click',()=>confirmTip(button.dataset.confirm)));
+    cancelTip.addEventListener('click',()=>{clearInterval(timer);document.getElementById('statusIcon').textContent='×';document.getElementById('statusTitle').textContent='Tip request cancelled';document.getElementById('statusText').textContent='The customer display has returned to its idle screen. You can send the tip request again or continue without a tip.';document.getElementById('elapsed').textContent='Customer display · Idle';document.getElementById('miniSpinner').style.display='none';document.getElementById('scrimText').textContent='Tip request cancelled — checkout controls are available';cancelTip.textContent='Send tip request again';footHint.textContent='No tip has been added to this checkout.';cancelTip.onclick=()=>location.reload()});
+  </script>
+</body>
+</html>
