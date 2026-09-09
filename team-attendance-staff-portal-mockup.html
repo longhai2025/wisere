@@ -172,7 +172,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .login-card, .profile-card, .action-card, .history-card {
+    .login-card, .profile-card, .action-card, .turn-card, .history-card {
       border: 1px solid var(--line);
       border-radius: 22px;
       background: linear-gradient(145deg, var(--panel-2), var(--panel));
@@ -324,6 +324,68 @@
     }
     .progress-line { height: 1px; background: var(--line); }
     .shift-label { color: var(--dim); font-size: 10px; font-weight: 700; }
+
+    .turn-card { margin-top: 12px; overflow: hidden; }
+    .turn-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px; }
+    .turn-heading { margin: 0; font-size: 15px; }
+    .turn-caption { margin-top: 4px; color: var(--muted); font-size: 10px; }
+    .turn-total { padding: 6px 9px; border-radius: 999px; color: var(--orange); background: var(--orange-soft); font-size: 9px; font-weight: 800; text-transform: uppercase; }
+
+    .active-turn-wrap { padding: 0 13px 13px; }
+    .active-turn {
+      position: relative;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 11px;
+      padding: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 91, 32, .28);
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 91, 32, .11), rgba(255, 91, 32, .035));
+    }
+    .active-turn::before { position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--orange); content: ""; }
+    .turn-index { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; color: #fff; background: var(--orange); font-size: 12px; font-weight: 800; }
+    .active-turn-copy { min-width: 0; }
+    .active-turn-label { color: var(--orange); font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .active-turn-service { margin-top: 3px; overflow: hidden; font-size: 13px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .active-turn-meta { margin-top: 4px; color: var(--muted); font-size: 9px; line-height: 1.55; }
+    .turn-type { display: inline-flex; align-items: center; min-height: 20px; margin-top: 8px; padding: 0 7px; border: 1px solid rgba(255, 91, 32, .2); border-radius: 7px; color: #ff9b75; background: rgba(255, 91, 32, .07); font-size: 8px; font-weight: 800; text-transform: uppercase; }
+
+    .complete-turn-button {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 46px;
+      margin-top: 2px;
+      border: 1px solid var(--orange);
+      border-radius: 12px;
+      color: #fff;
+      background: var(--orange);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .complete-turn-button svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.2; }
+
+    .no-active-turn { padding: 0 13px 13px; }
+    .no-active-turn-inner { padding: 16px; border: 1px dashed #33363e; border-radius: 15px; color: var(--muted); background: rgba(255, 255, 255, .015); font-size: 10px; line-height: 1.55; text-align: center; }
+    .no-active-turn-inner strong { display: block; margin-bottom: 3px; color: #d7d8dd; font-size: 11px; }
+
+    .completed-turns { border-top: 1px solid var(--line); }
+    .completed-title { display: flex; align-items: center; justify-content: space-between; padding: 12px 17px 9px; color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+    .completed-count { display: grid; min-width: 21px; height: 21px; padding: 0 6px; place-items: center; border-radius: 999px; color: #d9dae0; background: #292b32; }
+    .turn-list { padding: 0 13px 13px; }
+    .turn-row { display: grid; grid-template-columns: 29px minmax(0, 1fr) auto; gap: 9px; align-items: center; min-height: 52px; padding: 8px 4px; border-bottom: 1px solid rgba(255, 255, 255, .055); }
+    .turn-row:last-child { border-bottom: 0; }
+    .turn-row-index { display: grid; width: 29px; height: 29px; place-items: center; border-radius: 9px; color: var(--green); background: var(--green-soft); font-size: 9px; font-weight: 800; }
+    .turn-row-copy { min-width: 0; }
+    .turn-row-service { overflow: hidden; color: #d9dae0; font-size: 10px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .turn-row-meta { margin-top: 3px; color: var(--muted); font-size: 8px; }
+    .turn-row-end { text-align: right; }
+    .turn-value { color: var(--orange); font-size: 9px; font-weight: 800; }
+    .turn-complete-time { margin-top: 3px; color: var(--dim); font-size: 8px; }
+    .turn-empty { padding: 7px 4px 4px; color: var(--muted); font-size: 10px; text-align: center; }
 
     .history-card { margin-top: 12px; overflow: hidden; }
     .history-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 17px 17px 12px; }
@@ -525,6 +587,21 @@
           <div class="shift-progress"><span class="progress-line"></span><span class="shift-label" id="shiftLabel">Shift 1 of 2</span><span class="progress-line"></span></div>
         </div>
 
+        <section class="turn-card" aria-labelledby="turnHeading">
+          <div class="turn-head">
+            <div>
+              <h2 class="turn-heading" id="turnHeading">Today's turns</h2>
+              <div class="turn-caption">Complete your active Turn when the service is finished.</div>
+            </div>
+            <div class="turn-total" id="turnTotal">0 completed</div>
+          </div>
+          <div id="activeTurnArea"></div>
+          <div class="completed-turns">
+            <div class="completed-title"><span>Completed today</span><span class="completed-count" id="completedTurnCount">0</span></div>
+            <div class="turn-list" id="completedTurnList"></div>
+          </div>
+        </section>
+
         <div class="history-card">
           <div class="history-head">
             <div>
@@ -566,6 +643,26 @@
     </div>
   </div>
 
+  <div class="dialog-mask" id="turnDialogMask" role="dialog" aria-modal="true" aria-labelledby="turnDialogTitle">
+    <div class="dialog">
+      <div class="dialog-mark status-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>
+      </div>
+      <h2 id="turnDialogTitle">Complete this Turn?</h2>
+      <p>This marks the current Turn as completed. It does not change today's attendance or re-order the Turn queue.</p>
+      <div class="confirm-summary">
+        <div class="confirm-row"><span>Turn</span><strong id="confirmTurnNumber">T3</strong></div>
+        <div class="confirm-row"><span>Service</span><strong id="confirmTurnService">Manicure</strong></div>
+        <div class="confirm-row"><span>Customer</span><strong id="confirmTurnCustomer">Angela M.</strong></div>
+        <div class="confirm-row"><span>Complete time</span><strong id="confirmTurnTime">02:41 PM</strong></div>
+      </div>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="cancelTurnAction">Cancel</button>
+        <button class="primary-button" id="confirmTurnAction">Complete turn</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"><span aria-hidden="true">&#10003;</span><span id="toastText">Clock in recorded</span></div>
 
   <script>
@@ -579,7 +676,14 @@
         staff: {
           '001': {
             name: 'Nguyen Thao',
-            today: [{ in: '08:04 AM', out: '12:02 PM' }],
+            today: [{ in: '08:04 AM', out: '12:02 PM' }, { in: '01:00 PM', out: null }],
+            turns: {
+              active: { id: 'T3', customer: 'Angela M.', service: 'Manicure + Gel Polish', type: 'Full', value: 1, assignedAt: '02:05 PM' },
+              completed: [
+                { id: 'T1', customer: 'Sophia R.', service: 'Gel Polish', type: 'Half', value: .5, completedAt: '10:18 AM' },
+                { id: 'T2', customer: 'Mia T.', service: 'Pedicure', type: 'Full', value: 1, completedAt: '12:01 PM' }
+              ]
+            },
             history: [
               { label: 'Yesterday, Sep 8', shifts: [{ in: '08:11 AM', out: '12:05 PM' }, { in: '01:04 PM', out: '05:36 PM' }] },
               { label: 'Monday, Sep 7', shifts: [{ in: '08:06 AM', out: '04:42 PM' }] }
@@ -587,7 +691,13 @@
           },
           '002': {
             name: 'Email Check 0729',
-            today: [{ in: '09:12 AM', out: null }],
+            today: [{ in: '09:12 AM', out: '12:06 PM' }],
+            turns: {
+              active: null,
+              completed: [
+                { id: 'T1', customer: 'Olivia B.', service: 'Manicure', type: 'Full', value: 1, completedAt: '11:22 AM' }
+              ]
+            },
             history: [
               { label: 'Yesterday, Sep 8', shifts: [{ in: '09:02 AM', out: '05:28 PM' }] },
               { label: 'Monday, Sep 7', shifts: [{ in: '09:15 AM', out: '05:30 PM' }] }
@@ -596,6 +706,7 @@
           '003': {
             name: 'Bonghong',
             today: [{ in: '08:10 AM', out: '12:10 PM' }, { in: '01:05 PM', out: '05:32 PM' }],
+            turns: { active: null, completed: [] },
             history: [
               { label: 'Yesterday, Sep 8', shifts: [{ in: '08:14 AM', out: '04:55 PM' }] }
             ]
@@ -609,6 +720,10 @@
           '001': {
             name: 'Michael Lee',
             today: [],
+            turns: {
+              active: { id: 'T2', customer: 'Ava P.', service: 'Acrylic Full Set', type: 'Full', value: 1, assignedAt: '01:40 PM' },
+              completed: [{ id: 'T1', customer: 'Emma D.', service: 'Polish Change', type: 'Half', value: .5, completedAt: '11:06 AM' }]
+            },
             history: [
               { label: 'Yesterday, Sep 8', shifts: [{ in: '10:03 AM', out: '06:12 PM' }] },
               { label: 'Monday, Sep 7', shifts: [{ in: '09:56 AM', out: '06:04 PM' }] }
@@ -617,11 +732,13 @@
           '002': {
             name: 'Emma Wilson',
             today: [{ in: '09:01 AM', out: null }],
+            turns: { active: null, completed: [] },
             history: [{ label: 'Yesterday, Sep 8', shifts: [{ in: '09:08 AM', out: '05:44 PM' }] }]
           },
           '003': {
             name: 'Sophia Tran',
             today: [{ in: '08:30 AM', out: '12:00 PM' }],
+            turns: { active: null, completed: [{ id: 'T1', customer: 'Isabella W.', service: 'Pedicure', type: 'Full', value: 1, completedAt: '10:45 AM' }] },
             history: [{ label: 'Yesterday, Sep 8', shifts: [{ in: '08:32 AM', out: '04:40 PM' }] }]
           }
         }
@@ -638,6 +755,10 @@
               '001': {
                 name: 'Taylor Morgan',
                 today: [],
+                turns: {
+                  active: { id: 'T1', customer: 'Harper S.', service: 'Dipping Powder', type: 'Full', value: 1, assignedAt: '02:12 PM' },
+                  completed: []
+                },
                 history: [
                   { label: 'Yesterday, Sep 8', shifts: [{ in: '09:20 AM', out: '05:48 PM' }] }
                 ]
@@ -645,6 +766,7 @@
               '002': {
                 name: 'Jordan Kim',
                 today: [{ in: '10:02 AM', out: null }],
+                turns: { active: null, completed: [] },
                 history: []
               }
             }
@@ -677,6 +799,7 @@
     const clearId = document.getElementById('clearId');
     const staffError = document.getElementById('staffError');
     const dialogMask = document.getElementById('dialogMask');
+    const turnDialogMask = document.getElementById('turnDialogMask');
     const clockAction = document.getElementById('clockAction');
     let currentStaffId = '';
     let currentStaff = null;
@@ -768,6 +891,52 @@
       }).join('');
     }
 
+    function turnValueLabel(value) {
+      return `${Number(value).toFixed(value % 1 ? 1 : 0)} turn`;
+    }
+
+    function renderTurns() {
+      const turns = currentStaff.turns || { active: null, completed: [] };
+      const completedValue = turns.completed.reduce((sum, turn) => sum + Number(turn.value || 0), 0);
+      document.getElementById('turnTotal').textContent = `${Number(completedValue).toFixed(completedValue % 1 ? 1 : 0)} completed`;
+      document.getElementById('completedTurnCount').textContent = turns.completed.length;
+
+      const activeArea = document.getElementById('activeTurnArea');
+      if (turns.active) {
+        const turn = turns.active;
+        activeArea.innerHTML = `<div class="active-turn-wrap"><article class="active-turn">
+          <div class="turn-index">${turn.id}</div>
+          <div class="active-turn-copy">
+            <div class="active-turn-label">Active turn</div>
+            <div class="active-turn-service">${turn.service}</div>
+            <div class="active-turn-meta">${turn.customer} &middot; Assigned ${turn.assignedAt}</div>
+            <span class="turn-type">${turn.type} &middot; ${turnValueLabel(turn.value)}</span>
+          </div>
+          <button class="complete-turn-button" id="completeTurnButton">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>
+            Complete turn
+          </button>
+        </article></div>`;
+        document.getElementById('completeTurnButton').addEventListener('click', openTurnConfirmation);
+      } else {
+        activeArea.innerHTML = '<div class="no-active-turn"><div class="no-active-turn-inner"><strong>No active Turn</strong>Your next assigned Turn will appear here automatically.</div></div>';
+      }
+
+      const list = document.getElementById('completedTurnList');
+      list.innerHTML = turns.completed.length ? [...turns.completed].reverse().map(turn => `
+        <div class="turn-row">
+          <span class="turn-row-index">${turn.id}</span>
+          <div class="turn-row-copy">
+            <div class="turn-row-service">${turn.service}</div>
+            <div class="turn-row-meta">${turn.customer} &middot; ${turn.type} turn</div>
+          </div>
+          <div class="turn-row-end">
+            <div class="turn-value">${turnValueLabel(turn.value)}</div>
+            <div class="turn-complete-time">${turn.completedAt}</div>
+          </div>
+        </div>`).join('') : '<div class="turn-empty">No Turns completed today.</div>';
+    }
+
     function attendanceState() {
       const shifts = currentStaff.today;
       if (!shifts.length) return { action: 'clock-in', status: 'Ready to clock in', heading: 'Start your workday', subtitle: `Tap once to record your start time at ${currentLocation.name}.`, label: 'Clock in', shift: 'Shift 1 of 2', icon: icons.clock, className: '' };
@@ -791,6 +960,7 @@
       clockAction.disabled = state.action === 'done';
       clockAction.setAttribute('aria-label', state.label);
       clockAction.querySelector('.action-icon').innerHTML = state.icon;
+      renderTurns();
       renderHistory();
     }
 
@@ -835,6 +1005,33 @@
       clockAction.focus();
     }
 
+    function openTurnConfirmation() {
+      const turn = currentStaff?.turns?.active;
+      if (!turn) return;
+      document.getElementById('confirmTurnNumber').textContent = turn.id;
+      document.getElementById('confirmTurnService').textContent = turn.service;
+      document.getElementById('confirmTurnCustomer').textContent = turn.customer;
+      document.getElementById('confirmTurnTime').textContent = currentTime();
+      turnDialogMask.classList.add('open');
+      document.getElementById('confirmTurnAction').focus();
+    }
+
+    function closeTurnConfirmation() {
+      turnDialogMask.classList.remove('open');
+      document.getElementById('completeTurnButton')?.focus();
+    }
+
+    function completeTurn() {
+      const turns = currentStaff?.turns;
+      if (!turns?.active) return;
+      const completedTurn = { ...turns.active, completedAt: currentTime() };
+      turns.completed.push(completedTurn);
+      turns.active = null;
+      turnDialogMask.classList.remove('open');
+      renderTurns();
+      showToast(`${completedTurn.id} completed successfully`);
+    }
+
     function applyAttendanceAction() {
       const time = currentTime();
       if (pendingAction === 'clock-in' || pendingAction === 're-clock-in') {
@@ -872,7 +1069,14 @@
     document.getElementById('cancelAction').addEventListener('click', closeConfirmation);
     document.getElementById('confirmAction').addEventListener('click', applyAttendanceAction);
     dialogMask.addEventListener('click', event => { if (event.target === dialogMask) closeConfirmation(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialogMask.classList.contains('open')) closeConfirmation(); });
+    document.getElementById('cancelTurnAction').addEventListener('click', closeTurnConfirmation);
+    document.getElementById('confirmTurnAction').addEventListener('click', completeTurn);
+    turnDialogMask.addEventListener('click', event => { if (event.target === turnDialogMask) closeTurnConfirmation(); });
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Escape') return;
+      if (dialogMask.classList.contains('open')) closeConfirmation();
+      if (turnDialogMask.classList.contains('open')) closeTurnConfirmation();
+    });
 
     updateClock();
     setInterval(updateClock, 1000);
