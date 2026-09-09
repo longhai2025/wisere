@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e0f12">
+  <title>Beelia - Staff Attendance Portal</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --orange: #ff5b20;
+      --orange-strong: #f24b0f;
+      --orange-soft: rgba(255, 91, 32, .13);
+      --ink: #f7f7f8;
+      --muted: #9b9da7;
+      --dim: #6d707b;
+      --page: #0e0f12;
+      --panel: #17181d;
+      --panel-2: #1d1f25;
+      --line: #2a2c34;
+      --green: #5fd49a;
+      --green-soft: rgba(95, 212, 154, .12);
+      --red: #ff7777;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .42);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; background: var(--page); }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(255, 91, 32, .16), transparent 32rem),
+        radial-gradient(circle at 94% 86%, rgba(255, 123, 54, .08), transparent 28rem),
+        var(--page);
+      font-family: "Manrope", "Century Gothic", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .app-shell {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: rgba(14, 15, 18, .9);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+      padding: calc(13px + env(safe-area-inset-top)) 18px 13px;
+      border-bottom: 1px solid rgba(255, 255, 255, .055);
+      background: rgba(14, 15, 18, .86);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      color: var(--orange);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .portal-label {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #c7c8ce;
+      background: rgba(255, 255, 255, .025);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    main {
+      width: min(100%, 540px);
+      margin: 0 auto;
+      padding: 18px 16px calc(34px + env(safe-area-inset-bottom));
+    }
+
+    .location-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 15px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #1b1c22, #15161a);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .2);
+    }
+
+    .location-card::after {
+      position: absolute;
+      inset: auto -38px -58px auto;
+      width: 130px;
+      height: 130px;
+      border: 24px solid rgba(255, 91, 32, .045);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .location-icon {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--orange);
+      background: var(--orange-soft);
+    }
+
+    .location-icon svg, .small-icon svg, .action-icon svg, .status-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.9;
+    }
+
+    .location-copy { min-width: 0; }
+    .eyebrow { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .location-name { margin-top: 3px; overflow: hidden; font-size: 16px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .location-address { margin-top: 3px; overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+
+    .secure-dot {
+      position: relative;
+      z-index: 1;
+      width: 9px;
+      height: 9px;
+      border: 2px solid #17211d;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px var(--green-soft);
+    }
+
+    .clock-panel {
+      padding: 31px 10px 23px;
+      text-align: center;
+    }
+
+    .today-label { color: var(--muted); font-size: 12px; font-weight: 600; }
+    .live-time { margin-top: 3px; font-size: clamp(42px, 13vw, 62px); font-weight: 800; letter-spacing: -.06em; line-height: 1.05; }
+    .live-time .period { margin-left: 5px; color: var(--orange); font-size: .32em; letter-spacing: 0; }
+
+    .screen { display: none; animation: rise .34s ease both; }
+    .screen.active { display: block; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-card, .profile-card, .action-card, .history-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(145deg, var(--panel-2), var(--panel));
+      box-shadow: 0 14px 44px rgba(0, 0, 0, .16);
+    }
+
+    .login-card { padding: 22px 18px 19px; }
+    .login-card h1 { margin: 0; font-size: 24px; letter-spacing: -.04em; }
+    .login-card > p { margin: 8px 0 20px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+    .field-label { display: block; margin: 0 0 8px 2px; color: #d5d6da; font-size: 12px; font-weight: 700; }
+
+    .id-field {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 34px;
+      align-items: center;
+      height: 58px;
+      border: 1px solid #373a44;
+      border-radius: 15px;
+      background: #111216;
+      transition: .2s ease;
+    }
+
+    .id-field:focus-within { border-color: var(--orange); box-shadow: 0 0 0 4px rgba(255, 91, 32, .1); }
+    .small-icon { display: grid; color: var(--dim); place-items: center; }
+    .id-field input { width: 100%; height: 100%; border: 0; outline: 0; color: #fff; background: transparent; font-size: 17px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .id-field input::placeholder { color: #555861; font-weight: 500; letter-spacing: 0; text-transform: none; }
+
+    .clear-id {
+      display: none;
+      width: 28px;
+      height: 28px;
+      border: 0;
+      border-radius: 50%;
+      color: #b7b9c0;
+      background: #292b32;
+    }
+    .clear-id.visible { display: grid; place-items: center; }
+
+    .primary-button, .secondary-button, .text-button {
+      min-height: 52px;
+      border-radius: 14px;
+      font-weight: 800;
+    }
+
+    .primary-button {
+      width: 100%;
+      margin-top: 13px;
+      border: 1px solid var(--orange);
+      color: #fff;
+      background: linear-gradient(135deg, #ff682f, var(--orange-strong));
+      box-shadow: 0 12px 25px rgba(255, 91, 32, .18);
+    }
+    .primary-button:hover { filter: brightness(1.06); }
+    .primary-button:disabled { cursor: not-allowed; border-color: #30323a; color: #676a73; background: #24262c; box-shadow: none; }
+
+    .field-error { min-height: 20px; margin: 7px 2px 0; color: var(--red); font-size: 11px; line-height: 1.5; }
+    .login-help { margin-top: 13px; color: var(--dim); font-size: 10px; line-height: 1.5; text-align: center; }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .avatar {
+      display: grid;
+      flex: 0 0 48px;
+      height: 48px;
+      place-items: center;
+      border: 1px solid rgba(255, 91, 32, .24);
+      border-radius: 15px;
+      color: var(--orange);
+      background: var(--orange-soft);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .profile-copy { min-width: 0; flex: 1; }
+    .welcome { color: var(--muted); font-size: 10px; }
+    .member-name { margin-top: 2px; overflow: hidden; font-size: 17px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+    .member-meta { margin-top: 3px; color: var(--muted); font-size: 10px; }
+
+    .switch-user {
+      position: relative;
+      z-index: 1;
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: #c7c9cf;
+      background: #141519;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .action-card { margin-top: 12px; padding: 19px; text-align: center; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 29px;
+      padding: 0 10px;
+      border-radius: 999px;
+      color: #c2c4cb;
+      background: #282a31;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .status-pill.active { color: var(--green); background: var(--green-soft); }
+    .status-pill.complete { color: #aeb1ba; background: #25272d; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 4px rgba(255, 255, 255, .04); }
+
+    .action-heading { margin: 15px 0 4px; font-size: 21px; letter-spacing: -.035em; }
+    .action-subtitle { min-height: 40px; margin: 0 auto 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .clock-action {
+      position: relative;
+      display: grid;
+      width: 152px;
+      height: 152px;
+      margin: 0 auto;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(145deg, #ff713c, var(--orange-strong));
+      box-shadow: 0 0 0 10px rgba(255, 91, 32, .08), 0 22px 42px rgba(255, 91, 32, .25);
+      transition: transform .18s ease, filter .18s ease;
+    }
+    .clock-action:active { transform: scale(.96); }
+    .clock-action:hover { filter: brightness(1.05); }
+    .clock-action.out { background: linear-gradient(145deg, #2e3038, #202127); box-shadow: 0 0 0 10px rgba(255, 255, 255, .035), 0 22px 42px rgba(0, 0, 0, .24); }
+    .clock-action.done { cursor: default; color: var(--green); background: var(--green-soft); box-shadow: 0 0 0 10px rgba(95, 212, 154, .04); }
+    .clock-action:disabled { pointer-events: none; }
+    .action-inner { display: grid; gap: 8px; place-items: center; }
+    .action-icon { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 50%; background: rgba(255, 255, 255, .12); }
+    .clock-action.done .action-icon { background: rgba(95, 212, 154, .1); }
+    .action-label { max-width: 104px; font-size: 15px; font-weight: 800; line-height: 1.15; }
+
+    .shift-progress {
+      display: grid;
+      grid-template-columns: 1fr 32px 1fr;
+      align-items: center;
+      margin-top: 23px;
+    }
+    .progress-line { height: 1px; background: var(--line); }
+    .shift-label { color: var(--dim); font-size: 10px; font-weight: 700; }
+
+    .history-card { margin-top: 12px; overflow: hidden; }
+    .history-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 17px 17px 12px; }
+    .history-title { margin: 0; font-size: 15px; }
+    .history-subtitle { margin-top: 4px; color: var(--muted); font-size: 10px; }
+    .location-lock { display: flex; align-items: center; gap: 5px; color: var(--orange); font-size: 9px; font-weight: 800; text-transform: uppercase; }
+
+    .history-list { border-top: 1px solid var(--line); }
+    .history-day { padding: 14px 17px; border-bottom: 1px solid var(--line); }
+    .history-day:last-child { border-bottom: 0; }
+    .day-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .day-name { font-size: 11px; font-weight: 800; }
+    .day-total { color: var(--muted); font-size: 10px; font-weight: 600; }
+    .shift-row { display: grid; grid-template-columns: 20px 1fr auto; gap: 9px; align-items: center; min-height: 34px; }
+    .shift-row + .shift-row { margin-top: 4px; }
+    .shift-number { display: grid; width: 20px; height: 20px; place-items: center; border-radius: 7px; color: var(--orange); background: var(--orange-soft); font-size: 9px; font-weight: 800; }
+    .shift-times { color: #d7d8dc; font-size: 11px; font-weight: 700; }
+    .shift-times .arrow { margin: 0 5px; color: #666973; }
+    .shift-duration { color: var(--muted); font-size: 10px; }
+    .pending-out { color: var(--green); }
+
+    .privacy-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin: 18px 4px 0;
+      color: var(--dim);
+      font-size: 9px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .privacy-note svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2; }
+
+    .dialog-mask {
+      position: fixed;
+      z-index: 30;
+      inset: 0;
+      display: grid;
+      padding: 18px;
+      place-items: end center;
+      visibility: hidden;
+      background: rgba(0, 0, 0, .62);
+      opacity: 0;
+      backdrop-filter: blur(5px);
+      transition: .2s ease;
+    }
+    .dialog-mask.open { visibility: visible; opacity: 1; }
+
+    .dialog {
+      width: min(100%, 500px);
+      padding: 19px;
+      border: 1px solid #333640;
+      border-radius: 23px;
+      background: #1c1e23;
+      box-shadow: var(--shadow);
+      transform: translateY(18px);
+      transition: .24s ease;
+    }
+    .dialog-mask.open .dialog { transform: translateY(0); }
+    .dialog-mark { display: grid; width: 46px; height: 46px; margin-bottom: 14px; place-items: center; border-radius: 15px; color: var(--orange); background: var(--orange-soft); }
+    .dialog h2 { margin: 0; font-size: 20px; letter-spacing: -.035em; }
+    .dialog p { margin: 8px 0 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .confirm-summary { display: grid; gap: 9px; padding: 13px; border: 1px solid var(--line); border-radius: 14px; background: #141519; }
+    .confirm-row { display: flex; justify-content: space-between; gap: 12px; font-size: 11px; }
+    .confirm-row span { color: var(--muted); }
+    .confirm-row strong { text-align: right; }
+    .dialog-actions { display: grid; grid-template-columns: .75fr 1.25fr; gap: 9px; margin-top: 15px; }
+    .secondary-button { border: 1px solid var(--line); color: #d5d6da; background: #24262c; }
+    .dialog-actions .primary-button { margin: 0; }
+
+    .toast {
+      position: fixed;
+      z-index: 50;
+      top: calc(18px + env(safe-area-inset-top));
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      width: max-content;
+      max-width: calc(100vw - 32px);
+      padding: 11px 14px;
+      border: 1px solid rgba(95, 212, 154, .2);
+      border-radius: 13px;
+      color: #ddffef;
+      background: #173126;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .34);
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0;
+      transform: translate(-50%, -14px);
+      pointer-events: none;
+      transition: .24s ease;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    .demo-note {
+      margin-top: 13px;
+      padding: 10px 12px;
+      border: 1px dashed #32343b;
+      border-radius: 12px;
+      color: #72757f;
+      font-size: 9px;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .demo-note strong { color: #9fa1a9; }
+
+    @media (min-width: 680px) {
+      body { padding: 30px; }
+      .app-shell { min-height: calc(100vh - 60px); max-width: 570px; border: 1px solid #292b31; border-radius: 30px; box-shadow: var(--shadow); }
+      .topbar { border-radius: 30px 30px 0 0; }
+      .dialog-mask { place-items: center; }
+    }
+
+    @media (max-width: 360px) {
+      main { padding-inline: 12px; }
+      .clock-panel { padding-top: 24px; }
+      .live-time { font-size: 43px; }
+      .clock-action { width: 138px; height: 138px; }
+      .history-head { display: block; }
+      .location-lock { margin-top: 7px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">beelia</div>
+      <div class="portal-label">Staff portal</div>
+    </header>
+
+    <main>
+      <section class="location-card" aria-label="Current work location">
+        <div class="location-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        </div>
+        <div class="location-copy">
+          <div class="eyebrow" id="businessName">Bling Bling Nails Spa &middot; Attendance location</div>
+          <div class="location-name" id="locationName">ET Company</div>
+          <div class="location-address" id="locationAddress">268 Tran Hung Dao, Cho Lon Ward, Ho Chi Minh City</div>
+        </div>
+        <span class="secure-dot" title="Portal is active"></span>
+      </section>
+
+      <section class="clock-panel" aria-live="polite">
+        <div class="today-label" id="todayLabel">Wednesday, September 9</div>
+        <div class="live-time"><span id="liveTime">09:41</span><span class="period" id="livePeriod">AM</span></div>
+      </section>
+
+      <section class="screen active" id="loginScreen">
+        <div class="login-card">
+          <h1>Clock in to your shift</h1>
+          <p>Enter your Staff ID. Your attendance will be recorded only for this location.</p>
+
+          <label class="field-label" for="staffId">Staff ID</label>
+          <div class="id-field">
+            <span class="small-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"/><circle cx="9" cy="11" r="2"/><path d="M7 16c.5-1.6 1.4-2.4 2.8-2.4S12 14.4 12.5 16M14 10h3M14 14h3"/></svg>
+            </span>
+            <input id="staffId" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="20" placeholder="Enter your Staff ID">
+            <button class="clear-id" id="clearId" aria-label="Clear Staff ID">x</button>
+          </div>
+          <div class="field-error" id="staffError" role="alert"></div>
+          <button class="primary-button" id="continueButton" disabled>Continue</button>
+          <div class="login-help">Staff IDs are checked together with this portal's location. The same ID can be used by another business or location.</div>
+        </div>
+        <div class="demo-note"><strong>Interactive mockup:</strong> try Staff ID 001, 002, or 003. Use <strong>?business=sunset-nails&amp;location=et-company</strong> to preview the same ID in another BU.</div>
+      </section>
+
+      <section class="screen" id="attendanceScreen">
+        <div class="profile-card">
+          <div class="avatar" id="memberAvatar">NT</div>
+          <div class="profile-copy">
+            <div class="welcome">Welcome back</div>
+            <div class="member-name" id="memberName">Nguyen Thao</div>
+            <div class="member-meta"><span id="memberId">ID: 001</span> &middot; <span id="memberLocation">ET Company</span></div>
+          </div>
+          <button class="switch-user" id="switchUser">Switch ID</button>
+        </div>
+
+        <div class="action-card">
+          <div class="status-pill" id="statusPill"><span class="status-dot"></span><span id="statusText">Ready to clock in</span></div>
+          <h2 class="action-heading" id="actionHeading">Start your workday</h2>
+          <p class="action-subtitle" id="actionSubtitle">Tap once to record your start time at ET Company.</p>
+          <button class="clock-action" id="clockAction" aria-label="Clock in">
+            <span class="action-inner">
+              <span class="action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+              </span>
+              <span class="action-label" id="actionLabel">Clock in</span>
+            </span>
+          </button>
+          <div class="shift-progress"><span class="progress-line"></span><span class="shift-label" id="shiftLabel">Shift 1 of 2</span><span class="progress-line"></span></div>
+        </div>
+
+        <div class="history-card">
+          <div class="history-head">
+            <div>
+              <h2 class="history-title">Attendance history</h2>
+              <div class="history-subtitle" id="historySubtitle">Staff ID 001 at ET Company</div>
+            </div>
+            <div class="location-lock">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Location locked
+            </div>
+          </div>
+          <div class="history-list" id="historyList"></div>
+        </div>
+
+        <div class="privacy-note">
+          <svg viewBox="0 0 24 24"><path d="M12 3 4 6v5c0 5.2 3.2 8.4 8 10 4.8-1.6 8-4.8 8-10V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          History is shown only for the entered Staff ID and this portal location.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="dialog-mask" id="dialogMask" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+    <div class="dialog">
+      <div class="dialog-mark status-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+      </div>
+      <h2 id="dialogTitle">Confirm clock in</h2>
+      <p id="dialogCopy">Please confirm the attendance details below.</p>
+      <div class="confirm-summary">
+        <div class="confirm-row"><span>Staff</span><strong id="confirmStaff">Nguyen Thao (001)</strong></div>
+        <div class="confirm-row"><span>Location</span><strong id="confirmLocation">ET Company</strong></div>
+        <div class="confirm-row"><span>Time</span><strong id="confirmTime">09:41 AM</strong></div>
+      </div>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="cancelAction">Cancel</button>
+        <button class="primary-button" id="confirmAction">Confirm clock in</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><span aria-hidden="true">&#10003;</span><span id="toastText">Clock in recorded</span></div>
+
+  <script>
+    const businesses = {
+      'bling-bling-nails-spa': {
+        name: 'Bling Bling Nails Spa',
+        locations: {
+      'et-company': {
+        name: 'ET Company',
+        address: '268 Tran Hung Dao, Cho Lon Ward, Ho Chi Minh City',
+        staff: {
+          '001': {
+            name: 'Nguyen Thao',
+            today: [{ in: '08:04 AM', out: '12:02 PM' }],
+            history: [
+              { label: 'Yesterday, Sep 8', shifts: [{ in: '08:11 AM', out: '12:05 PM' }, { in: '01:04 PM', out: '05:36 PM' }] },
+              { label: 'Monday, Sep 7', shifts: [{ in: '08:06 AM', out: '04:42 PM' }] }
+            ]
+          },
+          '002': {
+            name: 'Email Check 0729',
+            today: [{ in: '09:12 AM', out: null }],
+            history: [
+              { label: 'Yesterday, Sep 8', shifts: [{ in: '09:02 AM', out: '05:28 PM' }] },
+              { label: 'Monday, Sep 7', shifts: [{ in: '09:15 AM', out: '05:30 PM' }] }
+            ]
+          },
+          '003': {
+            name: 'Bonghong',
+            today: [{ in: '08:10 AM', out: '12:10 PM' }, { in: '01:05 PM', out: '05:32 PM' }],
+            history: [
+              { label: 'Yesterday, Sep 8', shifts: [{ in: '08:14 AM', out: '04:55 PM' }] }
+            ]
+          }
+        }
+      },
+      'lewis-center': {
+        name: 'Lewis Center',
+        address: 'Lewis Center, Ohio',
+        staff: {
+          '001': {
+            name: 'Michael Lee',
+            today: [],
+            history: [
+              { label: 'Yesterday, Sep 8', shifts: [{ in: '10:03 AM', out: '06:12 PM' }] },
+              { label: 'Monday, Sep 7', shifts: [{ in: '09:56 AM', out: '06:04 PM' }] }
+            ]
+          },
+          '002': {
+            name: 'Emma Wilson',
+            today: [{ in: '09:01 AM', out: null }],
+            history: [{ label: 'Yesterday, Sep 8', shifts: [{ in: '09:08 AM', out: '05:44 PM' }] }]
+          },
+          '003': {
+            name: 'Sophia Tran',
+            today: [{ in: '08:30 AM', out: '12:00 PM' }],
+            history: [{ label: 'Yesterday, Sep 8', shifts: [{ in: '08:32 AM', out: '04:40 PM' }] }]
+          }
+        }
+      }
+        }
+      },
+      'sunset-nails': {
+        name: 'Sunset Nails',
+        locations: {
+          'et-company': {
+            name: 'ET Company',
+            address: '1450 Market Street, San Diego, California',
+            staff: {
+              '001': {
+                name: 'Taylor Morgan',
+                today: [],
+                history: [
+                  { label: 'Yesterday, Sep 8', shifts: [{ in: '09:20 AM', out: '05:48 PM' }] }
+                ]
+              },
+              '002': {
+                name: 'Jordan Kim',
+                today: [{ in: '10:02 AM', out: null }],
+                history: []
+              }
+            }
+          }
+        }
+      }
+    };
+
+    const icons = {
+      clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
+      out: '<svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"/></svg>',
+      replay: '<svg viewBox="0 0 24 24"><path d="M4 8V3m0 5h5M5.5 17A8 8 0 1 0 6 6"/><path d="M12 8v4l3 2"/></svg>',
+      check: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>'
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const pathParts = window.location.pathname.split('/').filter(Boolean);
+    const requestedBusiness = params.get('business') || pathParts.find(part => businesses[part]) || 'bling-bling-nails-spa';
+    const businessSlug = businesses[requestedBusiness] ? requestedBusiness : 'bling-bling-nails-spa';
+    const currentBusiness = businesses[businessSlug];
+    const requestedLocation = params.get('location') || pathParts.find(part => currentBusiness.locations[part]) || 'et-company';
+    const locationSlug = currentBusiness.locations[requestedLocation] ? requestedLocation : Object.keys(currentBusiness.locations)[0];
+    const currentLocation = currentBusiness.locations[locationSlug];
+    document.documentElement.dataset.business = businessSlug;
+    document.documentElement.dataset.location = locationSlug;
+    document.documentElement.dataset.viewportWidth = window.innerWidth;
+
+    const staffInput = document.getElementById('staffId');
+    const continueButton = document.getElementById('continueButton');
+    const clearId = document.getElementById('clearId');
+    const staffError = document.getElementById('staffError');
+    const dialogMask = document.getElementById('dialogMask');
+    const clockAction = document.getElementById('clockAction');
+    let currentStaffId = '';
+    let currentStaff = null;
+    let pendingAction = '';
+    let toastTimer;
+
+    document.getElementById('businessName').textContent = `${currentBusiness.name} · Attendance location`;
+    document.getElementById('locationName').textContent = currentLocation.name;
+    document.getElementById('locationAddress').textContent = currentLocation.address;
+
+    function updateClock() {
+      const now = new Date();
+      const timeParts = new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).formatToParts(now);
+      document.getElementById('liveTime').textContent = `${timeParts.find(part => part.type === 'hour').value}:${timeParts.find(part => part.type === 'minute').value}`;
+      document.getElementById('livePeriod').textContent = timeParts.find(part => part.type === 'dayPeriod').value;
+      document.getElementById('todayLabel').textContent = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).format(now);
+    }
+
+    function currentTime() {
+      return new Intl.DateTimeFormat('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).format(new Date());
+    }
+
+    function initials(name) {
+      return name.split(/\s+/).slice(0, 2).map(part => part[0]).join('').toUpperCase();
+    }
+
+    function normalizeId(value) {
+      return value.trim().toUpperCase();
+    }
+
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(screen => screen.classList.toggle('active', screen.id === id));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastText').textContent = message;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function minutesFromTime(value) {
+      if (!value) return null;
+      const match = value.match(/(\d+):(\d+)\s(AM|PM)/);
+      if (!match) return null;
+      let hour = Number(match[1]) % 12;
+      if (match[3] === 'PM') hour += 12;
+      return hour * 60 + Number(match[2]);
+    }
+
+    function duration(inTime, outTime) {
+      const start = minutesFromTime(inTime);
+      const end = minutesFromTime(outTime);
+      if (start === null || end === null || end < start) return '--';
+      const total = end - start;
+      const hours = Math.floor(total / 60);
+      const minutes = total % 60;
+      return `${hours}h ${String(minutes).padStart(2, '0')}m`;
+    }
+
+    function dayTotal(shifts) {
+      const total = shifts.reduce((sum, shift) => {
+        const start = minutesFromTime(shift.in);
+        const end = minutesFromTime(shift.out);
+        return sum + (start !== null && end !== null && end >= start ? end - start : 0);
+      }, 0);
+      if (!total) return 'In progress';
+      return `${Math.floor(total / 60)}h ${String(total % 60).padStart(2, '0')}m total`;
+    }
+
+    function renderHistory() {
+      const today = { label: 'Today', shifts: currentStaff.today };
+      const days = [today, ...currentStaff.history];
+      document.getElementById('historyList').innerHTML = days.map(day => {
+        const rows = day.shifts.length ? day.shifts.map((shift, index) => `
+          <div class="shift-row">
+            <span class="shift-number">${index + 1}</span>
+            <span class="shift-times">${shift.in}<span class="arrow">to</span><span class="${shift.out ? '' : 'pending-out'}">${shift.out || 'Working now'}</span></span>
+            <span class="shift-duration">${shift.out ? duration(shift.in, shift.out) : 'Active'}</span>
+          </div>`).join('') : `
+          <div class="shift-row">
+            <span class="shift-number">-</span>
+            <span class="shift-times" style="color:var(--muted);font-weight:500">No attendance recorded</span>
+            <span class="shift-duration">--</span>
+          </div>`;
+        return `<section class="history-day"><div class="day-head"><span class="day-name">${day.label}</span><span class="day-total">${dayTotal(day.shifts)}</span></div>${rows}</section>`;
+      }).join('');
+    }
+
+    function attendanceState() {
+      const shifts = currentStaff.today;
+      if (!shifts.length) return { action: 'clock-in', status: 'Ready to clock in', heading: 'Start your workday', subtitle: `Tap once to record your start time at ${currentLocation.name}.`, label: 'Clock in', shift: 'Shift 1 of 2', icon: icons.clock, className: '' };
+      const last = shifts[shifts.length - 1];
+      if (!last.out) return { action: 'clock-out', status: 'Currently clocked in', heading: shifts.length === 1 ? 'Shift 1 is active' : 'Shift 2 is active', subtitle: `Clocked in at ${last.in}. Tap when this shift is finished.`, label: 'Clock out', shift: `Shift ${shifts.length} of 2`, icon: icons.out, className: 'out active' };
+      if (shifts.length === 1) return { action: 're-clock-in', status: 'Shift 1 completed', heading: 'Working another shift?', subtitle: 'Use Re-clock in to start your second and final shift today.', label: 'Re-clock in', shift: 'Shift 2 of 2', icon: icons.replay, className: '' };
+      return { action: 'done', status: 'Day completed', heading: 'All shifts recorded', subtitle: `Your two shifts at ${currentLocation.name} are complete for today.`, label: 'Day complete', shift: '2 shifts completed', icon: icons.check, className: 'done complete' };
+    }
+
+    function renderAction() {
+      const state = attendanceState();
+      pendingAction = state.action;
+      const pill = document.getElementById('statusPill');
+      pill.className = `status-pill${state.className.includes('active') ? ' active' : ''}${state.className.includes('complete') ? ' complete' : ''}`;
+      document.getElementById('statusText').textContent = state.status;
+      document.getElementById('actionHeading').textContent = state.heading;
+      document.getElementById('actionSubtitle').textContent = state.subtitle;
+      document.getElementById('actionLabel').textContent = state.label;
+      document.getElementById('shiftLabel').textContent = state.shift;
+      clockAction.className = `clock-action ${state.className}`.trim();
+      clockAction.disabled = state.action === 'done';
+      clockAction.setAttribute('aria-label', state.label);
+      clockAction.querySelector('.action-icon').innerHTML = state.icon;
+      renderHistory();
+    }
+
+    function enterPortal() {
+      const id = normalizeId(staffInput.value);
+      const member = currentLocation.staff[id];
+      if (!member) {
+        staffError.textContent = `Staff ID was not found at ${currentLocation.name}. Check the ID or ask your manager.`;
+        staffInput.focus();
+        return;
+      }
+      staffError.textContent = '';
+      currentStaffId = id;
+      currentStaff = member;
+      document.getElementById('memberAvatar').textContent = initials(member.name);
+      document.getElementById('memberName').textContent = member.name;
+      document.getElementById('memberId').textContent = `ID: ${id}`;
+      document.getElementById('memberLocation').textContent = currentLocation.name;
+      document.getElementById('historySubtitle').textContent = `Staff ID ${id} at ${currentLocation.name}`;
+      renderAction();
+      showScreen('attendanceScreen');
+    }
+
+    function openConfirmation() {
+      if (!currentStaff || pendingAction === 'done') return;
+      const labels = {
+        'clock-in': ['Confirm clock in', 'Confirm clock in'],
+        'clock-out': ['Confirm clock out', 'Confirm clock out'],
+        're-clock-in': ['Confirm Re-clock in', 'Confirm Re-clock in']
+      };
+      document.getElementById('dialogTitle').textContent = labels[pendingAction][0];
+      document.getElementById('confirmAction').textContent = labels[pendingAction][1];
+      document.getElementById('confirmStaff').textContent = `${currentStaff.name} (${currentStaffId})`;
+      document.getElementById('confirmLocation').textContent = currentLocation.name;
+      document.getElementById('confirmTime').textContent = currentTime();
+      dialogMask.classList.add('open');
+      document.getElementById('confirmAction').focus();
+    }
+
+    function closeConfirmation() {
+      dialogMask.classList.remove('open');
+      clockAction.focus();
+    }
+
+    function applyAttendanceAction() {
+      const time = currentTime();
+      if (pendingAction === 'clock-in' || pendingAction === 're-clock-in') {
+        currentStaff.today.push({ in: time, out: null });
+        showToast(pendingAction === 're-clock-in' ? 'Second shift started' : 'Clock in recorded');
+      } else if (pendingAction === 'clock-out') {
+        currentStaff.today[currentStaff.today.length - 1].out = time;
+        showToast(currentStaff.today.length === 2 ? 'Second shift completed' : 'Clock out recorded');
+      }
+      dialogMask.classList.remove('open');
+      renderAction();
+    }
+
+    function syncStaffInput() {
+      const hasValue = normalizeId(staffInput.value).length > 0;
+      continueButton.disabled = !hasValue;
+      clearId.classList.toggle('visible', hasValue);
+      staffError.textContent = '';
+    }
+    staffInput.addEventListener('input', syncStaffInput);
+    staffInput.addEventListener('change', syncStaffInput);
+    staffInput.addEventListener('keyup', syncStaffInput);
+    staffInput.addEventListener('keydown', event => { if (event.key === 'Enter' && !continueButton.disabled) enterPortal(); });
+    clearId.addEventListener('click', () => { staffInput.value = ''; staffInput.dispatchEvent(new Event('input')); staffInput.focus(); });
+    continueButton.addEventListener('click', enterPortal);
+    document.getElementById('switchUser').addEventListener('click', () => {
+      currentStaff = null;
+      currentStaffId = '';
+      staffInput.value = '';
+      staffInput.dispatchEvent(new Event('input'));
+      showScreen('loginScreen');
+      setTimeout(() => staffInput.focus(), 250);
+    });
+    clockAction.addEventListener('click', openConfirmation);
+    document.getElementById('cancelAction').addEventListener('click', closeConfirmation);
+    document.getElementById('confirmAction').addEventListener('click', applyAttendanceAction);
+    dialogMask.addEventListener('click', event => { if (event.target === dialogMask) closeConfirmation(); });
+    document.addEventListener('keydown', event => { if (event.key === 'Escape' && dialogMask.classList.contains('open')) closeConfirmation(); });
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    const previewStaffId = normalizeId(params.get('staff') || '');
+    if (previewStaffId && currentLocation.staff[previewStaffId]) {
+      staffInput.value = previewStaffId;
+      staffInput.dispatchEvent(new Event('input'));
+      enterPortal();
+    }
+  </script>
+</body>
+</html>
