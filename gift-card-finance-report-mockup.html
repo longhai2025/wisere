@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beelia - Gift Card Finance Report Mockup</title>
+  <style>
+    :root {
+      --orange: #ff5b1a;
+      --orange-50: #fff1e9;
+      --orange-100: #ffe2d2;
+      --ink: #101828;
+      --muted: #667085;
+      --line: #e4e7ec;
+      --line-soft: #f0f2f5;
+      --panel: #ffffff;
+      --canvas: #fbfcfe;
+      --green: #079455;
+      --green-bg: #ecfdf3;
+      --red: #d92d20;
+      --red-bg: #fef3f2;
+      --blue: #175cd3;
+      --blue-bg: #eff8ff;
+      --shadow: 0 8px 24px rgba(16, 24, 40, .08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      font-size: 14px;
+    }
+
+    button, input, select { font: inherit; }
+    button { color: inherit; }
+    .icon { width: 20px; height: 20px; flex: 0 0 auto; }
+    .app { min-height: 100vh; }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 300px;
+      background: #fff;
+      border-right: 1px solid var(--line);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand {
+      height: 70px;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      color: var(--orange);
+      font-size: 44px;
+      line-height: 1;
+      font-weight: 300;
+      letter-spacing: -3px;
+    }
+
+    .menu-toggle {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .nav { padding: 6px 14px; overflow-y: auto; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-height: 58px;
+      padding: 0 14px;
+      border-radius: 8px;
+      color: #101318;
+      font-size: 18px;
+    }
+    .nav-item.active { color: var(--orange); background: var(--orange-50); }
+    .nav-spacer { flex: 1; }
+    .settings { margin: 0 14px 18px; color: #777; }
+
+    .header {
+      position: fixed;
+      left: 300px;
+      right: 0;
+      top: 0;
+      height: 60px;
+      z-index: 15;
+      background: rgba(255,255,255,.96);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .header h1 { margin: 0; font-size: 25px; letter-spacing: -.4px; }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .header-select {
+      min-height: 38px;
+      padding: 0 14px;
+      border: 1px solid #ccd4e0;
+      border-radius: 8px;
+      background: #fff;
+      color: #344054;
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #f2f4f7;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    .report-nav {
+      position: fixed;
+      left: 310px;
+      top: 60px;
+      bottom: 10px;
+      width: 210px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px 7px;
+      z-index: 10;
+    }
+    .report-link {
+      min-height: 44px;
+      padding: 0 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .report-link.active { color: var(--orange); background: var(--orange-50); font-weight: 600; }
+    .report-badge {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: #ffa21a;
+      font-size: 12px;
+    }
+
+    main {
+      margin-left: 520px;
+      padding: 70px 14px 22px 16px;
+      min-height: 100vh;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .tabs { height: 50px; display: flex; align-items: center; gap: 10px; }
+    .tab {
+      border: 0;
+      background: transparent;
+      padding: 10px 13px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tab.active { color: #fff; background: var(--orange); box-shadow: 0 5px 14px rgba(255,91,26,.22); }
+
+    .scope-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding: 10px 12px;
+      border: 1px solid #b2ddff;
+      border-radius: 8px;
+      background: var(--blue-bg);
+      color: #1849a9;
+      font-size: 13px;
+    }
+    .scope-note span { min-width: 0; overflow-wrap: anywhere; }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; }
+    .field, .action-button {
+      height: 48px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 13px;
+      color: #344054;
+    }
+    .search { width: 320px; }
+    .search input { width: 100%; border: 0; outline: 0; color: var(--ink); }
+    .search input::placeholder { color: #98a2b3; }
+    .scope { min-width: 190px; }
+    .scope select { border: 0; outline: 0; background: transparent; width: 100%; }
+    .date { min-width: 330px; justify-content: space-between; }
+    .date span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .action-button { cursor: pointer; box-shadow: 0 2px 10px rgba(16,24,40,.04); }
+    .action-button.primary { color: #fff; border-color: var(--orange); background: var(--orange); }
+
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .kpi {
+      position: relative;
+      min-height: 110px;
+      padding: 18px 18px 14px;
+      border: 1px solid #dce1e8;
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .kpi::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: #d7dde5; }
+    .kpi.orange::before { background: var(--orange); }
+    .kpi.green::before { background: #12b76a; }
+    .kpi.blue::before { background: #2e90fa; }
+    .kpi-label { color: #475467; font-size: 12px; font-weight: 700; letter-spacing: .35px; text-transform: uppercase; }
+    .kpi-value { margin-top: 8px; font-size: 29px; font-weight: 700; letter-spacing: -.6px; }
+    .kpi-help { margin-top: 4px; color: #667085; font-size: 12px; }
+
+    .reconcile {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      border: 1px solid #d1fadf;
+      border-radius: 8px;
+      background: #f6fef9;
+    }
+    .reconcile strong { color: #05603a; }
+    .reconcile .equation { color: #344054; font-variant-numeric: tabular-nums; }
+    .balanced { color: var(--green); font-weight: 700; white-space: nowrap; }
+
+    .table-card {
+      width: 100%;
+      min-width: 0;
+      min-height: 440px;
+      border: 1px solid #dce1e8;
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .table-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 50px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    .table-meta strong { font-size: 15px; }
+    .table-meta span { color: #667085; font-size: 12px; }
+    .table-wrap { width: 100%; min-width: 0; max-width: 100%; overflow: auto; flex: 1; }
+    table { width: 100%; min-width: 1680px; border-collapse: collapse; }
+    th {
+      height: 50px;
+      padding: 0 12px;
+      background: #f8fafc;
+      border-bottom: 1px solid #d9dee7;
+      color: #344054;
+      text-align: left;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    td {
+      height: 66px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--line-soft);
+      color: #344054;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    tbody tr:hover { background: #fffbf8; }
+    .txn-link { color: var(--orange); text-decoration: underline; font-weight: 600; }
+    .subtle { display: block; margin-top: 2px; color: #98a2b3; font-size: 11px; }
+    .amount { font-weight: 700; font-variant-numeric: tabular-nums; }
+    .liability.plus { color: var(--green); }
+    .liability.minus { color: var(--red); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 24px;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .pill.topup { color: #175cd3; background: var(--blue-bg); }
+    .pill.cancel { color: #b42318; background: var(--red-bg); }
+    .pill.usage { color: #b54708; background: #fffaeb; }
+    .pill.complete { color: var(--green); background: var(--green-bg); border: 1px solid #a6f4c5; }
+    .eye-button { width: 32px; height: 32px; border: 1px solid #dce1e8; border-radius: 50%; background: #f8fafc; cursor: pointer; display: grid; place-items: center; }
+    .empty { display: none; padding: 70px 20px; text-align: center; color: #667085; }
+
+    .pagination {
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 0 14px;
+      border-top: 1px solid var(--line);
+    }
+    .page-btn { min-width: 34px; height: 34px; border: 1px solid #d0d5dd; border-radius: 8px; background: #fff; cursor: pointer; }
+    .page-btn.active { color: var(--orange); border-color: var(--orange); }
+    .page-size { height: 34px; border: 1px solid #d0d5dd; border-radius: 8px; background: #fff; padding: 0 10px; }
+
+    .overlay { position: fixed; inset: 0; z-index: 40; background: rgba(16,24,40,.28); opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .overlay.open { opacity: 1; pointer-events: auto; }
+    .drawer {
+      position: fixed;
+      inset: 0 0 0 auto;
+      z-index: 50;
+      width: min(440px, 92vw);
+      background: #fff;
+      box-shadow: -10px 0 34px rgba(16,24,40,.14);
+      transform: translateX(105%);
+      transition: transform .25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .drawer.open { transform: translateX(0); }
+    .drawer-header { height: 68px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+    .drawer-header h2 { margin: 0; font-size: 20px; }
+    .close { width: 34px; height: 34px; border: 0; border-radius: 8px; background: #f2f4f7; cursor: pointer; font-size: 20px; }
+    .drawer-body { padding: 18px 20px; overflow-y: auto; }
+    .detail-card { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: #fcfcfd; margin-bottom: 14px; }
+    .detail-card h3 { margin: 0 0 12px; font-size: 13px; text-transform: uppercase; color: #475467; letter-spacing: .3px; }
+    .detail-row { display: flex; justify-content: space-between; gap: 20px; padding: 7px 0; }
+    .detail-row span:first-child { color: #667085; }
+    .detail-row span:last-child { text-align: right; font-weight: 600; }
+    .security-note { padding: 12px; border-radius: 8px; background: #f2f4f7; color: #475467; font-size: 12px; line-height: 1.5; }
+
+    .filter-panel .drawer-body { display: grid; gap: 14px; }
+    .filter-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; }
+    .filter-group select { width: 100%; height: 42px; padding: 0 10px; border: 1px solid #d0d5dd; border-radius: 8px; background: #fff; }
+    .filter-footer { margin-top: auto; padding: 14px 20px; border-top: 1px solid var(--line); display: flex; gap: 10px; }
+    .filter-footer button { flex: 1; height: 42px; border-radius: 8px; cursor: pointer; }
+    .reset { border: 1px solid #d0d5dd; background: #fff; }
+    .apply { border: 1px solid var(--orange); color: #fff; background: var(--orange); }
+
+    .toast {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 80;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #fff;
+      background: #101828;
+      box-shadow: var(--shadow);
+      transform: translateY(90px);
+      opacity: 0;
+      transition: .22s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 1320px) {
+      .sidebar { width: 86px; }
+      .brand { padding: 12px; justify-content: center; }
+      .logo { font-size: 0; }
+      .logo::after { content: "b"; font-size: 42px; }
+      .menu-toggle, .nav-item span, .settings span { display: none; }
+      .nav-item { justify-content: center; padding: 0; }
+      .header { left: 86px; }
+      .report-nav { left: 96px; }
+      main { margin-left: 306px; }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .header { left: 0; padding: 0 14px; }
+      .header-actions .header-select:nth-child(2) { display: none; }
+      .report-nav { display: none; }
+      main { margin-left: 0; padding: 68px 12px 18px; }
+      .toolbar { align-items: stretch; flex-direction: column; }
+      .toolbar-left, .toolbar-right { width: 100%; }
+      .search { width: 100%; flex: 1; }
+      .scope { min-width: 170px; }
+      .date { min-width: 0; flex: 1; }
+      .kpis { grid-template-columns: repeat(2, 1fr); }
+      .reconcile { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media (max-width: 560px) {
+      .header h1 { font-size: 21px; }
+      .header-select { display: none; }
+      .tabs { overflow-x: auto; }
+      .tab { white-space: nowrap; }
+      .scope-note { align-items: flex-start; }
+      .toolbar-left { flex-direction: column; }
+      .scope { width: 100%; }
+      .toolbar-right { display: grid; grid-template-columns: 1fr auto auto; }
+      .toolbar-right > * { min-width: 0; }
+      .date { font-size: 12px; }
+      .action-button span { display: none; }
+      .kpis { grid-template-columns: 1fr; }
+      .kpi { min-height: 96px; }
+      .pagination { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Main navigation">
+      <div class="brand"><div class="logo">beelia</div><button class="menu-toggle" aria-label="Collapse menu">☰</button></div>
+      <nav class="nav">
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span>Check-in</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="6" height="18" rx="2"/><rect x="14" y="3" width="6" height="18" rx="2"/></svg><span>Turn</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h5"/></svg><span>Gift Card</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg><span>Calendar</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg><span>Customers</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 8 9 5 9-5v9l-9 5-9-5V8Z"/></svg><span>Catalog</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="4"/><path d="M3 21v-2a6 6 0 0 1 12 0v2M16 4a4 4 0 0 1 0 8M19 21v-2a6 6 0 0 0-3-5"/></svg><span>Team</span></div>
+        <div class="nav-item active"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3h16v13H4zM2 7h2M20 7h2M8 20h8M12 16v4"/><path d="m8 12 3-3 2 2 3-4"/></svg><span>Reports</span></div>
+        <div class="nav-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l2 5-2 13H6L4 8l2-5Z"/><path d="M4 8h16"/></svg><span>Marketing</span></div>
+      </nav>
+      <div class="nav-spacer"></div>
+      <div class="nav-item settings"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg><span>Setting</span></div>
+    </aside>
+
+    <header class="header">
+      <h1>Reports</h1>
+      <div class="header-actions">
+        <select class="header-select" aria-label="Current location"><option>📍 Lewis Center</option></select>
+        <select class="header-select" aria-label="Printer status"><option>CloudPrint_0081 - ce4fe - (Offline)</option></select>
+        <div class="avatar">S</div>
+      </div>
+    </header>
+
+    <aside class="report-nav" aria-label="Report categories">
+      <div class="report-link"><span class="report-badge">♙</span>Customer</div>
+      <div class="report-link active"><span class="report-badge">▣</span>Finance</div>
+    </aside>
+
+    <main>
+      <div class="tabs" role="tablist">
+        <button class="tab" data-tab="orders" role="tab">POS Orders</button>
+        <button class="tab" data-tab="transactions" role="tab">POS Transactions</button>
+        <button class="tab active" data-tab="gift-card" role="tab" aria-selected="true">Gift Card</button>
+      </div>
+
+      <section id="giftCardReport">
+        <div class="scope-note">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></svg>
+          <span><strong>Company-level liability:</strong> Gift Cards assigned to All Locations are counted once and are not duplicated across individual locations.</span>
+        </div>
+
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <label class="field search">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input id="searchInput" type="search" placeholder="Search transaction, customer, card last 4..." aria-label="Search ledger">
+            </label>
+            <label class="field scope" title="Liability scope">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+              <select id="scopeSelect" aria-label="Liability scope">
+                <option value="all">Company - All Locations</option>
+                <option value="Lewis Center">Transactions at Lewis Center</option>
+                <option value="Dublin">Transactions at Dublin</option>
+              </select>
+            </label>
+          </div>
+          <div class="toolbar-right">
+            <button class="field date" id="dateButton"><span>Tuesday, Sep 01, 2026 - Thursday, Sep 10, 2026</span><span>▾</span></button>
+            <button class="action-button" id="filterButton"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span>Filter</span></button>
+            <button class="action-button primary" id="exportButton"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></svg><span>Export</span></button>
+          </div>
+        </div>
+
+        <div class="kpis">
+          <article class="kpi"><div class="kpi-label">Opening Liability</div><div class="kpi-value" id="openingValue">$3,520.00</div><div class="kpi-help">Balance before Sep 01, 2026</div></article>
+          <article class="kpi blue"><div class="kpi-label">Net Loaded</div><div class="kpi-value" id="netLoadedValue">$1,275.00</div><div class="kpi-help">$1,500.00 Top-Up − $225.00 Cancel</div></article>
+          <article class="kpi orange"><div class="kpi-label">Redeemed</div><div class="kpi-value" id="redeemedValue">$640.00</div><div class="kpi-help">Service / Product only; excludes Tip & Tax</div></article>
+          <article class="kpi green"><div class="kpi-label">Closing Liability</div><div class="kpi-value" id="closingValue">$4,155.00</div><div class="kpi-help">Balance at Sep 10, 2026</div></article>
+        </div>
+
+        <div class="reconcile">
+          <div><strong>Liability reconciliation</strong><div class="equation">$3,520.00 + $1,275.00 − $640.00 = $4,155.00</div></div>
+          <div class="balanced">✓ Balanced</div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-meta"><strong>Gift Card Activity</strong><span id="resultCount">8 transactions</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr>
+                <th>Date &amp; Time</th><th>Transaction #</th><th>Gift Card</th><th>Type</th><th>Customer</th><th>Card Assignment</th><th>Transaction Location</th><th>Method</th><th>Amount</th><th>Liability Change</th><th>Balance After</th><th>Related Ticket</th><th>Staff</th><th>Status</th><th>Action</th>
+              </tr></thead>
+              <tbody id="ledgerBody"></tbody>
+            </table>
+            <div class="empty" id="emptyState">No Gift Card activity matches the selected filters.</div>
+          </div>
+          <div class="pagination"><button class="page-btn" disabled>‹</button><button class="page-btn active">1</button><button class="page-btn" disabled>›</button><select class="page-size"><option>20 / page</option></select></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <aside class="drawer" id="detailDrawer" aria-hidden="true">
+    <div class="drawer-header"><h2>Gift Card Transaction</h2><button class="close" data-close aria-label="Close">×</button></div>
+    <div class="drawer-body" id="detailBody"></div>
+  </aside>
+  <aside class="drawer filter-panel" id="filterDrawer" aria-hidden="true">
+    <div class="drawer-header"><h2>Filter Gift Card Report</h2><button class="close" data-close aria-label="Close">×</button></div>
+    <div class="drawer-body">
+      <div class="filter-group"><label for="typeFilter">Transaction Type</label><select id="typeFilter"><option value="all">All types</option><option>Top Up</option><option>Cancel Top Up</option><option>Usage</option></select></div>
+      <div class="filter-group"><label for="methodFilter">Payment Method</label><select id="methodFilter"><option value="all">All methods</option><option>Cash</option><option>Card</option><option>Split Payment</option><option>Gift Card</option></select></div>
+      <div class="filter-group"><label for="locationFilter">Transaction Location</label><select id="locationFilter"><option value="all">All locations</option><option>Lewis Center</option><option>Dublin</option></select></div>
+      <div class="filter-group"><label for="statusFilter">Status</label><select id="statusFilter"><option value="all">All statuses</option><option>Completed</option></select></div>
+    </div>
+    <div class="filter-footer"><button class="reset" id="resetFilter">Reset</button><button class="apply" id="applyFilter">Apply Filter</button></div>
+  </aside>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const rows = [
+      { date: '09/10/2026', time: '04:26 PM', txn: 'GCT2609100008', card: '•••• 8174', type: 'Usage', customer: 'Mia Carter', assignment: 'All Locations', location: 'Lewis Center', method: 'Gift Card', amount: 300, change: -300, balance: 425, related: 'ORD-260910-184', staff: 'Sophie N.', status: 'Completed', note: 'Applied to Service $250.00 and Product $50.00. Tip and Tax were paid separately.' },
+      { date: '09/10/2026', time: '11:08 AM', txn: 'GCT2609100007', card: '•••• 4421', type: 'Cancel Top Up', customer: 'Olivia Lee', assignment: 'Lewis Center', location: 'Lewis Center', method: 'Card', amount: 75, change: -75, balance: 250, related: 'GCT2609080004', staff: 'Anna P.', status: 'Completed', note: 'Internal Gift Card balance reversal only. No external card refund or void was created.' },
+      { date: '09/09/2026', time: '03:17 PM', txn: 'GCT2609090006', card: '•••• 8174', type: 'Top Up', customer: 'Mia Carter', assignment: 'All Locations', location: 'Dublin', method: 'Split Payment', amount: 600, change: 600, balance: 725, related: 'POS-260909-093', staff: 'Emily R.', status: 'Completed', note: 'Loaded by Cash $200.00 and Card $400.00.' },
+      { date: '09/08/2026', time: '02:42 PM', txn: 'GCT2609080005', card: '•••• 1068', type: 'Usage', customer: 'Ava Wilson', assignment: 'Dublin', location: 'Dublin', method: 'Gift Card', amount: 220, change: -220, balance: 80, related: 'ORD-260908-122', staff: 'Chloe T.', status: 'Completed', note: 'Applied to Service/Product subtotal only. Tip and Tax are excluded.' },
+      { date: '09/08/2026', time: '10:03 AM', txn: 'GCT2609080004', card: '•••• 4421', type: 'Cancel Top Up', customer: 'Olivia Lee', assignment: 'Lewis Center', location: 'Lewis Center', method: 'Card', amount: 150, change: -150, balance: 325, related: 'GCT2609060002', staff: 'Anna P.', status: 'Completed', note: 'Internal Gift Card balance reversal only. No external card refund or void was created.' },
+      { date: '09/07/2026', time: '05:38 PM', txn: 'GCT2609070003', card: '•••• 1068', type: 'Top Up', customer: 'Ava Wilson', assignment: 'Dublin', location: 'Dublin', method: 'Cash', amount: 400, change: 400, balance: 300, related: 'POS-260907-211', staff: 'Chloe T.', status: 'Completed', note: 'Cash Top-Up recorded as stored-value liability, not POS revenue.' },
+      { date: '09/06/2026', time: '01:14 PM', txn: 'GCT2609060002', card: '•••• 4421', type: 'Top Up', customer: 'Olivia Lee', assignment: 'Lewis Center', location: 'Lewis Center', method: 'Card', amount: 500, change: 500, balance: 475, related: 'POS-260906-077', staff: 'Anna P.', status: 'Completed', note: 'Card Top-Up recorded as stored-value liability.' },
+      { date: '09/03/2026', time: '09:31 AM', txn: 'GCT2609030001', card: '•••• 8174', type: 'Usage', customer: 'Mia Carter', assignment: 'All Locations', location: 'Lewis Center', method: 'Gift Card', amount: 120, change: -120, balance: 125, related: 'ORD-260903-041', staff: 'Sophie N.', status: 'Completed', note: 'Applied to Service $120.00. Tip and Tax were paid separately.' }
+    ];
+
+    const body = document.getElementById('ledgerBody');
+    const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('resultCount');
+    const money = value => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+
+    function pillClass(type) {
+      if (type === 'Top Up') return 'topup';
+      if (type === 'Cancel Top Up') return 'cancel';
+      return 'usage';
+    }
+
+    function getFilteredRows() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const scope = document.getElementById('scopeSelect').value;
+      const type = document.getElementById('typeFilter').value;
+      const method = document.getElementById('methodFilter').value;
+      const drawerLocation = document.getElementById('locationFilter').value;
+      return rows.filter(row => {
+        const matchesQuery = !query || [row.txn, row.card, row.customer, row.related].join(' ').toLowerCase().includes(query);
+        const matchesScope = scope === 'all' || row.location === scope;
+        const matchesType = type === 'all' || row.type === type;
+        const matchesMethod = method === 'all' || row.method === method;
+        const matchesLocation = drawerLocation === 'all' || row.location === drawerLocation;
+        return matchesQuery && matchesScope && matchesType && matchesMethod && matchesLocation;
+      });
+    }
+
+    function renderRows() {
+      const filtered = getFilteredRows();
+      body.innerHTML = filtered.map(row => `
+        <tr>
+          <td>${row.date}<span class="subtle">${row.time}</span></td>
+          <td><a class="txn-link" href="#" data-detail="${row.txn}">${row.txn}</a></td>
+          <td><strong>${row.card}</strong></td>
+          <td><span class="pill ${pillClass(row.type)}">${row.type}</span></td>
+          <td>${row.customer}</td>
+          <td>${row.assignment}</td>
+          <td>${row.location}</td>
+          <td>${row.method}</td>
+          <td class="amount">${money(row.amount)}</td>
+          <td class="amount liability ${row.change > 0 ? 'plus' : 'minus'}">${row.change > 0 ? '+' : '−'}${money(Math.abs(row.change))}</td>
+          <td class="amount">${money(row.balance)}</td>
+          <td>${row.related}</td>
+          <td>${row.staff}</td>
+          <td><span class="pill complete">${row.status}</span></td>
+          <td><button class="eye-button" data-detail="${row.txn}" aria-label="View ${row.txn}">◉</button></td>
+        </tr>`).join('');
+      resultCount.textContent = `${filtered.length} transaction${filtered.length === 1 ? '' : 's'}`;
+      emptyState.style.display = filtered.length ? 'none' : 'block';
+      attachDetailEvents();
+    }
+
+    function openDrawer(drawer) {
+      document.getElementById('overlay').classList.add('open');
+      drawer.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDrawers() {
+      document.getElementById('overlay').classList.remove('open');
+      document.querySelectorAll('.drawer').forEach(drawer => {
+        drawer.classList.remove('open');
+        drawer.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    function attachDetailEvents() {
+      document.querySelectorAll('[data-detail]').forEach(element => element.addEventListener('click', event => {
+        event.preventDefault();
+        const row = rows.find(item => item.txn === element.dataset.detail);
+        document.getElementById('detailBody').innerHTML = `
+          <div class="detail-card"><h3>Transaction summary</h3>
+            <div class="detail-row"><span>Transaction #</span><span>${row.txn}</span></div>
+            <div class="detail-row"><span>Date & Time</span><span>${row.date}<br>${row.time}</span></div>
+            <div class="detail-row"><span>Type</span><span class="pill ${pillClass(row.type)}">${row.type}</span></div>
+            <div class="detail-row"><span>Status</span><span class="pill complete">${row.status}</span></div>
+          </div>
+          <div class="detail-card"><h3>Liability movement</h3>
+            <div class="detail-row"><span>Gift Card</span><span>${row.card}</span></div>
+            <div class="detail-row"><span>Card Assignment</span><span>${row.assignment}</span></div>
+            <div class="detail-row"><span>Transaction Location</span><span>${row.location}</span></div>
+            <div class="detail-row"><span>Amount</span><span>${money(row.amount)}</span></div>
+            <div class="detail-row"><span>Liability Change</span><span class="liability ${row.change > 0 ? 'plus' : 'minus'}">${row.change > 0 ? '+' : '−'}${money(Math.abs(row.change))}</span></div>
+            <div class="detail-row"><span>Balance After</span><span>${money(row.balance)}</span></div>
+          </div>
+          <div class="detail-card"><h3>Reference</h3>
+            <div class="detail-row"><span>Customer</span><span>${row.customer}</span></div>
+            <div class="detail-row"><span>Method</span><span>${row.method}</span></div>
+            <div class="detail-row"><span>Related Ticket</span><span>${row.related}</span></div>
+            <div class="detail-row"><span>Staff</span><span>${row.staff}</span></div>
+          </div>
+          <div class="security-note"><strong>Business note</strong><br>${row.note}<br><br>The full Gift Card code is never displayed or exported from this report.</div>`;
+        openDrawer(document.getElementById('detailDrawer'));
+      }));
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', renderRows);
+    document.getElementById('scopeSelect').addEventListener('change', renderRows);
+    document.getElementById('filterButton').addEventListener('click', () => openDrawer(document.getElementById('filterDrawer')));
+    document.getElementById('overlay').addEventListener('click', closeDrawers);
+    document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', closeDrawers));
+    document.getElementById('applyFilter').addEventListener('click', () => { renderRows(); closeDrawers(); showToast('Filters applied'); });
+    document.getElementById('resetFilter').addEventListener('click', () => {
+      ['typeFilter', 'methodFilter', 'locationFilter', 'statusFilter'].forEach(id => document.getElementById(id).value = 'all');
+      renderRows();
+    });
+    document.getElementById('dateButton').addEventListener('click', () => showToast('Date range picker preview'));
+
+    document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(item => item.classList.toggle('active', item === tab));
+      if (tab.dataset.tab !== 'gift-card') {
+        showToast(`${tab.textContent} remains unchanged in this Gift Card mockup`);
+        setTimeout(() => {
+          document.querySelectorAll('.tab').forEach(item => item.classList.toggle('active', item.dataset.tab === 'gift-card'));
+        }, 700);
+      }
+    }));
+
+    document.getElementById('exportButton').addEventListener('click', () => {
+      const headers = ['Date & Time','Transaction #','Gift Card','Type','Customer','Card Assignment','Transaction Location','Method','Amount','Liability Change','Balance After','Related Ticket','Staff','Status'];
+      const values = getFilteredRows().map(row => [row.date + ' ' + row.time,row.txn,row.card,row.type,row.customer,row.assignment,row.location,row.method,row.amount,row.change,row.balance,row.related,row.staff,row.status]);
+      const csv = [headers, ...values].map(line => line.map(value => `"${String(value).replaceAll('"','""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'gift-card-finance-report.csv';
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast('Masked Gift Card report exported');
+    });
+
+    renderRows();
+  </script>
+</body>
+</html>
