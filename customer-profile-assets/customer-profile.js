@@ -423,7 +423,7 @@
               h(Badge,{count:'99+',size:'small',className:'notification-badge'},h(Button,{type:'text',className:'top-icon',icon:icon('send'),'aria-label':'Notifications',onClick:()=>message.info('No new notifications in this preview.')})),
               h(Button,{type:'text',className:'top-icon',icon:icon('checkin'),'aria-label':'Tasks',onClick:()=>message.info('No pending tasks in this preview.')}),
               h(Avatar,{size:37,className:'top-avatar'},'S'))),
-          h(Tabs,{className:'module-tabs',activeKey:'customers',items:[{key:'customers',label:'All customers'},{key:'profile',label:'Customer profile',disabled:!selected}],onChange:key=>{if(key==='profile'&&c)showProfile(c);}}),
+          h(Tabs,{className:'module-tabs',activeKey:'customers',items:[{key:'customers',label:'All customers'}]}),
           h('section',{className:'workspace'},
             h('div',{className:'toolbar'},
               h('div',{className:'toolbar-left'},
