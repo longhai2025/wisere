@@ -262,34 +262,7 @@
             line-height: 1.3;
         }
 
-        .diagram-fields > label:nth-child(1) { order: 6; }
-        .diagram-fields > label:nth-child(2) { order: 7; }
-        .diagram-fields > label:nth-child(3) { order: 8; }
-        .diagram-fields > label:nth-child(4) { order: 9; }
-        .diagram-fields > label:nth-child(5) { order: 10; }
-        .diagram-fields > label:nth-child(6) { order: 11; }
-        .diagram-fields > label:nth-child(7) { order: 1; }
-        .diagram-fields > label:nth-child(8) { order: 2; }
-        .diagram-fields > label:nth-child(9) { order: 3; }
-        .diagram-fields > label:nth-child(10) { order: 4; }
-        .diagram-fields > label:nth-child(11) { order: 5; }
-        .diagram-fields > label:nth-child(1) { order: 11; }
-        .diagram-fields > label:nth-child(2) { order: 12; }
-        .diagram-fields > label:nth-child(3) { order: 13; }
-        .diagram-fields > label:nth-child(4) { order: 14; }
-        .diagram-fields > label:nth-child(5) { order: 15; }
-        .diagram-fields > label:nth-child(6) { order: 16; }
-        .diagram-fields > label:nth-child(7) { order: 1; }
-        .diagram-fields > label:nth-child(8) { order: 2; }
-        .diagram-fields > label:nth-child(9) { order: 3; }
-        .diagram-fields > label:nth-child(10) { order: 4; }
-        .diagram-fields > label:nth-child(11) { order: 5; }
-        .diagram-fields > label:nth-child(12) { order: 6; }
-        .diagram-fields > label:nth-child(13) { order: 7; }
-        .diagram-fields > label:nth-child(14) { order: 8; }
-        .diagram-fields > label:nth-child(15) { order: 9; }
-        .diagram-fields > label:nth-child(16) { order: 10; }
-        .diagram-fields > label:nth-child(17) { order: 17; }
+
 
         .check-row {
             display: flex;
@@ -305,6 +278,49 @@
             height: 16px;
             margin: 0;
             accent-color: #6d5dfc;
+        }
+
+        .procedure-drag-item {
+            cursor: grab;
+            transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        .procedure-drag-item:active {
+            cursor: grabbing;
+        }
+
+        .procedure-drag-item.dragging {
+            opacity: 0.45;
+            border: 2px dashed #2563eb !important;
+            background-color: #eff6ff !important;
+        }
+
+        /* Trạng thái dropdown/input chọn răng theo checkbox trong popup trình tự phẫu thuật */
+        .tooth-input-disabled {
+            background-color: #f1f5f9 !important;
+            color: #94a3b8 !important;
+            border-color: #cbd5e1 !important;
+            cursor: not-allowed !important;
+        }
+
+        .tooth-input-enabled {
+            background-color: #ffffff !important;
+            color: #1e3a8a !important;
+            border-color: #3b82f6 !important;
+            cursor: pointer !important;
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-tooth-picker-disabled {
+            color: #cbd5e1 !important;
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
+
+        .btn-tooth-picker-enabled {
+            color: #3b82f6 !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
         }
     </style>
 </head>
@@ -394,15 +410,26 @@
                     <span class="admin-label">Chẩn đoán sau phẫu thuật:</span>
                     <textarea class="control min-h-20 flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="3">Sâu ngà răng - K02.1 - (42), Sâu ngà răng - K02.1 - (41), Hoại tử tuỷ răng - K04.1 - (28), Răng đốm màu - K00.3 - (25, 26), Răng đốm màu - K00.3 - (22, 23), Rối loạn tạo răng - K00.4 - (34), Răng đốm màu - K00.3 - (44)</textarea>
                 </label>
-                <label class="admin-field stacked-field md:col-span-4">
+                <label class="admin-field stacked-field md:col-span-6">
                     <span class="admin-label">Phương pháp phẫu thuật:</span>
-                    <select class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900">
-                        <option selected>Phương pháp 1</option>
-                        <option>Phương pháp 2</option>
-                        <option>Phương pháp 3</option>
-                    </select>
+                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phuong-phap-phau-thuat-list" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                    <datalist id="phuong-phap-phau-thuat-list">
+                        <option value="Cầu hợp kim thường">
+                        <option value="Cầu hợp kim Titanium cẩn sứ">
+                        <option value="Cầu sứ Titanium gắn bằng cement trên Implant">
+                        <option value="Chụp hợp kim thường cẩn nhựa">
+                        <option value="Chích Apxe lợi trẻ em">
+                        <option value="Điều trị răng sữa sâu ngà phục hồi bằng Amalgam">
+                        <option value="Điều trị sâu ngà răng phục hồi bằng Amalgam">
+                        <option value="Hàm giả tháo lắp bán phần nền nhựa thường">
+                        <option value="Hàm khung kim loại">
+                    </datalist>
                 </label>
-                <label class="admin-field stacked-field md:col-span-4">
+                <label class="admin-field stacked-field md:col-span-6">
+                    <span class="admin-label">Phương pháp vô cảm:</span>
+                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" value="Gây tê tại chỗ">
+                </label>
+                <label class="admin-field stacked-field md:col-span-6">
                     <span class="admin-label">Bác sĩ phẫu thuật/thủ thuật:</span>
                     <select class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900">
                         <option selected>Không</option>
@@ -410,10 +437,26 @@
                         <option>Bác sĩ 2</option>
                     </select>
                 </label>
-                <label class="admin-field stacked-field md:col-span-4">
+                <div class="admin-field stacked-field md:col-span-6">
                     <span class="admin-label">Bác sĩ gây mê hồi sức:</span>
-                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" value="Không">
-                </label>
+                    <div class="flex items-center gap-3">
+                        <div class="flex h-8 items-center gap-4 text-sm font-semibold text-blue-900">
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                <input type="radio" name="bs_gay_me_option" id="bs_gay_me_co" value="co" class="h-4 w-4 accent-blue-600">
+                                <span>Có</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                                <input type="radio" name="bs_gay_me_option" id="bs_gay_me_khong" value="khong" checked class="h-4 w-4 accent-blue-600">
+                                <span>Không</span>
+                            </label>
+                        </div>
+                        <select id="select_bs_gay_me" class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900 hidden">
+                            <option selected disabled>Chọn bác sĩ</option>
+                            <option>Bác sĩ 1</option>
+                            <option>Bác sĩ 2</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -422,54 +465,8 @@
 
             <h3 class="sub-title">Lược đồ phẫu thuật / thủ thuật</h3>
             <div class="diagram-fields mb-6 grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-2">
-                <label class="admin-field">
-                    <span class="admin-label">Phương pháp hướng dẫn phẫu thuật:</span>
-                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phuong-phap-huong-dan" placeholder="Chọn 1">
-                    <datalist id="phuong-phap-huong-dan">
-                        <option value="Free hand">
-                        <option value="Máng HDPT">
-                        <option value="X-Guided">
-                        <option value="Yake Bot">
-                    </datalist>
-                </label>
-                <label class="admin-field">
-                    <span class="admin-label">Thời điểm cấy ghép:</span>
-                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="thoi-diem-cay-ghep" placeholder="Chọn 1">
-                    <datalist id="thoi-diem-cay-ghep">
-                        <option value="Tức thì">
-                        <option value="Sớm">
-                        <option value="Trì hoãn">
-                    </datalist>
-                </label>
-                <label class="admin-field">
-                    <span class="admin-label">Phẫu thuật:</span>
-                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phau-thuat" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
-                    <datalist id="phau-thuat">
-                        <option value="Phẫu thuật nâng sàn xoang hàm">
-                        <option value="Phẫu thuật dịch chuyển dây thần kinh răng dưới để cấy ghép implant">
-                        <option value="Phẫu thuật cấy ghép implant">
-                    </datalist>
-                </label>
-                <label class="admin-field">
-                    <span class="admin-label">Phẫu thuật tái tạo xương sống hàm / ổ răng:</span>
-                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="tai-tao-xuong" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
-                    <datalist id="tai-tao-xuong">
-                        <option value="Xương tự thân: góc hàm">
-                        <option value="Vật liệu hỗn hợp: allograft">
-                        <option value="Vật liệu hỗn hợp: Gen-os">
-                        <option value="Vật liệu hỗn hợp: Osteon">
-                        <option value="Vật liệu hỗn hợp: Boss">
-                    </datalist>
-                </label>
-                <label class="admin-field">
-                    <span class="admin-label">Đặt màng sinh học:</span>
-                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="mang-sinh-hoc" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
-                    <datalist id="mang-sinh-hoc">
-                        <option value="Colla-DM">
-                        <option value="Collagen membrane">
-                        <option value="OsteoBiol">
-                    </datalist>
-                </label>
+
+
                 <label class="admin-field">
                     <span class="admin-label">Khâu chỉ:</span>
                     <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="khau-chi" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
@@ -510,92 +507,253 @@
                     <input type="checkbox" checked>Sát trùng tại chỗ bằng Povidine
                 </label>
                 <label class="check-row procedure-check md:col-span-2">
-                    <input type="checkbox" checked>Người bệnh được gây tê tại chỗ
+                    <input type="checkbox" id="check_gay_te" checked>Người bệnh được gây tê tại chỗ
                 </label>
+                <div id="anesthetic-table-container" class="anesthetic-table-wrapper md:col-span-2 pl-6 my-1">
+                    <div class="max-w-md overflow-hidden rounded border border-slate-300 bg-white shadow-sm">
+                        <table class="w-full border-collapse text-sm" id="anesthetic-table">
+                            <thead>
+                                <tr class="bg-slate-100 text-left font-bold text-gray-800 border-b border-slate-300">
+                                    <th class="px-3 py-2 border-r border-slate-300 w-2/3">Thuốc gây tê</th>
+                                    <th class="px-3 py-2 w-1/3">Số lượng ống</th>
+                                    <th class="w-8 px-1 py-2 text-center no-print"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="anesthetic-tbody">
+                                <tr class="border-b border-slate-200">
+                                    <td class="px-3 py-1.5 border-r border-slate-200 font-semibold text-blue-900">Lidocaine 2%</td>
+                                    <td class="p-1">
+                                        <input type="number" min="0" placeholder="0" class="control h-8 w-full border border-slate-300 rounded px-2 text-sm font-semibold text-blue-900">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="px-3 py-1.5 border-r border-slate-200 font-semibold text-blue-900">Mepivacaine 3%</td>
+                                    <td class="p-1">
+                                        <input type="number" min="0" placeholder="0" class="control h-8 w-full border border-slate-300 rounded px-2 text-sm font-semibold text-blue-900">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="border-b border-slate-200">
+                                    <td class="px-3 py-1.5 border-r border-slate-200 font-semibold text-blue-900">Articaine 4%</td>
+                                    <td class="p-1">
+                                        <input type="number" min="0" placeholder="0" class="control h-8 w-full border border-slate-300 rounded px-2 text-sm font-semibold text-blue-900">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="p-2 bg-slate-50 border-t border-slate-200 no-print">
+                            <button type="button" id="add-anesthetic-row" class="inline-flex items-center gap-1 text-xs font-semibold text-cyan-600 hover:text-cyan-800">
+                                + Thêm dòng thuốc gây tê
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <label class="check-row procedure-check md:col-span-2">
                     <input type="checkbox" checked>Rạch nướu và bóc tách nướu bộc lộ vùng phẫu thuật
                 </label>
+                <div class="tab-procedure-wrapper md:col-span-2 mt-4 mb-2">
+                    <!-- Tab Navigation -->
+                    <div class="flex border-b border-gray-200 mb-4 no-print">
+                        <button type="button" id="tab-btn-implant" class="tab-btn active px-5 py-2.5 border-b-2 border-blue-600 text-blue-900 font-bold text-sm focus:outline-none flex items-center gap-2 transition-colors cursor-pointer">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                            Implant
+                        </button>
+                        <button type="button" id="tab-btn-khac" class="tab-btn px-5 py-2.5 border-b-2 border-transparent text-gray-500 font-medium hover:text-gray-700 text-sm focus:outline-none flex items-center gap-2 transition-colors cursor-pointer">
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            Khác
+                        </button>
+                    </div>
+
+                    <!-- Tab 1: Implant -->
+                    <div id="tab-content-implant" class="tab-content block">
+                        <!-- Table 1: Phương pháp hướng dẫn & thời điểm cấy ghép theo Răng -->
+                        <div class="mb-6">
+                            <h3 class="sub-title text-base font-bold text-gray-800 mb-3">Phương pháp hướng dẫn & thời điểm cấy ghép</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full border-collapse border border-slate-700 text-sm">
+                                    <thead>
+                                        <tr class="bg-slate-100 text-center font-bold text-gray-900">
+                                            <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
+                                            <th class="border border-slate-700 px-2 py-2 w-1/3">Răng</th>
+                                            <th class="border border-slate-700 px-2 py-2 w-1/3">Phương pháp hướng dẫn phẫu thuật</th>
+                                            <th class="border border-slate-700 px-2 py-2 w-1/3">Thời điểm cấy ghép</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="implant-method-tbody">
+                                        <tr>
+                                            <td class="border border-slate-700 px-2 py-2 text-center">
+                                                <button type="button" class="delete-method-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                            <td class="border border-slate-700 p-1">
+                                                <div class="relative flex items-center">
+                                                    <input class="tooth-select-input h-10 w-full border-0 p-1 pr-8 text-sm font-semibold text-blue-900 focus:ring-0 cursor-pointer bg-transparent" type="text" placeholder="Chọn vị trí răng (VD: 11, 12, 21)" readonly>
+                                                    <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-1 focus:outline-none cursor-pointer" title="Chọn vị trí răng">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                            <td class="border border-slate-700 p-1">
+                                                <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                    <option value="" disabled selected>Chọn phương pháp</option>
+                                                    <option value="Free hand">Free hand</option>
+                                                    <option value="Máng HDPT">Máng HDPT</option>
+                                                    <option value="X-Guided">X-Guided</option>
+                                                    <option value="Yake Bot">Yake Bot</option>
+                                                </select>
+                                            </td>
+                                            <td class="border border-slate-700 p-1">
+                                                <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                    <option value="" disabled selected>Chọn thời điểm</option>
+                                                    <option value="Tức thì">Tức thì</option>
+                                                    <option value="Sớm">Sớm</option>
+                                                    <option value="Trì hoãn">Trì hoãn</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button type="button" id="add-implant-method-row" class="mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 no-print">
+                                + Thêm dòng phương pháp
+                            </button>
+                        </div>
+
+                        <!-- Table 2: Chi tiết công cụ dụng cụ cấy ghép trên người bệnh (nếu có) -->
+                        <h3 class="sub-title text-base font-bold text-gray-800 mb-3">Chi tiết công cụ dụng cụ cấy ghép trên người bệnh (nếu có)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full border-collapse border border-slate-700 text-sm">
+                                <thead>
+                                    <tr class="bg-slate-100 text-center font-bold text-gray-900">
+                                        <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
+                                        <th class="border border-slate-700 px-2 py-2">Loại cấy ghép</th>
+                                        <th class="border border-slate-700 px-2 py-2">Số lượng</th>
+                                        <th class="border border-slate-700 px-2 py-2">Hãng</th>
+                                        <th class="border border-slate-700 px-2 py-2">Kích thước</th>
+                                        <th class="border border-slate-700 px-2 py-2">Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border border-slate-700 px-2 py-2 text-center">
+                                            <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập loại cấy ghép">
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="number" min="0">
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <select class="implant-brand h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                <option selected disabled>Chọn hãng</option>
+                                                <option value="DiO - Hàn Quốc">DiO - Hàn Quốc</option>
+                                                <option value="Anthogyr - Pháp">Anthogyr - Pháp</option>
+                                                <option value="Nobel Active - Mỹ">Nobel Active - Mỹ</option>
+                                                <option value="Nobel Active TiUltra - Mỹ">Nobel Active TiUltra - Mỹ</option>
+                                                <option value="NobelParallel - Mỹ">NobelParallel - Mỹ</option>
+                                                <option value="NobelParallel TiUltra - Mỹ">NobelParallel TiUltra - Mỹ</option>
+                                                <option value="Straumann BLT - Thuỵ Sỹ">Straumann BLT - Thuỵ Sỹ</option>
+                                                <option value="Straumann BLX - Thuỵ Sỹ">Straumann BLX - Thuỵ Sỹ</option>
+                                                <option value="AnyRidge Megagen - Hàn Quốc">AnyRidge Megagen - Hàn Quốc</option>
+                                                <option value="Zygoma Implant">Zygoma Implant</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <select class="implant-size h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" disabled>
+                                                <option selected value="">Chọn hãng trước</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="text" placeholder="Nhập ghi chú">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-slate-700 px-2 py-3 text-center">
+                                            <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                        <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập"></td>
+                                        <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="number" min="0"></td>
+                                        <td class="border border-slate-700 p-1"><select class="implant-brand h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0"></select></td>
+                                        <td class="border border-slate-700 p-1"><select class="implant-size h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" disabled><option value="">Chọn hãng trước</option></select></td>
+                                        <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <datalist id="implant-type-options">
+                                <option value="Link P trong TD-01 (Theo đúng dm kỹ thuật)">
+                                <option value="Loại cấy ghép khác">
+                            </datalist>
+                        </div>
+                        <button type="button" id="add-implant-row" class="mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 no-print">
+                            + Thêm dòng
+                        </button>
+                    </div>
+
+                    <!-- Tab 2: Khác -->
+                    <div id="tab-content-khac" class="tab-content hidden">
+                        <!-- 3 Trường Phẫu thuật / Tái tạo xương / Đặt màng sinh học -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <label class="admin-field stacked-field md:col-span-2">
+                                <span class="admin-label">Phẫu thuật:</span>
+                                <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phau-thuat" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                                <datalist id="phau-thuat">
+                                    <option value="Phẫu thuật nâng sàn xoang hàm">
+                                    <option value="Phẫu thuật dịch chuyển dây thần kinh răng dưới để cấy ghép implant">
+                                    <option value="Phẫu thuật cấy ghép implant">
+                                </datalist>
+                            </label>
+                            <label class="admin-field stacked-field">
+                                <span class="admin-label">Phẫu thuật tái tạo xương sống hàm / ổ răng:</span>
+                                <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="tai-tao-xuong" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                                <datalist id="tai-tao-xuong">
+                                    <option value="Xương tự thân: góc hàm">
+                                    <option value="Vật liệu hỗn hợp: allograft">
+                                    <option value="Vật liệu hỗn hợp: Gen-os">
+                                    <option value="Vật liệu hỗn hợp: Osteon">
+                                    <option value="Vật liệu hỗn hợp: Boss">
+                                </datalist>
+                            </label>
+                            <label class="admin-field stacked-field">
+                                <span class="admin-label">Đặt màng sinh học:</span>
+                                <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="mang-sinh-hoc" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                                <datalist id="mang-sinh-hoc">
+                                    <option value="Colla-DM">
+                                    <option value="Collagen membrane">
+                                    <option value="OsteoBiol">
+                                </datalist>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container chứa các trình tự phẫu thuật đã được bổ sung từ popup -->
+                <div id="dynamic-procedure-list" class="md:col-span-2 space-y-2"></div>
+
+                <!-- Action button Thêm trình tự phẫu thuật -->
+                <div class="md:col-span-2 my-2 no-print">
+                    <button type="button" id="btn-open-procedure-modal" class="inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer">
+                        <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        + Thêm trình tự phẫu thuật
+                    </button>
+                </div>
+
                 <label class="check-row procedure-complete md:col-span-2">
                     <input type="checkbox" checked>Hoàn tất ca thủ thuật. Kiểm tra vật tư đủ.
                 </label>
             </div>
-
-            <h3 class="sub-title">Chi tiết công cụ dụng cụ cấy ghép trên người bệnh (nếu có)</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full border-collapse border border-slate-700 text-sm">
-                    <thead>
-                        <tr class="bg-slate-100 text-center font-bold text-gray-900">
-                            <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
-                            <th class="border border-slate-700 px-2 py-2">Loại cấy ghép</th>
-                            <th class="border border-slate-700 px-2 py-2">Số lượng</th>
-                            <th class="border border-slate-700 px-2 py-2">Hãng</th>
-                            <th class="border border-slate-700 px-2 py-2">Kích thước</th>
-                            <th class="border border-slate-700 px-2 py-2">Ghi chú</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="border border-slate-700 px-2 py-2 text-center">
-                                <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
-                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
-                                    </svg>
-                                </button>
-                            </td>
-                            <td class="border border-slate-700 p-1">
-                                <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập loại cấy ghép">
-                            </td>
-                            <td class="border border-slate-700 p-1">
-                                <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="number" min="0">
-                            </td>
-                            <td class="border border-slate-700 p-1">
-                                <select class="implant-brand h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
-                                    <option selected disabled>Chọn hãng</option>
-                                    <option value="DiO - Hàn Quốc">DiO - Hàn Quốc</option>
-                                    <option value="Anthogyr - Pháp">Anthogyr - Pháp</option>
-                                    <option value="Nobel Active - Mỹ">Nobel Active - Mỹ</option>
-                                    <option value="Nobel Active TiUltra - Mỹ">Nobel Active TiUltra - Mỹ</option>
-                                    <option value="NobelParallel - Mỹ">NobelParallel - Mỹ</option>
-                                    <option value="NobelParallel TiUltra - Mỹ">NobelParallel TiUltra - Mỹ</option>
-                                    <option value="Straumann BLT - Thuỵ Sỹ">Straumann BLT - Thuỵ Sỹ</option>
-                                    <option value="Straumann BLX - Thuỵ Sỹ">Straumann BLX - Thuỵ Sỹ</option>
-                                    <option value="AnyRidge Megagen - Hàn Quốc">AnyRidge Megagen - Hàn Quốc</option>
-                                    <option value="Zygoma Implant">Zygoma Implant</option>
-                                </select>
-                            </td>
-                            <td class="border border-slate-700 p-1">
-                                <select class="implant-size h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" disabled>
-                                    <option selected value="">Chọn hãng trước</option>
-                                </select>
-                            </td>
-                            <td class="border border-slate-700 p-1">
-                                <input class="h-20 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0" type="text" placeholder="Nhập ghi chú">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-slate-700 px-2 py-3 text-center">
-                                <button type="button" class="delete-implant-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
-                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
-                                    </svg>
-                                </button>
-                            </td>
-                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text" list="implant-type-options" placeholder="Chọn hoặc nhập"></td>
-                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="number" min="0"></td>
-                            <td class="border border-slate-700 p-1"><select class="implant-brand h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0"></select></td>
-                            <td class="border border-slate-700 p-1"><select class="implant-size h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" disabled><option value="">Chọn hãng trước</option></select></td>
-                            <td class="border border-slate-700 p-1"><input class="h-10 w-full border-0 p-1 text-sm text-blue-900 focus:ring-0" type="text"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <datalist id="implant-type-options">
-                    <option value="Link P trong TD-01 (Theo đúng dm kỹ thuật)">
-                    <option value="Loại cấy ghép khác">
-                </datalist>
-            </div>
-            <button type="button" id="add-implant-row" class="mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50">
-                + Thêm dòng
-            </button>
             <div class="completion-fields mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
                 <label class="admin-field w-full">
                     <span class="admin-label">Phẫu thuật / thủ thuật viên:</span>
@@ -636,7 +794,481 @@
         </div>
     </div>
 
-    <script>
+        <!-- Modal chọn Trình tự phẫu thuật -->
+    <div id="procedure-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 backdrop-blur-xs p-4 hidden no-print">
+        <div class="bg-white rounded-lg shadow-2xl max-w-3xl w-full max-h-[88vh] flex flex-col border border-gray-200 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold text-xs">
+                        32
+                    </span>
+                    <h3 class="text-base font-bold text-blue-900 uppercase">Danh sách trình tự phẫu thuật / thủ thuật</h3>
+                </div>
+                <button type="button" id="btn-close-procedure-modal" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-200 cursor-pointer" title="Đóng">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Modal Search & Quick Actions -->
+            <div class="p-4 border-b border-gray-100 bg-white flex flex-wrap items-center justify-between gap-3">
+                <div class="relative flex-1 min-w-[240px]">
+                    <input type="text" id="procedure-search-input" placeholder="Tìm kiếm trình tự phẫu thuật (theo tên, số thứ tự, từ khóa)..." class="control h-9 w-full text-sm pl-9 pr-3 rounded border border-slate-300 focus:border-blue-500">
+                    <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" id="btn-uncheck-all-proc" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded border border-slate-200 hover:bg-slate-50 cursor-pointer transition-colors">
+                        Bỏ chọn tất cả
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Body (32 items) -->
+            <div class="p-5 overflow-y-auto space-y-2.5 flex-1 bg-slate-50/50" id="modal-procedure-items">
+                <!-- 1. Cắt đôi thân răng -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="1">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-1" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-1" class="text-sm font-semibold text-gray-800 cursor-pointer">1. Cắt đôi thân răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Nhổ răng -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="2">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-2" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-2" class="text-sm font-semibold text-gray-800 cursor-pointer">2. Nhổ răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Xử lý ổ răng -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-3" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">3. Xử lý ổ răng: Nạo sạch ổ răng, lấy các mảnh vụn còn sót trong ổ răng</span>
+                    </label>
+                </div>
+
+                <!-- 4. Xử lý ổ bằng Povidine + Tetracycline -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="4">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-4" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">4. Xử lý ổ bằng Povidine + Tetracycline</span>
+                    </label>
+                </div>
+
+                <!-- 5. Bơm rửa bằng Oxy già và NaCl 0,9% -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="5">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-5" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">5. Bơm rửa bằng Oxy già và NaCl 0,9%</span>
+                    </label>
+                </div>
+
+                <!-- 6. Đặt Spongel kết hợp bơm Gentamicin vào ổ răng -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="6">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-6" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">6. Đặt Spongel kết hợp bơm Gentamicin vào ổ răng</span>
+                    </label>
+                </div>
+
+                <!-- 7. Định vị vị trí cấy Implant -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="7">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-7" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">7. Định vị vị trí cấy Implant</span>
+                    </label>
+                </div>
+
+                <!-- 8. Chuẩn bị ổ Implant -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="8">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-8" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">8. Chuẩn bị ổ Implant</span>
+                    </label>
+                </div>
+
+                <!-- 9. Chêm xương -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="9">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-9" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">9. Chêm xương</span>
+                    </label>
+                </div>
+
+                <!-- 10. Cắm Implant răng … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="10">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-10" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-10" class="text-sm font-semibold text-gray-800 cursor-pointer">10. Cắm Implant răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. Khoan xương răng … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="11">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-11" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-11" class="text-sm font-semibold text-gray-800 cursor-pointer">11. Khoan xương răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. Nâng xoang kín răng … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="12">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-12" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-12" class="text-sm font-semibold text-gray-800 cursor-pointer">12. Nâng xoang kín răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13. Nâng xoang hở răng … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="13">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-13" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-13" class="text-sm font-semibold text-gray-800 cursor-pointer">13. Nâng xoang hở răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14. Bơm rửa sạch vị trí Implant bằng NaCl 0,9% -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="14">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-14" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">14. Bơm rửa sạch vị trí Implant bằng NaCl 0,9%</span>
+                    </label>
+                </div>
+
+                <!-- 15. Gắn …. răng … (Có thể thêm hàng) -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="15">
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" id="proc-chk-15" class="proc-checkbox mt-1 w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <div class="flex-1 space-y-2">
+                            <label for="proc-chk-15" class="text-sm font-semibold text-gray-800 cursor-pointer block">
+                                15. Gắn phục hình / linh kiện:
+                            </label>
+                            <div id="item-15-rows-container" class="space-y-2">
+                                <div class="item-15-row flex flex-wrap items-center gap-2">
+                                    <span class="text-xs font-medium text-gray-600">Gắn</span>
+                                    <input type="text" list="item15-gan-type-list" placeholder="Cover screw, Healing, Multi..." class="item15-type-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                                    <span class="text-xs font-medium text-gray-600">răng</span>
+                                    <div class="relative flex items-center">
+                                        <input type="text" placeholder="Chọn răng..." class="item15-tooth-input tooth-select-input control h-8 w-32 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                                        <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                        </button>
+                                    </div>
+                                    <button type="button" class="btn-remove-item15-row text-red-400 hover:text-red-600 p-1 hidden" title="Xóa hàng">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <datalist id="item15-gan-type-list">
+                                <option value="Cover screw">
+                                <option value="Healing">
+                                <option value="Multi">
+                            </datalist>
+                            <button type="button" id="btn-add-item15-row" class="inline-flex items-center gap-1 text-xs font-semibold text-cyan-600 hover:text-cyan-800 cursor-pointer pt-1">
+                                + Thêm hàng gắn loại khác
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 16. Ghép xương ….. vào ổ răng … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="16">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <input type="checkbox" id="proc-chk-16" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-16" class="text-sm font-semibold text-gray-800 cursor-pointer">16. Ghép xương</label>
+                        <input type="text" list="item16-xuong-list" placeholder="Sticky bone,..." class="proc-field-xuong control h-8 w-36 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                        <span class="text-sm font-semibold text-gray-800">vào ổ răng:</span>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn răng..." class="proc-field-tooth tooth-select-input control h-8 w-36 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                        <datalist id="item16-xuong-list">
+                            <option value="Sticky bone">
+                            <option value="Allograft">
+                            <option value="Gen-os">
+                            <option value="Osteon">
+                            <option value="Boss">
+                        </datalist>
+                    </div>
+                </div>
+
+                <!-- 17. Ghép xương ….. trong xoang ở …. -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="17">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <input type="checkbox" id="proc-chk-17" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-17" class="text-sm font-semibold text-gray-800 cursor-pointer">17. Ghép xương</label>
+                        <input type="text" list="item16-xuong-list" placeholder="Sticky bone,..." class="proc-field-xuong control h-8 w-36 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                        <span class="text-sm font-semibold text-gray-800">trong xoang ở:</span>
+                        <input type="text" list="item17-xoang-list" placeholder="hàm một, hàm hai..." class="proc-field-xoang control h-8 w-44 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                        <datalist id="item17-xoang-list">
+                            <option value="hàm một">
+                            <option value="hàm hai">
+                            <option value="hai hàm">
+                            <option value="xoang hàm phải">
+                            <option value="xoang hàm trái">
+                        </datalist>
+                    </div>
+                </div>
+
+                <!-- 18. Ghép màng sinh học giàu tiểu cầu -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="18">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-18" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">18. Ghép màng sinh học giàu tiểu cầu</span>
+                    </label>
+                </div>
+
+                <!-- 19. Cho màng sinh học giàu tiểu cầu vào xoang -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="19">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-19" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">19. Cho màng sinh học giàu tiểu cầu vào xoang</span>
+                    </label>
+                </div>
+
+                <!-- 20. Kiểm tra vạt, tạo vạt và khâu đóng vạt -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="20">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-20" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">20. Kiểm tra vạt, tạo vạt và khâu đóng vạt</span>
+                    </label>
+                </div>
+
+                <!-- 21. Kiểm tra mô mềm và khâu đóng vết mổ -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="21">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-21" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">21. Kiểm tra mô mềm và khâu đóng vết mổ</span>
+                    </label>
+                </div>
+
+                <!-- 22. Lấy dấu … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="22">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-22" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-22" class="text-sm font-semibold text-gray-800 cursor-pointer">22. Lấy dấu:</label>
+                        <select class="proc-field-select control h-8 w-44 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                            <option value="hai hàm">hai hàm</option>
+                            <option value="hàm trên">hàm trên</option>
+                            <option value="hàm dưới">hàm dưới</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 23. Gắn ốc lành thương -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="23">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-23" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">23. Gắn ốc lành thương</span>
+                    </label>
+                </div>
+
+                <!-- 24. Nạo túi nha chu răng …. -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="24">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-24" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-24" class="text-sm font-semibold text-gray-800 cursor-pointer">24. Nạo túi nha chu răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 25. Deep clean … -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="25">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-25" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-25" class="text-sm font-semibold text-gray-800 cursor-pointer">25. Deep clean:</label>
+                        <select class="proc-field-select control h-8 w-44 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                            <option value="hai hàm">hai hàm</option>
+                            <option value="hàm trên">hàm trên</option>
+                            <option value="hàm dưới">hàm dưới</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 26. Tháo implant răng …. -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="26">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-26" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-26" class="text-sm font-semibold text-gray-800 cursor-pointer">26. Tháo implant răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 27. Kéo răng mọc ngầm răng …. -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="27">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-27" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-27" class="text-sm font-semibold text-gray-800 cursor-pointer">27. Kéo răng mọc ngầm răng:</label>
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Chọn vị trí răng..." class="proc-field-tooth tooth-select-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                            <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 28. Đánh dấu vị trí ghép nướu -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="28">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-28" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">28. Đánh dấu vị trí ghép nướu</span>
+                    </label>
+                </div>
+
+                <!-- 29. Chuẩn bị vùng nhận nướu -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="29">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-29" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">29. Chuẩn bị vùng nhận nướu</span>
+                    </label>
+                </div>
+
+                <!-- 30. Lấy nướu -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="30">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-30" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-30" class="text-sm font-semibold text-gray-800 cursor-pointer">30. Lấy nướu:</label>
+                        <input type="text" list="item30-lay-nuou-list" placeholder="Khẩu cái, lồi củ..." class="proc-field-custom control h-8 w-56 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                        <datalist id="item30-lay-nuou-list">
+                            <option value="khẩu cái">
+                            <option value="lồi củ">
+                            <option value="khẩu cái, lồi củ">
+                        </datalist>
+                    </div>
+                </div>
+
+                <!-- 31. Xử lý vùng ghép nướu -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="31">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                        <input type="checkbox" id="proc-chk-31" class="proc-checkbox w-4 h-4 mt-0.5 accent-blue-600 rounded">
+                        <span class="text-sm font-semibold text-gray-800">31. Xử lý vùng ghép nướu</span>
+                    </label>
+                </div>
+
+                <!-- 32. Khác -->
+                <div class="procedure-item-row p-3 rounded-lg border border-slate-200 bg-white hover:border-blue-300 transition-all shadow-xs" data-proc-id="32">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <input type="checkbox" id="proc-chk-32" class="proc-checkbox w-4 h-4 accent-blue-600 rounded cursor-pointer">
+                        <label for="proc-chk-32" class="text-sm font-semibold text-gray-800 cursor-pointer">32. Khác:</label>
+                        <input type="text" placeholder="Nhập trình tự phẫu thuật khác..." class="proc-field-custom control h-8 flex-1 min-w-[220px] text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex items-center justify-between px-6 py-3 border-t border-gray-200 bg-white">
+                <div class="text-xs text-gray-500">
+                    Kéo thả các bước trên giao diện để sắp xếp lại trình tự phẫu thuật.
+                </div>
+                <div class="flex items-center gap-3">
+                    <button type="button" id="btn-cancel-procedure-modal" class="h-9 px-4 rounded border border-slate-300 bg-white text-sm font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer">
+                        Hủy
+                    </button>
+                    <button type="button" id="btn-confirm-procedure-modal" class="h-9 px-5 rounded bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 cursor-pointer shadow-sm">
+                        Xác nhận bổ sung
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chọn Răng (Popup) -->
+    <div id="tooth-picker-modal" class="fixed inset-0 z-[70] flex items-center justify-center bg-gray-900/40 backdrop-blur-xs p-4 hidden no-print">
+        <div class="bg-white rounded-lg shadow-2xl w-full max-w-4xl p-6 border border-gray-200 overflow-hidden flex flex-col">
+            <!-- Modal Header: Radio Người lớn / Trẻ em + Nút Đóng -->
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-6 text-sm text-gray-700 font-medium">
+                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="tooth_picker_age" value="adult" checked class="w-4 h-4 text-blue-600 accent-blue-600 cursor-pointer">
+                        <span>Người lớn</span>
+                    </label>
+                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="tooth_picker_age" value="child" class="w-4 h-4 text-blue-600 accent-blue-600 cursor-pointer">
+                        <span>Trẻ em</span>
+                    </label>
+                </div>
+                <button type="button" id="btn-close-tooth-modal" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100 transition cursor-pointer" title="Đóng">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Jaw Action Buttons: Hàm trên / Hàm dưới / Hai hàm -->
+            <div class="mb-5 flex flex-wrap gap-4">
+                <button type="button" class="btn-jaw-select rounded border border-gray-300 px-8 py-2 text-sm font-semibold text-gray-800 hover:bg-blue-50/50 hover:border-blue-400 transition-all cursor-pointer shadow-xs" data-jaw="upper">Hàm trên</button>
+                <button type="button" class="btn-jaw-select rounded border border-gray-300 px-8 py-2 text-sm font-semibold text-gray-800 hover:bg-blue-50/50 hover:border-blue-400 transition-all cursor-pointer shadow-xs" data-jaw="lower">Hàm dưới</button>
+                <button type="button" class="btn-jaw-select rounded border border-gray-300 px-8 py-2 text-sm font-semibold text-gray-800 hover:bg-blue-50/50 hover:border-blue-400 transition-all cursor-pointer shadow-xs" data-jaw="all">Hai hàm</button>
+            </div>
+
+            <!-- Teeth Rows Container -->
+            <div id="tooth-picker-container" class="space-y-3 mb-6 select-none overflow-x-auto pb-1">
+                <!-- Rendered dynamically -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-gray-200">
+                <div class="text-sm text-gray-600">
+                    Đã chọn: <span id="tooth-selected-summary" class="font-bold text-blue-900">Chưa chọn</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button type="button" id="btn-clear-teeth" class="h-9 px-4 rounded border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 cursor-pointer">Xóa chọn</button>
+                    <button type="button" id="btn-cancel-teeth" class="h-9 px-4 rounded border border-slate-300 text-sm font-medium text-gray-700 hover:bg-slate-100 cursor-pointer">Hủy</button>
+                    <button type="button" id="btn-confirm-teeth" class="h-9 px-5 rounded bg-blue-600 hover:bg-blue-700 text-sm font-semibold text-white cursor-pointer shadow-sm">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
         const branchSelect = document.getElementById('chi_nhanh');
         const healthDepartment = document.getElementById('so_y_te');
         const healthDepartmentByBranch = {
@@ -728,7 +1360,792 @@
             if (!deleteButton) return;
             deleteButton.closest('tr')?.remove();
         });
+
+        // Xử lý ẩn/hiện bảng Thuốc gây tê theo checkbox "Người bệnh được gây tê tại chỗ"
+        const checkGayTe = document.getElementById('check_gay_te');
+        const containerThuocTe = document.getElementById('anesthetic-table-container');
+        const anestheticTbody = document.getElementById('anesthetic-tbody');
+        const addAnestheticRowBtn = document.getElementById('add-anesthetic-row');
+
+        const toggleAnestheticTable = () => {
+            if (!checkGayTe || !containerThuocTe) return;
+            containerThuocTe.style.display = checkGayTe.checked ? 'block' : 'none';
+        };
+
+        checkGayTe?.addEventListener('change', toggleAnestheticTable);
+        toggleAnestheticTable();
+
+        addAnestheticRowBtn?.addEventListener('click', () => {
+            if (!anestheticTbody) return;
+            const tr = document.createElement('tr');
+            tr.className = 'border-b border-slate-200';
+            tr.innerHTML = `
+                <td class="p-1 border-r border-slate-200">
+                    <input type="text" placeholder="Nhập tên thuốc gây tê..." class="control h-8 w-full border border-slate-300 rounded px-2 text-sm font-semibold text-blue-900">
+                </td>
+                <td class="p-1">
+                    <input type="number" min="0" placeholder="0" class="control h-8 w-full border border-slate-300 rounded px-2 text-sm font-semibold text-blue-900">
+                </td>
+                <td class="text-center p-1 no-print">
+                    <button type="button" class="delete-anesthetic-row text-red-500 hover:text-red-700 p-1" title="Xóa dòng" aria-label="Xóa dòng">
+                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </td>
+            `;
+            anestheticTbody.appendChild(tr);
+        });
+
+        anestheticTbody?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.delete-anesthetic-row');
+            if (btn) {
+                btn.closest('tr')?.remove();
+            }
+        });
+
+        // Xử lý radio Có / Không cho Bác sĩ gây mê hồi sức
+        const radioBsGayMeCo = document.getElementById('bs_gay_me_co');
+        const radioBsGayMeKhong = document.getElementById('bs_gay_me_khong');
+        const selectBsGayMe = document.getElementById('select_bs_gay_me');
+
+        const toggleBsGayMeSelect = () => {
+            if (!selectBsGayMe) return;
+            if (radioBsGayMeCo?.checked) {
+                selectBsGayMe.classList.remove('hidden');
+            } else {
+                selectBsGayMe.classList.add('hidden');
+            }
+        };
+
+        radioBsGayMeCo?.addEventListener('change', toggleBsGayMeSelect);
+        radioBsGayMeKhong?.addEventListener('change', toggleBsGayMeSelect);
+        toggleBsGayMeSelect();
+
+        // Xử lý chuyển Tab Implant và Khác
+        const tabBtnImplant = document.getElementById('tab-btn-implant');
+        const tabBtnKhac = document.getElementById('tab-btn-khac');
+        const tabContentImplant = document.getElementById('tab-content-implant');
+        const tabContentKhac = document.getElementById('tab-content-khac');
+
+        const switchTab = (targetTab) => {
+            if (targetTab === 'implant') {
+                tabBtnImplant?.classList.add('border-blue-600', 'text-blue-900', 'font-bold');
+                tabBtnImplant?.classList.remove('border-transparent', 'text-gray-500', 'font-medium');
+                tabBtnKhac?.classList.remove('border-blue-600', 'text-blue-900', 'font-bold');
+                tabBtnKhac?.classList.add('border-transparent', 'text-gray-500', 'font-medium');
+
+                tabContentImplant?.classList.remove('hidden');
+                tabContentImplant?.classList.add('block');
+                tabContentKhac?.classList.remove('block');
+                tabContentKhac?.classList.add('hidden');
+            } else {
+                tabBtnKhac?.classList.add('border-blue-600', 'text-blue-900', 'font-bold');
+                tabBtnKhac?.classList.remove('border-transparent', 'text-gray-500', 'font-medium');
+                tabBtnImplant?.classList.remove('border-blue-600', 'text-blue-900', 'font-bold');
+                tabBtnImplant?.classList.add('border-transparent', 'text-gray-500', 'font-medium');
+
+                tabContentKhac?.classList.remove('hidden');
+                tabContentKhac?.classList.add('block');
+                tabContentImplant?.classList.remove('block');
+                tabContentImplant?.classList.add('hidden');
+            }
+        };
+
+        tabBtnImplant?.addEventListener('click', () => switchTab('implant'));
+        tabBtnKhac?.addEventListener('click', () => switchTab('khac'));
+
+        // Xử lý Thêm/Xóa dòng cho Bảng Phương pháp & Thời điểm cấy ghép theo Răng
+        const implantMethodTbody = document.getElementById('implant-method-tbody');
+        const addImplantMethodRowBtn = document.getElementById('add-implant-method-row');
+
+        addImplantMethodRowBtn?.addEventListener('click', () => {
+            if (!implantMethodTbody) return;
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="border border-slate-700 px-2 py-2 text-center">
+                    <button type="button" class="delete-method-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                        </svg>
+                    </button>
+                </td>
+                <td class="border border-slate-700 p-1">
+                    <div class="relative flex items-center">
+                        <input class="tooth-select-input h-10 w-full border-0 p-1 pr-8 text-sm font-semibold text-blue-900 focus:ring-0 cursor-pointer bg-transparent" type="text" placeholder="Chọn vị trí răng (VD: 11, 12, 21)" readonly>
+                        <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-1 focus:outline-none cursor-pointer" title="Chọn vị trí răng">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </button>
+                    </div>
+                </td>
+                <td class="border border-slate-700 p-1">
+                    <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                        <option value="" disabled selected>Chọn phương pháp</option>
+                        <option value="Free hand">Free hand</option>
+                        <option value="Máng HDPT">Máng HDPT</option>
+                        <option value="X-Guided">X-Guided</option>
+                        <option value="Yake Bot">Yake Bot</option>
+                    </select>
+                </td>
+                <td class="border border-slate-700 p-1">
+                    <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                        <option value="" disabled selected>Chọn thời điểm</option>
+                        <option value="Tức thì">Tức thì</option>
+                        <option value="Sớm">Sớm</option>
+                        <option value="Trì hoãn">Trì hoãn</option>
+                    </select>
+                </td>
+            `;
+            implantMethodTbody.appendChild(tr);
+        });
+
+        implantMethodTbody?.addEventListener('click', (event) => {
+            const deleteButton = event.target.closest('.delete-method-row');
+            if (!deleteButton) return;
+            deleteButton.closest('tr')?.remove();
+        });
+
+        // ==========================================
+        // Xử lý Popup Modal chọn Trình tự phẫu thuật (32 mục) & Drag & Drop List
+        // ==========================================
+        const procedureModal = document.getElementById('procedure-modal');
+        const btnOpenProcedureModal = document.getElementById('btn-open-procedure-modal');
+        const btnCloseProcedureModal = document.getElementById('btn-close-procedure-modal');
+        const btnCancelProcedureModal = document.getElementById('btn-cancel-procedure-modal');
+        const btnConfirmProcedureModal = document.getElementById('btn-confirm-procedure-modal');
+        const btnUncheckAllProc = document.getElementById('btn-uncheck-all-proc');
+        const procedureSearchInput = document.getElementById('procedure-search-input');
+        const modalProcedureItems = document.getElementById('modal-procedure-items');
+        const dynamicProcedureList = document.getElementById('dynamic-procedure-list');
+
+        // Quản lý trạng thái background sáng / mờ của dropdown/input chọn răng theo checkbox
+        const updateProcedureRowToothState = (row) => {
+            if (!row) return;
+            const chk = row.querySelector('.proc-checkbox');
+            const isChecked = !!chk?.checked;
+            
+            const toothInputs = row.querySelectorAll('.tooth-select-input');
+            const pickerBtns = row.querySelectorAll('.btn-open-tooth-picker');
+            
+            toothInputs.forEach(input => {
+                if (isChecked) {
+                    input.classList.remove('tooth-input-disabled');
+                    input.classList.add('tooth-input-enabled');
+                    input.removeAttribute('disabled');
+                } else {
+                    input.classList.remove('tooth-input-enabled');
+                    input.classList.add('tooth-input-disabled');
+                    input.setAttribute('disabled', 'disabled');
+                }
+            });
+
+            pickerBtns.forEach(btn => {
+                if (isChecked) {
+                    btn.classList.remove('btn-tooth-picker-disabled');
+                    btn.classList.add('btn-tooth-picker-enabled');
+                    btn.removeAttribute('disabled');
+                } else {
+                    btn.classList.remove('btn-tooth-picker-enabled');
+                    btn.classList.add('btn-tooth-picker-disabled');
+                    btn.setAttribute('disabled', 'disabled');
+                }
+            });
+        };
+
+        const syncAllProcedureRowToothStates = () => {
+            const rows = modalProcedureItems?.querySelectorAll('.procedure-item-row');
+            rows?.forEach(updateProcedureRowToothState);
+        };
+
+        const openProcedureModal = () => {
+            const modal = document.getElementById('procedure-modal');
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            modal.style.display = 'flex';
+            syncAllProcedureRowToothStates();
+        };
+
+        const closeProcedureModal = () => {
+            const modal = document.getElementById('procedure-modal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            modal.style.display = 'none';
+        };
+
+        btnOpenProcedureModal?.addEventListener('click', openProcedureModal);
+        btnCloseProcedureModal?.addEventListener('click', closeProcedureModal);
+        btnCancelProcedureModal?.addEventListener('click', closeProcedureModal);
+
+        // Delegation fallback for open procedure modal
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#btn-open-procedure-modal')) {
+                e.preventDefault();
+                openProcedureModal();
+            }
+        });
+
+        // Đóng modal khi click ra ngoài phông nền
+        procedureModal?.addEventListener('click', (e) => {
+            if (e.target === procedureModal) closeProcedureModal();
+        });
+
+        // Tìm kiếm trình tự trong modal
+        procedureSearchInput?.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            const rows = modalProcedureItems?.querySelectorAll('.procedure-item-row');
+            rows?.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // Bỏ chọn tất cả
+        btnUncheckAllProc?.addEventListener('click', () => {
+            const checkboxes = modalProcedureItems?.querySelectorAll('.proc-checkbox');
+            checkboxes?.forEach(cb => cb.checked = false);
+            syncAllProcedureRowToothStates();
+        });
+
+        // Xử lý thêm/xóa hàng cho Mục 15: Gắn... răng...
+        const item15Container = document.getElementById('item-15-rows-container');
+        const btnAddItem15Row = document.getElementById('btn-add-item15-row');
+
+        const updateItem15DeleteButtons = () => {
+            const rows = item15Container?.querySelectorAll('.item-15-row');
+            rows?.forEach(r => {
+                const delBtn = r.querySelector('.btn-remove-item15-row');
+                if (delBtn) delBtn.classList.toggle('hidden', rows.length <= 1);
+            });
+        };
+
+        btnAddItem15Row?.addEventListener('click', () => {
+            if (!item15Container) return;
+            const newRow = document.createElement('div');
+            newRow.className = 'item-15-row flex flex-wrap items-center gap-2';
+            newRow.innerHTML = `
+                <span class="text-xs font-medium text-gray-600">Gắn</span>
+                <input type="text" list="item15-gan-type-list" placeholder="Cover screw, Healing, Multi..." class="item15-type-input control h-8 w-44 text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                <span class="text-xs font-medium text-gray-600">răng</span>
+                <div class="relative flex items-center">
+                    <input type="text" placeholder="Chọn răng..." class="item15-tooth-input tooth-select-input control h-8 w-32 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                    <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                </div>
+                <button type="button" class="btn-remove-item15-row text-red-400 hover:text-red-600 p-1" title="Xóa hàng">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            `;
+            item15Container.appendChild(newRow);
+            updateItem15DeleteButtons();
+
+            // Tự động tích chọn checkbox mục 15
+            const chk15 = document.getElementById('proc-chk-15');
+            if (chk15) {
+                chk15.checked = true;
+                updateProcedureRowToothState(item15Container?.closest('.procedure-item-row'));
+            }
+        });
+
+        item15Container?.addEventListener('click', (e) => {
+            const delBtn = e.target.closest('.btn-remove-item15-row');
+            if (delBtn) {
+                delBtn.closest('.item-15-row')?.remove();
+                updateItem15DeleteButtons();
+            }
+        });
+
+        // Lắng nghe thay đổi checkbox để bật/tắt background sáng cho dropdown chọn răng
+        modalProcedureItems?.addEventListener('change', (e) => {
+            const row = e.target.closest('.procedure-item-row');
+            if (!row) return;
+
+            if (e.target.matches('.proc-checkbox')) {
+                updateProcedureRowToothState(row);
+                return;
+            }
+
+            // Nếu thay đổi ở input khác thì tự động tích checkbox và bật background sáng
+            const chk = row.querySelector('.proc-checkbox');
+            if (chk && !chk.checked) {
+                chk.checked = true;
+                updateProcedureRowToothState(row);
+            }
+        });
+
+        modalProcedureItems?.addEventListener('input', (e) => {
+            const row = e.target.closest('.procedure-item-row');
+            if (row && !e.target.matches('.proc-checkbox')) {
+                const chk = row.querySelector('.proc-checkbox');
+                if (chk && !chk.checked) {
+                    chk.checked = true;
+                    updateProcedureRowToothState(row);
+                }
+            }
+        });
+
+        // Hàm phân tích và trích xuất nội dung từ từng dòng trong 32 mục
+        const getProcedureRowTexts = (row) => {
+            const procId = row.dataset.procId;
+            const results = [];
+
+            if (procId === '1') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Cắt đôi thân răng: răng ${tooth}` : 'Cắt đôi thân răng');
+            } else if (procId === '2') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Nhổ răng: răng ${tooth}` : 'Nhổ răng');
+            } else if (procId === '3') {
+                results.push('Xử lý ổ răng: Nạo sạch ổ răng, lấy các mảnh vụn còn sót trong ổ răng');
+            } else if (procId === '4') {
+                results.push('Xử lý ổ bằng Povidine + Tetracycline');
+            } else if (procId === '5') {
+                results.push('Bơm rửa bằng Oxy già và NaCl 0,9%');
+            } else if (procId === '6') {
+                results.push('Đặt Spongel kết hợp bơm Gentamicin vào ổ răng');
+            } else if (procId === '7') {
+                results.push('Định vị vị trí cấy Implant');
+            } else if (procId === '8') {
+                results.push('Chuẩn bị ổ Implant');
+            } else if (procId === '9') {
+                results.push('Chêm xương');
+            } else if (procId === '10') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Cắm Implant răng ${tooth}` : 'Cắm Implant');
+            } else if (procId === '11') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Khoan xương răng ${tooth}` : 'Khoan xương');
+            } else if (procId === '12') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Nâng xoang kín răng ${tooth}` : 'Nâng xoang kín');
+            } else if (procId === '13') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Nâng xoang hở răng ${tooth}` : 'Nâng xoang hở');
+            } else if (procId === '14') {
+                results.push('Bơm rửa sạch vị trí Implant bằng NaCl 0,9%');
+            } else if (procId === '15') {
+                const subRows = row.querySelectorAll('.item-15-row');
+                subRows.forEach(sub => {
+                    const type = sub.querySelector('.item15-type-input')?.value.trim();
+                    const tooth = sub.querySelector('.item15-tooth-input')?.value.trim();
+                    if (type && tooth) {
+                        results.push(`Gắn ${type} răng ${tooth}`);
+                    } else if (type) {
+                        results.push(`Gắn ${type}`);
+                    } else if (tooth) {
+                        results.push(`Gắn phục hình răng ${tooth}`);
+                    } else {
+                        results.push('Gắn phục hình / linh kiện');
+                    }
+                });
+            } else if (procId === '16') {
+                const xuong = row.querySelector('.proc-field-xuong')?.value.trim();
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                let s = 'Ghép xương';
+                if (xuong) s += ` ${xuong}`;
+                if (tooth) s += ` vào ổ răng ${tooth}`;
+                else s += ' vào ổ răng';
+                results.push(s);
+            } else if (procId === '17') {
+                const xuong = row.querySelector('.proc-field-xuong')?.value.trim();
+                const xoang = row.querySelector('.proc-field-xoang')?.value.trim();
+                let s = 'Ghép xương';
+                if (xuong) s += ` ${xuong}`;
+                if (xoang) s += ` trong xoang ở ${xoang}`;
+                else s += ' trong xoang';
+                results.push(s);
+            } else if (procId === '18') {
+                results.push('Ghép màng sinh học giàu tiểu cầu');
+            } else if (procId === '19') {
+                results.push('Cho màng sinh học giàu tiểu cầu vào xoang');
+            } else if (procId === '20') {
+                results.push('Kiểm tra vạt, tạo vạt và khâu đóng vạt');
+            } else if (procId === '21') {
+                results.push('Kiểm tra mô mềm và khâu đóng vết mổ');
+            } else if (procId === '22') {
+                const selectVal = row.querySelector('.proc-field-select')?.value.trim();
+                results.push(`Lấy dấu ${selectVal || 'hai hàm'}`);
+            } else if (procId === '23') {
+                results.push('Gắn ốc lành thương');
+            } else if (procId === '24') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Nạo túi nha chu răng ${tooth}` : 'Nạo túi nha chu');
+            } else if (procId === '25') {
+                const selectVal = row.querySelector('.proc-field-select')?.value.trim();
+                results.push(`Deep clean ${selectVal || 'hai hàm'}`);
+            } else if (procId === '26') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Tháo implant răng ${tooth}` : 'Tháo implant');
+            } else if (procId === '27') {
+                const tooth = row.querySelector('.proc-field-tooth')?.value.trim();
+                results.push(tooth ? `Kéo răng mọc ngầm răng ${tooth}` : 'Kéo răng mọc ngầm');
+            } else if (procId === '28') {
+                results.push('Đánh dấu vị trí ghép nướu');
+            } else if (procId === '29') {
+                results.push('Chuẩn bị vùng nhận nướu');
+            } else if (procId === '30') {
+                const val = row.querySelector('.proc-field-custom')?.value.trim();
+                results.push(val ? `Lấy nướu: ${val}` : 'Lấy nướu');
+            } else if (procId === '31') {
+                results.push('Xử lý vùng ghép nướu');
+            } else if (procId === '32') {
+                const val = row.querySelector('.proc-field-custom')?.value.trim();
+                results.push(val ? `Khác: ${val}` : 'Khác');
+            } else {
+                const label = row.querySelector('label')?.textContent.trim();
+                if (label) results.push(label);
+            }
+
+            return results;
+        };
+
+        // Hàm tạo 1 phần tử Drag and Drop trong danh sách chính
+        const addProcedureDragItem = (text) => {
+            if (!dynamicProcedureList) return;
+            const div = document.createElement('div');
+            div.className = 'procedure-drag-item group flex items-center justify-between gap-3 p-3 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all select-none';
+            div.setAttribute('draggable', 'true');
+            div.innerHTML = `
+                <div class="flex items-center gap-3 flex-1 min-w-0">
+                    <span class="drag-handle text-slate-400 hover:text-blue-600 cursor-grab active:cursor-grabbing p-1 flex-shrink-0" title="Kéo thả để sắp xếp vị trí">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M7 2a2 2 0 10.001 4.001A2 2 0 007 2zm0 6a2 2 0 10.001 4.001A2 2 0 007 8zm0 6a2 2 0 10.001 4.001A2 2 0 007 14zm6-12a2 2 0 10.001 4.001A2 2 0 0013 2zm0 6a2 2 0 10.001 4.001A2 2 0 0013 8zm0 6a2 2 0 10.001 4.001A2 2 0 0013 14z"></path></svg>
+                    </span>
+                    <input type="checkbox" checked class="w-4 h-4 accent-blue-600 rounded cursor-pointer flex-shrink-0">
+                    <span class="procedure-val text-sm font-semibold text-gray-800 flex-1 leading-snug">${text}</span>
+                </div>
+                <button type="button" class="remove-drag-proc text-slate-400 hover:text-red-500 p-1 opacity-0 group-hover:opacity-100 transition-opacity no-print flex-shrink-0 cursor-pointer" title="Xóa bước này">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            `;
+            dynamicProcedureList.appendChild(div);
+            initProcedureDragAndDrop();
+        };
+
+        // Kỹ thuật Drag and Drop mượt mà cập nhật vị trí
+        let dragSource = null;
+
+        function initProcedureDragAndDrop() {
+            if (!dynamicProcedureList) return;
+            const items = dynamicProcedureList.querySelectorAll('.procedure-drag-item');
+            items.forEach(item => {
+                item.setAttribute('draggable', 'true');
+
+                item.ondragstart = (e) => {
+                    dragSource = item;
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData('text/plain', '');
+                    item.classList.add('dragging');
+                };
+
+                item.ondragend = () => {
+                    item.classList.remove('dragging');
+                    dynamicProcedureList.querySelectorAll('.procedure-drag-item').forEach(el => {
+                        el.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
+                    });
+                    dragSource = null;
+                };
+
+                item.ondragover = (e) => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (!dragSource || dragSource === item) return;
+
+                    const rect = item.getBoundingClientRect();
+                    const midpoint = rect.top + rect.height / 2;
+                    if (e.clientY < midpoint) {
+                        item.classList.add('border-t-2', 'border-blue-500');
+                        item.classList.remove('border-b-2');
+                    } else {
+                        item.classList.add('border-b-2', 'border-blue-500');
+                        item.classList.remove('border-t-2');
+                    }
+                };
+
+                item.ondragleave = () => {
+                    item.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
+                };
+
+                item.ondrop = (e) => {
+                    e.preventDefault();
+                    item.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
+                    if (!dragSource || dragSource === item) return;
+
+                    const rect = item.getBoundingClientRect();
+                    const midpoint = rect.top + rect.height / 2;
+                    if (e.clientY < midpoint) {
+                        dynamicProcedureList.insertBefore(dragSource, item);
+                    } else {
+                        dynamicProcedureList.insertBefore(dragSource, item.nextSibling);
+                    }
+                };
+            });
+        }
+
+        // Xử lý nút xóa dòng trong danh sách Drag and Drop
+        dynamicProcedureList?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.remove-drag-proc');
+            if (btn) {
+                btn.closest('.procedure-drag-item')?.remove();
+            }
+        });
+
+        // Xác nhận bổ sung các bước đã chọn vào form dạng Drag and Drop List
+        btnConfirmProcedureModal?.addEventListener('click', () => {
+            const activeCheckboxes = modalProcedureItems?.querySelectorAll('.proc-checkbox:checked');
+            activeCheckboxes?.forEach(chk => {
+                const row = chk.closest('.procedure-item-row');
+                if (!row) return;
+                const texts = getProcedureRowTexts(row);
+                texts.forEach(text => {
+                    addProcedureDragItem(text);
+                });
+                chk.checked = false;
+            });
+            closeProcedureModal();
+        });
+
+        // ==========================================
+        // Xử lý Popup Modal chọn Răng (Nhiều răng, cách nhau bằng dấu phẩy)
+        // ==========================================
+        const toothPickerModal = document.getElementById('tooth-picker-modal');
+        const btnCloseToothModal = document.getElementById('btn-close-tooth-modal');
+        const btnCancelTeeth = document.getElementById('btn-cancel-teeth');
+        const btnConfirmTeeth = document.getElementById('btn-confirm-teeth');
+        const btnClearTeeth = document.getElementById('btn-clear-teeth');
+        const toothPickerContainer = document.getElementById('tooth-picker-container');
+        const toothSelectedSummary = document.getElementById('tooth-selected-summary');
+        const ageRadios = document.querySelectorAll('input[name="tooth_picker_age"]');
+        const jawSelectButtons = document.querySelectorAll('.btn-jaw-select');
+
+        const toothSets = {
+            adult: {
+                upper: ['18', '17', '16', '15', '14', '13', '12', '11', '21', '22', '23', '24', '25', '26', '27', '28'],
+                lower: ['48', '47', '46', '45', '44', '43', '42', '41', '31', '32', '33', '34', '35', '36', '37', '38']
+            },
+            child: {
+                upper: ['55', '54', '53', '52', '51', '61', '62', '63', '64', '65'],
+                lower: ['85', '84', '83', '82', '81', '71', '72', '73', '74', '75']
+            }
+        };
+
+        let currentActiveToothInput = null;
+        let selectedTeeth = new Set();
+        let initialToothValue = '';
+
+        const getSelectedAge = () => document.querySelector('input[name="tooth_picker_age"]:checked')?.value || 'adult';
+
+        const updateToothSummary = () => {
+            if (!toothSelectedSummary) return;
+            if (selectedTeeth.size === 0) {
+                toothSelectedSummary.textContent = 'Chưa chọn';
+                toothSelectedSummary.className = 'font-semibold text-gray-400';
+            } else {
+                const sorted = Array.from(selectedTeeth).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+                toothSelectedSummary.textContent = sorted.join(', ');
+                toothSelectedSummary.className = 'font-bold text-blue-900';
+            }
+        };
+
+        const renderTeethGrid = () => {
+            if (!toothPickerContainer) return;
+            const age = getSelectedAge();
+            const { upper, lower } = toothSets[age];
+
+            const createRowHtml = (teethList) => {
+                return `
+                    <div class="flex items-center justify-center gap-1.5 sm:gap-2 w-full">
+                        ${teethList.map(tooth => {
+                            const isSelected = selectedTeeth.has(tooth);
+                            const activeClasses = isSelected
+                                ? 'bg-[#2b8fed] border-[#2b8fed] text-white font-bold shadow-xs hover:bg-blue-600'
+                                : 'bg-white border-[#cbd5e1] text-gray-700 font-medium hover:bg-blue-50 hover:border-blue-400';
+                            return `
+                                <button type="button" 
+                                    data-tooth="${tooth}" 
+                                    class="tooth-btn flex-1 min-w-[34px] max-w-[46px] h-10 flex items-center justify-center rounded border text-sm transition-all cursor-pointer ${activeClasses}">
+                                    ${tooth}
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            };
+
+            toothPickerContainer.innerHTML = `
+                ${createRowHtml(upper)}
+                ${createRowHtml(lower)}
+            `;
+            updateToothSummary();
+        };
+
+        const openToothPicker = (input) => {
+            currentActiveToothInput = input;
+            initialToothValue = input.value || '';
+            selectedTeeth.clear();
+
+            if (input.value) {
+                const parts = input.value.split(/[,;\s]+/).map(s => s.trim()).filter(Boolean);
+                parts.forEach(p => selectedTeeth.add(p));
+            }
+
+            // Tự động nhận diện nếu có răng sữa thì chọn Trẻ em
+            const childAll = [...toothSets.child.upper, ...toothSets.child.lower];
+            const hasChild = Array.from(selectedTeeth).some(t => childAll.includes(t));
+            ageRadios.forEach(radio => {
+                radio.checked = hasChild ? (radio.value === 'child') : (radio.value === 'adult');
+            });
+
+            renderTeethGrid();
+            const modal = document.getElementById('tooth-picker-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.style.display = 'flex';
+            }
+        };
+
+        const closeToothPicker = () => {
+            const modal = document.getElementById('tooth-picker-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.style.display = 'none';
+            }
+            currentActiveToothInput = null;
+        };
+
+        const saveAndCloseToothPicker = () => {
+            if (currentActiveToothInput) {
+                const sorted = Array.from(selectedTeeth).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+                currentActiveToothInput.value = sorted.join(', ');
+                currentActiveToothInput.dispatchEvent(new Event('input', { bubbles: true }));
+                currentActiveToothInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+                // Tự động tích chọn checkbox của mục trình tự tương ứng nếu có
+                const procRow = currentActiveToothInput.closest('.procedure-item-row');
+                if (procRow) {
+                    const chk = procRow.querySelector('.proc-checkbox');
+                    if (chk && currentActiveToothInput.value.trim() !== '') {
+                        chk.checked = true;
+                        updateProcedureRowToothState(procRow);
+                    }
+                }
+            }
+            closeToothPicker();
+        };
+
+        const cancelToothPicker = () => {
+            if (currentActiveToothInput) {
+                currentActiveToothInput.value = initialToothValue;
+            }
+            closeToothPicker();
+        };
+
+        // Chọn hoặc bỏ chọn từng răng
+        toothPickerContainer?.addEventListener('click', (e) => {
+            const btn = e.target.closest('.tooth-btn');
+            if (!btn) return;
+            const tooth = btn.dataset.tooth;
+            if (selectedTeeth.has(tooth)) {
+                selectedTeeth.delete(tooth);
+            } else {
+                selectedTeeth.add(tooth);
+            }
+            renderTeethGrid();
+        });
+
+        // Nút chọn nhanh Hàm trên / Hàm dưới / Hai hàm
+        jawSelectButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const jaw = btn.dataset.jaw;
+                const age = getSelectedAge();
+                let targetTeeth = [];
+                if (jaw === 'upper') {
+                    targetTeeth = toothSets[age].upper;
+                } else if (jaw === 'lower') {
+                    targetTeeth = toothSets[age].lower;
+                } else if (jaw === 'all') {
+                    targetTeeth = [...toothSets[age].upper, ...toothSets[age].lower];
+                }
+
+                const allSelected = targetTeeth.every(t => selectedTeeth.has(t));
+                if (allSelected) {
+                    targetTeeth.forEach(t => selectedTeeth.delete(t));
+                } else {
+                    targetTeeth.forEach(t => selectedTeeth.add(t));
+                }
+                renderTeethGrid();
+            });
+        });
+
+        // Đổi chế độ Người lớn / Trẻ em
+        ageRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                renderTeethGrid();
+            });
+        });
+
+        // Xóa tất cả răng đã chọn
+        btnClearTeeth?.addEventListener('click', () => {
+            selectedTeeth.clear();
+            renderTeethGrid();
+        });
+
+        // Hủy bỏ
+        btnCancelTeeth?.addEventListener('click', cancelToothPicker);
+        // Đóng và lưu
+        btnCloseToothModal?.addEventListener('click', saveAndCloseToothPicker);
+
+        // Đóng khi click ngoài backdrop
+        toothPickerModal?.addEventListener('click', (e) => {
+            if (e.target === toothPickerModal) {
+                saveAndCloseToothPicker();
+            }
+        });
+
+        // Phím Escape để đóng modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && toothPickerModal && !toothPickerModal.classList.contains('hidden')) {
+                saveAndCloseToothPicker();
+            }
+        });
+
+        // Xác nhận chọn răng
+        btnConfirmTeeth?.addEventListener('click', saveAndCloseToothPicker);
+
+        // Mở popup khi click vào cell chọn răng hoặc nút icon
+        document.addEventListener('click', (e) => {
+            const toothInput = e.target.closest('.tooth-select-input');
+            const pickerBtn = e.target.closest('.btn-open-tooth-picker');
+            
+            const targetEl = toothInput || pickerBtn;
+            if (!targetEl) return;
+
+            // Nếu nằm trong modal trình tự phẫu thuật: chỉ mở khi checkbox của mục = true
+            const procRow = targetEl.closest('.procedure-item-row');
+            if (procRow) {
+                const chk = procRow.querySelector('.proc-checkbox');
+                // Ngược lại nếu checkbox = false thì KHÔNG hiện modal chọn răng!
+                if (!chk || !chk.checked) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+            }
+
+            if (toothInput) {
+                openToothPicker(toothInput);
+                return;
+            }
+            if (pickerBtn) {
+                const input = pickerBtn.closest('.relative')?.querySelector('.tooth-select-input') || 
+                              pickerBtn.closest('div')?.querySelector('.tooth-select-input') || 
+                              pickerBtn.closest('td')?.querySelector('.tooth-select-input');
+                if (input) openToothPicker(input);
+                return;
+            }
+        });
+
+        // Khởi tạo đồng bộ trạng thái ban đầu cho toàn bộ 32 mục trong popup trình tự phẫu thuật
+        syncAllProcedureRowToothStates();
     </script>
+
 </body>
 
 </html>
