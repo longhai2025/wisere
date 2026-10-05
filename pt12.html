@@ -35,6 +35,27 @@
                 max-width: none;
                 padding: 0;
             }
+
+            .tab-content {
+                display: block !important;
+                margin-top: 1rem;
+                margin-bottom: 1.5rem;
+                padding-bottom: 1rem;
+                border-bottom: 1px dashed #cbd5e1;
+                page-break-inside: avoid;
+            }
+
+            .tab-content:last-child {
+                border-bottom: none;
+            }
+
+            .tab-print-header {
+                display: block !important;
+            }
+        }
+
+        .tab-print-header {
+            display: none;
         }
 
         body {
@@ -610,137 +631,163 @@
                     <input type="checkbox" checked>Rạch nướu và bóc tách nướu bộc lộ vùng phẫu thuật
                 </label>
                 <div class="tab-procedure-wrapper md:col-span-2 mt-4 mb-2">
-                    <!-- Tab Navigation -->
-                    <div class="flex border-b border-gray-200 mb-4 no-print">
-                        <button type="button" id="tab-btn-implant" class="tab-btn active px-5 py-2.5 border-b-2 border-blue-600 text-blue-900 font-bold text-sm focus:outline-none flex items-center gap-2 transition-colors cursor-pointer">
-                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                            Implant
-                        </button>
-                        <button type="button" id="tab-btn-khac" class="tab-btn px-5 py-2.5 border-b-2 border-transparent text-gray-500 font-medium hover:text-gray-700 text-sm focus:outline-none flex items-center gap-2 transition-colors cursor-pointer">
-                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                            Khác
-                        </button>
-                    </div>
+                    <!-- Tab Navigation Bar -->
+                    <div class="flex items-center border-b border-gray-200 mb-4 no-print flex-wrap gap-2 pb-0.5">
+                        <!-- Tab Pills Container -->
+                        <div class="flex items-center flex-wrap gap-1" id="tab-nav-list">
+                            <!-- Populated dynamically by JS -->
+                        </div>
 
-                    <!-- Tab 1: Implant -->
-                    <div id="tab-content-implant" class="tab-content block">
-                        <!-- Table 1: Phương pháp hướng dẫn & thời điểm cấy ghép theo Răng -->
-                        <div class="mb-6">
-                            <h3 class="sub-title text-base font-bold text-gray-800 mb-3">Phương pháp hướng dẫn & thời điểm cấy ghép</h3>
-                            <div class="overflow-x-auto">
-                                <table class="w-full border-collapse border border-slate-700 text-sm">
-                                    <thead>
-                                        <tr class="bg-slate-100 text-center font-bold text-gray-900">
-                                            <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
-                                            <th class="border border-slate-700 px-2 py-2 w-1/3">Răng</th>
-                                            <th class="border border-slate-700 px-2 py-2 w-1/3">Phương pháp hướng dẫn phẫu thuật</th>
-                                            <th class="border border-slate-700 px-2 py-2 w-1/3">Thời điểm cấy ghép</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="implant-method-tbody">
-                                        <tr>
-                                            <td class="border border-slate-700 px-2 py-2 text-center">
-                                                <button type="button" class="delete-method-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
-                                                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
-                                                    </svg>
-                                                </button>
-                                            </td>
-                                            <td class="border border-slate-700 p-1">
-                                                <div class="relative flex items-center">
-                                                    <input class="tooth-select-input h-10 w-full border-0 p-1 pr-8 text-sm font-semibold text-blue-900 focus:ring-0 cursor-pointer bg-transparent" type="text" placeholder="Chọn vị trí răng (VD: 11, 12, 21)" readonly>
-                                                    <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-1 focus:outline-none cursor-pointer" title="Chọn vị trí răng">
-                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td class="border border-slate-700 p-1">
-                                                <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
-                                                    <option value="" disabled selected>Chọn phương pháp</option>
-                                                    <option value="Free hand">Free hand</option>
-                                                    <option value="Máng HDPT">Máng HDPT</option>
-                                                    <option value="X-Guided">X-Guided</option>
-                                                    <option value="Yake Bot">Yake Bot</option>
-                                                </select>
-                                            </td>
-                                            <td class="border border-slate-700 p-1">
-                                                <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
-                                                    <option value="" disabled selected>Chọn thời điểm</option>
-                                                    <option value="Tức thì">Tức thì</option>
-                                                    <option value="Sớm">Sớm</option>
-                                                    <option value="Trì hoãn">Trì hoãn</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <button type="button" id="add-implant-method-row" class="mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 no-print">
-                                + Thêm dòng phương pháp
+                        <!-- Add Tab Dropdown Group Button -->
+                        <div class="relative inline-block mb-1" id="add-tab-dropdown-wrapper">
+                            <button type="button" id="btn-add-tab-dropdown" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 rounded-md hover:bg-blue-100 hover:border-blue-300 transition-colors cursor-pointer shadow-2xs focus:outline-none" title="Thêm tab phẫu thuật">
+                                <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                <span>Thêm</span>
+                                <svg class="w-3 h-3 text-blue-600 ml-0.5 transition-transform duration-200" id="add-tab-dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </button>
-                        </div>
-
-                        <!-- Trình tự phẫu thuật của Tab Implant -->
-                        <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
-                            <!-- Container chứa các trình tự phẫu thuật đã được bổ sung từ popup của tab Implant -->
-                            <div id="dynamic-procedure-list-implant" class="dynamic-procedure-list space-y-2 mb-2"></div>
-
-                            <!-- Action button Chọn trình tự phẫu thuật (Implant) -->
-                            <div class="my-2 no-print">
-                                <button type="button" id="btn-open-procedure-modal-implant" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="implant">
-                                    <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                                    chọn trình tự phẫu thuật
+                            <div id="add-tab-dropdown-menu" class="hidden absolute left-0 mt-1 w-44 bg-white rounded-lg shadow-lg border border-slate-200 py-1.5 z-30 transition-all">
+                                <button type="button" id="menu-add-tab-implant" class="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-700 flex items-center gap-2 transition cursor-pointer">
+                                    <svg class="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                                    <span>Thêm Implant</span>
+                                </button>
+                                <button type="button" id="menu-add-tab-khac" class="w-full text-left px-3.5 py-2 text-xs font-semibold text-slate-700 hover:bg-indigo-50 hover:text-indigo-700 flex items-center gap-2 transition cursor-pointer">
+                                    <svg class="w-3.5 h-3.5 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    <span>Thêm Khác</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tab 2: Khác -->
-                    <div id="tab-content-khac" class="tab-content hidden">
-                        <!-- 3 Trường Phẫu thuật / Tái tạo xương / Đặt màng sinh học -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                            <label class="admin-field stacked-field md:col-span-2">
-                                <span class="admin-label">Phẫu thuật:</span>
-                                <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phau-thuat" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
-                                <datalist id="phau-thuat">
-                                    <option value="Phẫu thuật nâng sàn xoang hàm">
-                                    <option value="Phẫu thuật dịch chuyển dây thần kinh răng dưới để cấy ghép implant">
-                                    <option value="Phẫu thuật cấy ghép implant">
-                                </datalist>
-                            </label>
-                            <label class="admin-field stacked-field">
-                                <span class="admin-label">Phẫu thuật tái tạo xương sống hàm / ổ răng:</span>
-                                <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="tai-tao-xuong" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
-                                <datalist id="tai-tao-xuong">
-                                    <option value="Xương tự thân: góc hàm">
-                                    <option value="Vật liệu hỗn hợp: allograft">
-                                    <option value="Vật liệu hỗn hợp: Gen-os">
-                                    <option value="Vật liệu hỗn hợp: Osteon">
-                                    <option value="Vật liệu hỗn hợp: Boss">
-                                </datalist>
-                            </label>
-                            <label class="admin-field stacked-field">
-                                <span class="admin-label">Đặt màng sinh học:</span>
-                                <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="mang-sinh-hoc" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
-                                <datalist id="mang-sinh-hoc">
-                                    <option value="Colla-DM">
-                                    <option value="Collagen membrane">
-                                    <option value="OsteoBiol">
-                                </datalist>
-                            </label>
+                    <!-- Shared Datalists for Khác tabs -->
+                    <datalist id="phau-thuat">
+                        <option value="Phẫu thuật nâng sàn xoang hàm">
+                        <option value="Phẫu thuật dịch chuyển dây thần kinh răng dưới để cấy ghép implant">
+                        <option value="Phẫu thuật cấy ghép implant">
+                    </datalist>
+                    <datalist id="tai-tao-xuong">
+                        <option value="Xương tự thân: góc hàm">
+                        <option value="Vật liệu hỗn hợp: allograft">
+                        <option value="Vật liệu hỗn hợp: Gen-os">
+                        <option value="Vật liệu hỗn hợp: Osteon">
+                        <option value="Vật liệu hỗn hợp: Boss">
+                    </datalist>
+                    <datalist id="mang-sinh-hoc">
+                        <option value="Colla-DM">
+                        <option value="Collagen membrane">
+                        <option value="OsteoBiol">
+                    </datalist>
+
+                    <!-- Container containing all Tab Contents -->
+                    <div id="tab-contents-container">
+                        <!-- Initial tab-implant-1 -->
+                        <div id="tab-content-tab-implant-1" class="tab-content block" data-tab-id="tab-implant-1" data-tab-type="implant">
+                            <!-- Tab Print Header -->
+                            <div class="tab-print-header mb-3 pb-1 border-b border-blue-200">
+                                <h4 class="text-sm font-bold text-blue-900 uppercase">Mục phẫu thuật: <span class="tab-print-title">Implant 1</span> (Cấy ghép Implant)</h4>
+                            </div>
+
+                            <!-- Table 1: Phương pháp hướng dẫn & thời điểm cấy ghép theo Răng -->
+                            <div class="mb-6">
+                                <h3 class="sub-title text-base font-bold text-gray-800 mb-3">Phương pháp hướng dẫn & thời điểm cấy ghép</h3>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full border-collapse border border-slate-700 text-sm">
+                                        <thead>
+                                            <tr class="bg-slate-100 text-center font-bold text-gray-900">
+                                                <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
+                                                <th class="border border-slate-700 px-2 py-2 w-1/3">Răng</th>
+                                                <th class="border border-slate-700 px-2 py-2 w-1/3">Phương pháp hướng dẫn phẫu thuật</th>
+                                                <th class="border border-slate-700 px-2 py-2 w-1/3">Thời điểm cấy ghép</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="implant-method-tbody">
+                                            <tr>
+                                                <td class="border border-slate-700 px-2 py-2 text-center">
+                                                    <button type="button" class="delete-method-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                                        </svg>
+                                                    </button>
+                                                </td>
+                                                <td class="border border-slate-700 p-1">
+                                                    <div class="relative flex items-center">
+                                                        <input class="tooth-select-input h-10 w-full border-0 p-1 pr-8 text-sm font-semibold text-blue-900 focus:ring-0 cursor-pointer bg-transparent" type="text" placeholder="Chọn vị trí răng (VD: 11, 12, 21)" readonly>
+                                                        <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-1 focus:outline-none cursor-pointer" title="Chọn vị trí răng">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="border border-slate-700 p-1">
+                                                    <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                        <option value="" disabled selected>Chọn phương pháp</option>
+                                                        <option value="Free hand">Free hand</option>
+                                                        <option value="Máng HDPT">Máng HDPT</option>
+                                                        <option value="X-Guided">X-Guided</option>
+                                                        <option value="Yake Bot">Yake Bot</option>
+                                                    </select>
+                                                </td>
+                                                <td class="border border-slate-700 p-1">
+                                                    <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                        <option value="" disabled selected>Chọn thời điểm</option>
+                                                        <option value="Tức thì">Tức thì</option>
+                                                        <option value="Sớm">Sớm</option>
+                                                        <option value="Trì hoãn">Trì hoãn</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button type="button" class="btn-add-implant-method-row mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 no-print cursor-pointer">
+                                    + Thêm dòng phương pháp
+                                </button>
+                            </div>
+
+                            <!-- Trình tự phẫu thuật của Tab Implant -->
+                            <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
+                                <div id="dynamic-procedure-list-tab-implant-1" class="dynamic-procedure-list space-y-2 mb-2"></div>
+
+                                <div class="my-2 no-print">
+                                    <button type="button" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="tab-implant-1">
+                                        <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                        chọn trình tự phẫu thuật
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Trình tự phẫu thuật của Tab Khác -->
-                        <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
-                            <!-- Container chứa các trình tự phẫu thuật đã được bổ sung từ popup của tab Khác -->
-                            <div id="dynamic-procedure-list-khac" class="dynamic-procedure-list space-y-2 mb-2"></div>
+                        <!-- Initial tab-khac-1 -->
+                        <div id="tab-content-tab-khac-1" class="tab-content hidden" data-tab-id="tab-khac-1" data-tab-type="khac">
+                            <!-- Tab Print Header -->
+                            <div class="tab-print-header mb-3 pb-1 border-b border-indigo-200">
+                                <h4 class="text-sm font-bold text-indigo-900 uppercase">Mục phẫu thuật: <span class="tab-print-title">Khác 1</span> (Phẫu thuật khác)</h4>
+                            </div>
 
-                            <!-- Action button Chọn trình tự phẫu thuật (Khác) -->
-                            <div class="my-2 no-print">
-                                <button type="button" id="btn-open-procedure-modal-khac" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="khac">
-                                    <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
-                                    chọn trình tự phẫu thuật
-                                </button>
+                            <!-- 3 Trường Phẫu thuật / Tái tạo xương / Đặt màng sinh học -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                <label class="admin-field stacked-field md:col-span-2">
+                                    <span class="admin-label">Phẫu thuật:</span>
+                                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phau-thuat" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                                </label>
+                                <label class="admin-field stacked-field">
+                                    <span class="admin-label">Phẫu thuật tái tạo xương sống hàm / ổ răng:</span>
+                                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="tai-tao-xuong" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                                </label>
+                                <label class="admin-field stacked-field">
+                                    <span class="admin-label">Đặt màng sinh học:</span>
+                                    <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="mang-sinh-hoc" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                                </label>
+                            </div>
+
+                            <!-- Trình tự phẫu thuật của Tab Khác -->
+                            <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
+                                <div id="dynamic-procedure-list-tab-khac-1" class="dynamic-procedure-list space-y-2 mb-2"></div>
+
+                                <div class="my-2 no-print">
+                                    <button type="button" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="tab-khac-1">
+                                        <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                        chọn trình tự phẫu thuật
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -941,6 +988,29 @@
                 <button type="button" onclick="window.print()" class="h-9 min-w-[96px] rounded bg-cyan-500 px-5 text-sm font-semibold text-white hover:bg-cyan-600">
                     Lưu và in
                 </button>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal Đặt tên / Đổi tên Tab (Popup) -->
+    <div id="tab-name-modal" class="fixed inset-0 z-[65] flex items-center justify-center bg-gray-900/50 backdrop-blur-xs p-4 hidden no-print">
+        <div class="bg-white rounded-lg shadow-2xl max-w-sm w-full p-5 border border-gray-200 flex flex-col">
+            <div class="flex items-center justify-between mb-3 border-b border-gray-100 pb-2">
+                <div class="flex items-center gap-2">
+                    <span class="flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold text-xs">
+                        ✎
+                    </span>
+                    <h3 class="text-sm font-bold text-blue-900 uppercase" id="tab-name-modal-title">Đặt tên tab</h3>
+                </div>
+                <button type="button" id="btn-close-tab-name-modal" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 cursor-pointer" title="Đóng">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1.5" for="tab-name-input">Tên tab phẫu thuật / thủ thuật:</label>
+            <input type="text" id="tab-name-input" class="control h-9 w-full text-sm font-semibold text-blue-900 px-3 rounded border border-slate-300 focus:border-blue-500 mb-4" placeholder="VD: Implant răng 16, Ghép xương...">
+            <div class="flex items-center justify-end gap-2">
+                <button type="button" id="btn-cancel-tab-name-modal" class="h-8 px-3 rounded border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50 cursor-pointer">Hủy</button>
+                <button type="button" id="btn-save-tab-name-modal" class="h-8 px-4 rounded bg-blue-600 text-xs font-semibold text-white hover:bg-blue-700 cursor-pointer shadow-xs">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -1684,46 +1754,103 @@
         radioBsGayMeKhong?.addEventListener('change', toggleBsGayMeSelect);
         toggleBsGayMeSelect();
 
-        // Xử lý chuyển Tab Implant và Khác
-        const tabBtnImplant = document.getElementById('tab-btn-implant');
-        const tabBtnKhac = document.getElementById('tab-btn-khac');
-        const tabContentImplant = document.getElementById('tab-content-implant');
-        const tabContentKhac = document.getElementById('tab-content-khac');
+        // ==========================================
+        // QUẢN LÝ HỆ THỐNG TAB ĐA NĂNG (DYNAMIC TABS: IMPLANT / KHÁC)
+        // ==========================================
+        const tabNavList = document.getElementById('tab-nav-list');
+        const tabContentsContainer = document.getElementById('tab-contents-container');
+        const btnAddTabDropdown = document.getElementById('btn-add-tab-dropdown');
+        const addTabDropdownMenu = document.getElementById('add-tab-dropdown-menu');
+        const addTabDropdownArrow = document.getElementById('add-tab-dropdown-arrow');
+        const menuAddTabImplant = document.getElementById('menu-add-tab-implant');
+        const menuAddTabKhac = document.getElementById('menu-add-tab-khac');
+        
+        // Modal đặt / đổi tên tab
+        const tabNameModal = document.getElementById('tab-name-modal');
+        const tabNameModalTitle = document.getElementById('tab-name-modal-title');
+        const tabNameInput = document.getElementById('tab-name-input');
+        const btnCloseTabNameModal = document.getElementById('btn-close-tab-name-modal');
+        const btnCancelTabNameModal = document.getElementById('btn-cancel-tab-name-modal');
+        const btnSaveTabNameModal = document.getElementById('btn-save-tab-name-modal');
 
-        const switchTab = (targetTab) => {
-            currentProcedureTab = targetTab;
-            if (targetTab === 'implant') {
-                tabBtnImplant?.classList.add('border-blue-600', 'text-blue-900', 'font-bold');
-                tabBtnImplant?.classList.remove('border-transparent', 'text-gray-500', 'font-medium');
-                tabBtnKhac?.classList.remove('border-blue-600', 'text-blue-900', 'font-bold');
-                tabBtnKhac?.classList.add('border-transparent', 'text-gray-500', 'font-medium');
-
-                tabContentImplant?.classList.remove('hidden');
-                tabContentImplant?.classList.add('block');
-                tabContentKhac?.classList.remove('block');
-                tabContentKhac?.classList.add('hidden');
-            } else {
-                tabBtnKhac?.classList.add('border-blue-600', 'text-blue-900', 'font-bold');
-                tabBtnKhac?.classList.remove('border-transparent', 'text-gray-500', 'font-medium');
-                tabBtnImplant?.classList.remove('border-blue-600', 'text-blue-900', 'font-bold');
-                tabBtnImplant?.classList.add('border-transparent', 'text-gray-500', 'font-medium');
-
-                tabContentKhac?.classList.remove('hidden');
-                tabContentKhac?.classList.add('block');
-                tabContentImplant?.classList.remove('block');
-                tabContentImplant?.classList.add('hidden');
-            }
+        let tabModalAction = {
+            mode: 'create', // 'create' | 'rename'
+            type: 'implant', // 'implant' | 'khac'
+            tabId: null
         };
 
-        tabBtnImplant?.addEventListener('click', () => switchTab('implant'));
-        tabBtnKhac?.addEventListener('click', () => switchTab('khac'));
+        // Danh sách các tab đang có
+        let tabs = [
+            { id: 'tab-implant-1', type: 'implant', title: 'Implant 1' },
+            { id: 'tab-khac-1', type: 'khac', title: 'Khác 1' }
+        ];
+        let currentActiveTabId = 'tab-implant-1';
+        let currentProcedureTab = 'tab-implant-1';
 
-        // Xử lý Thêm/Xóa dòng cho Bảng Phương pháp & Thời điểm cấy ghép theo Răng
-        const implantMethodTbody = document.getElementById('implant-method-tbody');
-        const addImplantMethodRowBtn = document.getElementById('add-implant-method-row');
+        // Bộ nhớ lưu trạng thái modal trình tự phẫu thuật theo từng tab ID
+        const tabModalState = {};
 
-        addImplantMethodRowBtn?.addEventListener('click', () => {
-            if (!implantMethodTbody) return;
+        const implantTabSvg = `<svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>`;
+        const khacTabSvg = `<svg class="w-4 h-4 text-indigo-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>`;
+
+        // Render danh sách các nút tab
+        const renderTabNav = () => {
+            if (!tabNavList) return;
+            tabNavList.innerHTML = '';
+            
+            tabs.forEach(tab => {
+                const isActive = tab.id === currentActiveTabId;
+                const pill = document.createElement('div');
+                pill.className = `tab-item-pill inline-flex items-center rounded-t border-b-2 transition-all mr-1 mb-1 ${
+                    isActive 
+                        ? 'border-blue-600 bg-blue-50/70 text-blue-900 font-bold' 
+                        : 'border-transparent text-gray-500 font-medium hover:text-gray-800 hover:bg-gray-100/70'
+                }`;
+                pill.dataset.tabId = tab.id;
+
+                pill.innerHTML = `
+                    <button type="button" class="btn-select-tab px-3 py-2 text-sm flex items-center gap-1.5 focus:outline-none cursor-pointer" data-tab-id="${tab.id}" title="Chuyển đến tab này">
+                        ${tab.type === 'implant' ? implantTabSvg : khacTabSvg}
+                        <span class="tab-title-text font-bold select-none">${tab.title}</span>
+                    </button>
+                    <div class="flex items-center pr-2 gap-0.5 no-print">
+                        <button type="button" class="btn-edit-tab-name p-1 text-slate-400 hover:text-blue-600 rounded hover:bg-blue-100/60 transition-colors cursor-pointer" data-tab-id="${tab.id}" title="Đổi tên tab">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        </button>
+                        ${tabs.length > 1 ? `
+                        <button type="button" class="btn-remove-tab p-1 text-slate-400 hover:text-red-500 rounded hover:bg-red-50 transition-colors cursor-pointer" data-tab-id="${tab.id}" title="Xóa tab này">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                        ` : ''}
+                    </div>
+                `;
+                tabNavList.appendChild(pill);
+            });
+        };
+
+        // Chuyển tab hoạt động
+        const switchTab = (targetTabId) => {
+            currentActiveTabId = targetTabId;
+            currentProcedureTab = targetTabId;
+
+            // Cập nhật giao diện tab bar
+            renderTabNav();
+
+            // Cập nhật hiển thị nội dung tab
+            const contents = tabContentsContainer?.querySelectorAll('.tab-content');
+            contents?.forEach(content => {
+                if (content.dataset.tabId === targetTabId) {
+                    content.classList.remove('hidden');
+                    content.classList.add('block');
+                } else {
+                    content.classList.remove('block');
+                    content.classList.add('hidden');
+                }
+            });
+        };
+
+        // Helper tạo hàng trong bảng phương pháp Implant
+        const createImplantMethodRow = () => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="border border-slate-700 px-2 py-2 text-center">
@@ -1759,14 +1886,323 @@
                     </select>
                 </td>
             `;
-            implantMethodTbody.appendChild(tr);
+            return tr;
+        };
+
+        // Helper tạo HTML nội dung tab Implant
+        const generateImplantTabHtml = (tabId, title) => {
+            return `
+                <div id="tab-content-${tabId}" class="tab-content block" data-tab-id="${tabId}" data-tab-type="implant">
+                    <div class="tab-print-header mb-3 pb-1 border-b border-blue-200">
+                        <h4 class="text-sm font-bold text-blue-900 uppercase">Mục phẫu thuật: <span class="tab-print-title">${title}</span> (Cấy ghép Implant)</h4>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="sub-title text-base font-bold text-gray-800 mb-3">Phương pháp hướng dẫn & thời điểm cấy ghép</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full border-collapse border border-slate-700 text-sm">
+                                <thead>
+                                    <tr class="bg-slate-100 text-center font-bold text-gray-900">
+                                        <th class="w-12 border border-slate-700 px-2 py-2" aria-label="Xóa dòng"></th>
+                                        <th class="border border-slate-700 px-2 py-2 w-1/3">Răng</th>
+                                        <th class="border border-slate-700 px-2 py-2 w-1/3">Phương pháp hướng dẫn phẫu thuật</th>
+                                        <th class="border border-slate-700 px-2 py-2 w-1/3">Thời điểm cấy ghép</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="implant-method-tbody">
+                                    <tr>
+                                        <td class="border border-slate-700 px-2 py-2 text-center">
+                                            <button type="button" class="delete-method-row inline-flex h-8 w-8 items-center justify-center rounded text-red-500 hover:bg-red-50 hover:text-red-700" title="Xóa dòng" aria-label="Xóa dòng">
+                                                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14M10 10v6m4-6v6" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <div class="relative flex items-center">
+                                                <input class="tooth-select-input h-10 w-full border-0 p-1 pr-8 text-sm font-semibold text-blue-900 focus:ring-0 cursor-pointer bg-transparent" type="text" placeholder="Chọn vị trí răng (VD: 11, 12, 21)" readonly>
+                                                <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-1 focus:outline-none cursor-pointer" title="Chọn vị trí răng">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                <option value="" disabled selected>Chọn phương pháp</option>
+                                                <option value="Free hand">Free hand</option>
+                                                <option value="Máng HDPT">Máng HDPT</option>
+                                                <option value="X-Guided">X-Guided</option>
+                                                <option value="Yake Bot">Yake Bot</option>
+                                            </select>
+                                        </td>
+                                        <td class="border border-slate-700 p-1">
+                                            <select class="h-10 w-full border-0 p-1 text-sm font-semibold text-blue-900 focus:ring-0">
+                                                <option value="" disabled selected>Chọn thời điểm</option>
+                                                <option value="Tức thì">Tức thì</option>
+                                                <option value="Sớm">Sớm</option>
+                                                <option value="Trì hoãn">Trì hoãn</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn-add-implant-method-row mt-3 h-9 rounded border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 no-print cursor-pointer">
+                            + Thêm dòng phương pháp
+                        </button>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
+                        <div id="dynamic-procedure-list-${tabId}" class="dynamic-procedure-list space-y-2 mb-2"></div>
+                        <div class="my-2 no-print">
+                            <button type="button" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="${tabId}">
+                                <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                chọn trình tự phẫu thuật
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Helper tạo HTML nội dung tab Khác
+        const generateKhacTabHtml = (tabId, title) => {
+            return `
+                <div id="tab-content-${tabId}" class="tab-content block" data-tab-id="${tabId}" data-tab-type="khac">
+                    <div class="tab-print-header mb-3 pb-1 border-b border-indigo-200">
+                        <h4 class="text-sm font-bold text-indigo-900 uppercase">Mục phẫu thuật: <span class="tab-print-title">${title}</span> (Phẫu thuật khác)</h4>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <label class="admin-field stacked-field md:col-span-2">
+                            <span class="admin-label">Phẫu thuật:</span>
+                            <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="phau-thuat" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                        </label>
+                        <label class="admin-field stacked-field">
+                            <span class="admin-label">Phẫu thuật tái tạo xương sống hàm / ổ răng:</span>
+                            <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="tai-tao-xuong" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                        </label>
+                        <label class="admin-field stacked-field">
+                            <span class="admin-label">Đặt màng sinh học:</span>
+                            <input class="control h-8 flex-1 min-w-0 text-sm font-semibold text-blue-900" type="text" list="mang-sinh-hoc" placeholder="Chọn nhiều, ngăn cách bằng dấu phẩy">
+                        </label>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
+                        <div id="dynamic-procedure-list-${tabId}" class="dynamic-procedure-list space-y-2 mb-2"></div>
+                        <div class="my-2 no-print">
+                            <button type="button" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="${tabId}">
+                                <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                chọn trình tự phẫu thuật
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        // Modal Đặt / Đổi tên tab
+        const openTabNameModal = (mode, type, tabId) => {
+            tabModalAction = { mode, type, tabId };
+            if (!tabNameModal || !tabNameInput) return;
+
+            if (mode === 'create') {
+                if (type === 'implant') {
+                    const count = tabs.filter(t => t.type === 'implant').length + 1;
+                    tabNameModalTitle.textContent = 'Thêm tab Implant mới';
+                    tabNameInput.value = `Implant ${count}`;
+                } else {
+                    const count = tabs.filter(t => t.type === 'khac').length + 1;
+                    tabNameModalTitle.textContent = 'Thêm tab Khác mới';
+                    tabNameInput.value = `Khác ${count}`;
+                }
+            } else {
+                const targetTab = tabs.find(t => t.id === tabId);
+                tabNameModalTitle.textContent = 'Đổi tên tab';
+                tabNameInput.value = targetTab ? targetTab.title : '';
+            }
+
+            tabNameModal.classList.remove('hidden');
+            tabNameModal.style.display = 'flex';
+            setTimeout(() => {
+                tabNameInput.focus();
+                tabNameInput.select();
+            }, 50);
+        };
+
+        const closeTabNameModal = () => {
+            if (!tabNameModal) return;
+            tabNameModal.classList.add('hidden');
+            tabNameModal.style.display = 'none';
+        };
+
+        const handleSaveTabName = () => {
+            const rawName = tabNameInput?.value.trim();
+            if (!rawName) {
+                alert('Vui lòng nhập tên tab.');
+                tabNameInput?.focus();
+                return;
+            }
+
+            if (tabModalAction.mode === 'create') {
+                const newId = 'tab-' + tabModalAction.type + '-' + Date.now();
+                const newTab = {
+                    id: newId,
+                    type: tabModalAction.type,
+                    title: rawName
+                };
+                tabs.push(newTab);
+
+                // Thêm DOM nội dung tab
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = tabModalAction.type === 'implant' 
+                    ? generateImplantTabHtml(newId, rawName) 
+                    : generateKhacTabHtml(newId, rawName);
+                
+                const contentEl = wrapper.firstElementChild;
+                tabContentsContainer?.appendChild(contentEl);
+
+                switchTab(newId);
+            } else if (tabModalAction.mode === 'rename') {
+                const targetTab = tabs.find(t => t.id === tabModalAction.tabId);
+                if (targetTab) {
+                    targetTab.title = rawName;
+                    // Cập nhật title trong content print header
+                    const contentEl = document.getElementById(`tab-content-${targetTab.id}`);
+                    const printTitle = contentEl?.querySelector('.tab-print-title');
+                    if (printTitle) printTitle.textContent = rawName;
+                    renderTabNav();
+                }
+            }
+
+            closeTabNameModal();
+        };
+
+        btnSaveTabNameModal?.addEventListener('click', handleSaveTabName);
+        btnCloseTabNameModal?.addEventListener('click', closeTabNameModal);
+        btnCancelTabNameModal?.addEventListener('click', closeTabNameModal);
+        tabNameInput?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSaveTabName();
+            } else if (e.key === 'Escape') {
+                closeTabNameModal();
+            }
         });
 
-        implantMethodTbody?.addEventListener('click', (event) => {
-            const deleteButton = event.target.closest('.delete-method-row');
-            if (!deleteButton) return;
-            deleteButton.closest('tr')?.remove();
+        // Dropdown menu Thêm tab (Implant / Khác)
+        const toggleAddTabDropdown = (show) => {
+            if (!addTabDropdownMenu) return;
+            const willShow = show !== undefined ? show : addTabDropdownMenu.classList.contains('hidden');
+            if (willShow) {
+                addTabDropdownMenu.classList.remove('hidden');
+                addTabDropdownArrow?.classList.add('rotate-180');
+            } else {
+                addTabDropdownMenu.classList.add('hidden');
+                addTabDropdownArrow?.classList.remove('rotate-180');
+            }
+        };
+
+        btnAddTabDropdown?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAddTabDropdown();
         });
+
+        menuAddTabImplant?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAddTabDropdown(false);
+            openTabNameModal('create', 'implant');
+        });
+
+        menuAddTabKhac?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAddTabDropdown(false);
+            openTabNameModal('create', 'khac');
+        });
+
+        // Click ngoài đóng dropdown menu
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#add-tab-dropdown-wrapper')) {
+                toggleAddTabDropdown(false);
+            }
+        });
+
+        // Event delegation cho Tab bar actions (select, rename, delete)
+        tabNavList?.addEventListener('click', (e) => {
+            const selectBtn = e.target.closest('.btn-select-tab');
+            const renameBtn = e.target.closest('.btn-edit-tab-name');
+            const removeBtn = e.target.closest('.btn-remove-tab');
+
+            if (renameBtn) {
+                const tabId = renameBtn.dataset.tabId;
+                openTabNameModal('rename', null, tabId);
+                return;
+            }
+
+            if (removeBtn) {
+                const tabId = removeBtn.dataset.tabId;
+                const tabToRemove = tabs.find(t => t.id === tabId);
+                if (!tabToRemove) return;
+
+                if (confirm(`Bạn có chắc chắn muốn xóa tab "${tabToRemove.title}" không? Toàn bộ nội dung của tab này sẽ bị xóa.`)) {
+                    // Xóa phần tử content trong DOM
+                    const contentEl = document.getElementById(`tab-content-${tabId}`);
+                    contentEl?.remove();
+
+                    // Xóa khỏi danh sách tabs
+                    tabs = tabs.filter(t => t.id !== tabId);
+                    delete tabModalState[tabId];
+
+                    // Nếu xóa tab đang active thì chuyển sang tab còn lại
+                    if (currentActiveTabId === tabId) {
+                        currentActiveTabId = tabs[0]?.id || '';
+                    }
+
+                    if (currentActiveTabId) {
+                        switchTab(currentActiveTabId);
+                    } else {
+                        renderTabNav();
+                    }
+                }
+                return;
+            }
+
+            if (selectBtn) {
+                const tabId = selectBtn.dataset.tabId;
+                if (tabId) switchTab(tabId);
+                return;
+            }
+        });
+
+        // Double click vào tên tab để đổi tên nhanh
+        tabNavList?.addEventListener('dblclick', (e) => {
+            const titleEl = e.target.closest('.tab-title-text');
+            if (titleEl) {
+                const pill = titleEl.closest('.tab-item-pill');
+                const tabId = pill?.dataset.tabId;
+                if (tabId) openTabNameModal('rename', null, tabId);
+            }
+        });
+
+        // Event delegation cho nút Thêm dòng phương pháp trong bất kỳ tab Implant nào
+        document.addEventListener('click', (e) => {
+            const addBtn = e.target.closest('.btn-add-implant-method-row, #add-implant-method-row');
+            if (addBtn) {
+                const tbody = addBtn.closest('.tab-content')?.querySelector('.implant-method-tbody');
+                if (tbody) {
+                    const tr = createImplantMethodRow();
+                    tbody.appendChild(tr);
+                }
+            }
+        });
+
+        // Event delegation cho nút Xóa dòng trong bảng phương pháp của bất kỳ tab Implant nào
+        document.addEventListener('click', (e) => {
+            const deleteBtn = e.target.closest('.delete-method-row');
+            if (deleteBtn) {
+                deleteBtn.closest('tr')?.remove();
+            }
+        });
+
+        // Khởi tạo hiển thị tab ban đầu
+        renderTabNav();
+        switchTab('tab-implant-1');
 
         // ==========================================
         // Xử lý Popup Modal chọn Trình tự phẫu thuật (32 mục) & Drag & Drop List (Độc lập theo Tab)
@@ -1778,14 +2214,6 @@
         const btnUncheckAllProc = document.getElementById('btn-uncheck-all-proc');
         const procedureSearchInput = document.getElementById('procedure-search-input');
         const modalProcedureItems = document.getElementById('modal-procedure-items');
-        
-        let currentProcedureTab = 'implant';
-
-        // Lưu giữ trạng thái modal riêng biệt cho từng tab (implant / khac)
-        const tabModalState = {
-            implant: null,
-            khac: null
-        };
 
         const captureModalState = () => {
             const rows = modalProcedureItems?.querySelectorAll('.procedure-item-row');
@@ -1920,11 +2348,11 @@
             rows?.forEach(updateProcedureRowToothState);
         };
 
-        const openProcedureModal = (targetTab) => {
-            if (targetTab) {
-                currentProcedureTab = targetTab;
+        const openProcedureModal = (targetTabId) => {
+            if (targetTabId) {
+                currentProcedureTab = targetTabId;
             } else {
-                currentProcedureTab = document.getElementById('tab-content-khac')?.classList.contains('hidden') ? 'implant' : 'khac';
+                currentProcedureTab = currentActiveTabId;
             }
 
             const modal = document.getElementById('procedure-modal');
@@ -1933,7 +2361,8 @@
             // Cập nhật tiêu đề popup theo tab hiện hành
             const modalTitle = document.getElementById('procedure-modal-title');
             if (modalTitle) {
-                const tabBadge = currentProcedureTab === 'khac' ? 'Khác' : 'Implant';
+                const currentTabObj = tabs.find(t => t.id === currentProcedureTab);
+                const tabBadge = currentTabObj ? currentTabObj.title : (currentProcedureTab.includes('khac') ? 'Khác' : 'Implant');
                 modalTitle.innerHTML = `Danh sách trình tự phẫu thuật / thủ thuật <span class="text-blue-600 normal-case font-bold text-sm bg-blue-50 px-2 py-0.5 rounded border border-blue-200 ml-1.5">${tabBadge}</span>`;
             }
 
@@ -1962,12 +2391,12 @@
         btnCloseProcedureModal?.addEventListener('click', closeProcedureModal);
         btnCancelProcedureModal?.addEventListener('click', closeProcedureModal);
 
-        // Delegation fallback for open procedure modal (hỗ trợ cả button của 2 tab)
+        // Delegation fallback for open procedure modal (hỗ trợ cả button của mọi tab)
         document.addEventListener('click', (e) => {
-            const btn = e.target.closest('.btn-open-procedure-modal, #btn-open-procedure-modal, #btn-open-procedure-modal-implant, #btn-open-procedure-modal-khac');
+            const btn = e.target.closest('.btn-open-procedure-modal, #btn-open-procedure-modal');
             if (btn) {
                 e.preventDefault();
-                const tab = btn.dataset.targetTab || (document.getElementById('tab-content-khac')?.classList.contains('hidden') ? 'implant' : 'khac');
+                const tab = btn.dataset.targetTab || btn.closest('.tab-content')?.dataset.tabId || currentActiveTabId;
                 openProcedureModal(tab);
             }
         });
@@ -2188,11 +2617,10 @@
         };
 
         // Helper lấy container danh sách tương ứng theo tab
-        const getActiveProcedureList = (tab) => {
-            const targetTab = tab || currentProcedureTab;
-            return targetTab === 'khac' 
-                ? document.getElementById('dynamic-procedure-list-khac') 
-                : document.getElementById('dynamic-procedure-list-implant');
+        const getActiveProcedureList = (tabId) => {
+            const targetId = tabId || currentProcedureTab || currentActiveTabId;
+            return document.getElementById(`dynamic-procedure-list-${targetId}`) || 
+                   document.querySelector(`#tab-content-${targetId} .dynamic-procedure-list`);
         };
 
         // Hàm tạo 1 phần tử Drag and Drop trong danh sách của tab tương ứng
