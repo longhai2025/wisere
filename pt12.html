@@ -679,6 +679,20 @@
                                 + Thêm dòng phương pháp
                             </button>
                         </div>
+
+                        <!-- Trình tự phẫu thuật của Tab Implant -->
+                        <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
+                            <!-- Container chứa các trình tự phẫu thuật đã được bổ sung từ popup của tab Implant -->
+                            <div id="dynamic-procedure-list-implant" class="dynamic-procedure-list space-y-2 mb-2"></div>
+
+                            <!-- Action button Chọn trình tự phẫu thuật (Implant) -->
+                            <div class="my-2 no-print">
+                                <button type="button" id="btn-open-procedure-modal-implant" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="implant">
+                                    <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                    chọn trình tự phẫu thuật
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Tab 2: Khác -->
@@ -715,17 +729,21 @@
                                 </datalist>
                             </label>
                         </div>
-                    </div>
-                </div>
-                <!-- Container chứa các trình tự phẫu thuật đã được bổ sung từ popup -->
-                <div id="dynamic-procedure-list" class="md:col-span-2 space-y-2"></div>
 
-                <!-- Action button Thêm trình tự phẫu thuật -->
-                <div class="md:col-span-2 my-2 no-print">
-                    <button type="button" id="btn-open-procedure-modal" class="inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer">
-                        <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        + Thêm trình tự phẫu thuật
-                    </button>
+                        <!-- Trình tự phẫu thuật của Tab Khác -->
+                        <div class="mt-4 pt-3 border-t border-dashed border-slate-200">
+                            <!-- Container chứa các trình tự phẫu thuật đã được bổ sung từ popup của tab Khác -->
+                            <div id="dynamic-procedure-list-khac" class="dynamic-procedure-list space-y-2 mb-2"></div>
+
+                            <!-- Action button Chọn trình tự phẫu thuật (Khác) -->
+                            <div class="my-2 no-print">
+                                <button type="button" id="btn-open-procedure-modal-khac" class="btn-open-procedure-modal inline-flex items-center gap-2 rounded border border-cyan-400 bg-white px-4 py-2 text-sm font-semibold text-cyan-600 hover:bg-cyan-50 transition-colors cursor-pointer" data-target-tab="khac">
+                                    <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                    chọn trình tự phẫu thuật
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Dropdown Khâu chỉ: Sổ chọn, search datalist (Nylon 5.0, Nylon 6.0, PDS 5.0, PDS 6.0) (Được chọn nhiều) -->
@@ -936,7 +954,7 @@
                     <span class="flex h-7 w-7 items-center justify-center rounded-full bg-blue-100 text-blue-700 font-bold text-xs">
                         32
                     </span>
-                    <h3 class="text-base font-bold text-blue-900 uppercase">Danh sách trình tự phẫu thuật / thủ thuật</h3>
+                    <h3 class="text-base font-bold text-blue-900 uppercase" id="procedure-modal-title">Danh sách trình tự phẫu thuật / thủ thuật</h3>
                 </div>
                 <button type="button" id="btn-close-procedure-modal" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-200 cursor-pointer" title="Đóng">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -1673,6 +1691,7 @@
         const tabContentKhac = document.getElementById('tab-content-khac');
 
         const switchTab = (targetTab) => {
+            currentProcedureTab = targetTab;
             if (targetTab === 'implant') {
                 tabBtnImplant?.classList.add('border-blue-600', 'text-blue-900', 'font-bold');
                 tabBtnImplant?.classList.remove('border-transparent', 'text-gray-500', 'font-medium');
@@ -1750,17 +1769,117 @@
         });
 
         // ==========================================
-        // Xử lý Popup Modal chọn Trình tự phẫu thuật (32 mục) & Drag & Drop List
+        // Xử lý Popup Modal chọn Trình tự phẫu thuật (32 mục) & Drag & Drop List (Độc lập theo Tab)
         // ==========================================
         const procedureModal = document.getElementById('procedure-modal');
-        const btnOpenProcedureModal = document.getElementById('btn-open-procedure-modal');
         const btnCloseProcedureModal = document.getElementById('btn-close-procedure-modal');
         const btnCancelProcedureModal = document.getElementById('btn-cancel-procedure-modal');
         const btnConfirmProcedureModal = document.getElementById('btn-confirm-procedure-modal');
         const btnUncheckAllProc = document.getElementById('btn-uncheck-all-proc');
         const procedureSearchInput = document.getElementById('procedure-search-input');
         const modalProcedureItems = document.getElementById('modal-procedure-items');
-        const dynamicProcedureList = document.getElementById('dynamic-procedure-list');
+        
+        let currentProcedureTab = 'implant';
+
+        // Lưu giữ trạng thái modal riêng biệt cho từng tab (implant / khac)
+        const tabModalState = {
+            implant: null,
+            khac: null
+        };
+
+        const captureModalState = () => {
+            const rows = modalProcedureItems?.querySelectorAll('.procedure-item-row');
+            const state = [];
+            rows?.forEach(row => {
+                const procId = row.dataset.procId;
+                const chk = row.querySelector('.proc-checkbox');
+                const isChecked = !!chk?.checked;
+                const fieldValues = [];
+                row.querySelectorAll('input:not(.proc-checkbox), select').forEach(el => {
+                    fieldValues.push(el.value);
+                });
+                
+                let item15Data = null;
+                if (procId === '15') {
+                    item15Data = [];
+                    row.querySelectorAll('.item-15-row').forEach(sub => {
+                        item15Data.push({
+                            type: sub.querySelector('.item15-type-input')?.value || '',
+                            tooth: sub.querySelector('.item15-tooth-input')?.value || ''
+                        });
+                    });
+                }
+
+                state.push({
+                    procId,
+                    isChecked,
+                    fieldValues,
+                    item15Data
+                });
+            });
+            return state;
+        };
+
+        const restoreModalState = (state) => {
+            if (!state) {
+                // Đặt lại trạng thái trắng ban đầu nếu tab chưa từng mở/lưu modal
+                modalProcedureItems?.querySelectorAll('.proc-checkbox').forEach(cb => cb.checked = false);
+                modalProcedureItems?.querySelectorAll('input:not(.proc-checkbox), select').forEach(el => {
+                    if (el.tagName === 'SELECT') el.selectedIndex = 0;
+                    else el.value = '';
+                });
+                // Đặt lại item 15 về 1 dòng mặc định
+                const item15Container = document.getElementById('item-15-rows-container');
+                if (item15Container) {
+                    const firstRow = item15Container.querySelector('.item-15-row');
+                    if (firstRow) {
+                        item15Container.innerHTML = '';
+                        item15Container.appendChild(firstRow);
+                        firstRow.querySelectorAll('input').forEach(i => i.value = '');
+                    }
+                }
+                syncAllProcedureRowToothStates();
+                return;
+            }
+
+            state.forEach(itemState => {
+                const row = modalProcedureItems?.querySelector(`.procedure-item-row[data-proc-id="${itemState.procId}"]`);
+                if (!row) return;
+                const chk = row.querySelector('.proc-checkbox');
+                if (chk) chk.checked = !!itemState.isChecked;
+
+                if (itemState.procId === '15' && itemState.item15Data && itemState.item15Data.length > 0) {
+                    const container = document.getElementById('item-15-rows-container');
+                    if (container) {
+                        container.innerHTML = '';
+                        itemState.item15Data.forEach((d, idx) => {
+                            const rowDiv = document.createElement('div');
+                            rowDiv.className = 'item-15-row flex items-center gap-2 flex-wrap';
+                            rowDiv.innerHTML = `
+                                <input type="text" list="item-15-type-options" value="${d.type}" placeholder="Loại phục hình / linh kiện..." class="item15-type-input control h-8 flex-1 min-w-[170px] text-xs font-semibold text-blue-900 px-2 rounded border border-slate-300 bg-white">
+                                <div class="relative flex items-center">
+                                    <input type="text" value="${d.tooth}" placeholder="Chọn răng..." class="item15-tooth-input tooth-select-input control h-8 w-32 text-xs font-semibold text-blue-900 px-2 pr-7 rounded border border-slate-300 bg-white cursor-pointer" readonly>
+                                    <button type="button" class="btn-open-tooth-picker absolute right-1 text-slate-400 hover:text-blue-600 p-0.5" title="Chọn răng">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                    </button>
+                                </div>
+                                <button type="button" class="btn-remove-item15-row text-slate-400 hover:text-red-500 p-1 text-xs ${idx === 0 && itemState.item15Data.length === 1 ? 'hidden' : ''}" title="Xóa dòng này">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                                </button>
+                            `;
+                            container.appendChild(rowDiv);
+                        });
+                        updateItem15DeleteButtons();
+                    }
+                } else {
+                    const fields = row.querySelectorAll('input:not(.proc-checkbox), select');
+                    itemState.fieldValues?.forEach((val, idx) => {
+                        if (fields[idx]) fields[idx].value = val;
+                    });
+                }
+            });
+            syncAllProcedureRowToothStates();
+        };
 
         // Quản lý trạng thái background sáng / mờ của dropdown/input chọn răng theo checkbox
         const updateProcedureRowToothState = (row) => {
@@ -1801,9 +1920,33 @@
             rows?.forEach(updateProcedureRowToothState);
         };
 
-        const openProcedureModal = () => {
+        const openProcedureModal = (targetTab) => {
+            if (targetTab) {
+                currentProcedureTab = targetTab;
+            } else {
+                currentProcedureTab = document.getElementById('tab-content-khac')?.classList.contains('hidden') ? 'implant' : 'khac';
+            }
+
             const modal = document.getElementById('procedure-modal');
             if (!modal) return;
+
+            // Cập nhật tiêu đề popup theo tab hiện hành
+            const modalTitle = document.getElementById('procedure-modal-title');
+            if (modalTitle) {
+                const tabBadge = currentProcedureTab === 'khac' ? 'Khác' : 'Implant';
+                modalTitle.innerHTML = `Danh sách trình tự phẫu thuật / thủ thuật <span class="text-blue-600 normal-case font-bold text-sm bg-blue-50 px-2 py-0.5 rounded border border-blue-200 ml-1.5">${tabBadge}</span>`;
+            }
+
+            // Phục hồi lại dữ liệu form của tab tương ứng
+            restoreModalState(tabModalState[currentProcedureTab]);
+
+            // Reset ô tìm kiếm
+            if (procedureSearchInput) {
+                procedureSearchInput.value = '';
+                const rows = modalProcedureItems?.querySelectorAll('.procedure-item-row');
+                rows?.forEach(r => r.style.display = 'block');
+            }
+
             modal.classList.remove('hidden');
             modal.style.display = 'flex';
             syncAllProcedureRowToothStates();
@@ -1816,15 +1959,16 @@
             modal.style.display = 'none';
         };
 
-        btnOpenProcedureModal?.addEventListener('click', openProcedureModal);
         btnCloseProcedureModal?.addEventListener('click', closeProcedureModal);
         btnCancelProcedureModal?.addEventListener('click', closeProcedureModal);
 
-        // Delegation fallback for open procedure modal
+        // Delegation fallback for open procedure modal (hỗ trợ cả button của 2 tab)
         document.addEventListener('click', (e) => {
-            if (e.target.closest('#btn-open-procedure-modal')) {
+            const btn = e.target.closest('.btn-open-procedure-modal, #btn-open-procedure-modal, #btn-open-procedure-modal-implant, #btn-open-procedure-modal-khac');
+            if (btn) {
                 e.preventDefault();
-                openProcedureModal();
+                const tab = btn.dataset.targetTab || (document.getElementById('tab-content-khac')?.classList.contains('hidden') ? 'implant' : 'khac');
+                openProcedureModal(tab);
             }
         });
 
@@ -2043,9 +2187,18 @@
             return results;
         };
 
-        // Hàm tạo 1 phần tử Drag and Drop trong danh sách chính
-        const addProcedureDragItem = (text) => {
-            if (!dynamicProcedureList) return;
+        // Helper lấy container danh sách tương ứng theo tab
+        const getActiveProcedureList = (tab) => {
+            const targetTab = tab || currentProcedureTab;
+            return targetTab === 'khac' 
+                ? document.getElementById('dynamic-procedure-list-khac') 
+                : document.getElementById('dynamic-procedure-list-implant');
+        };
+
+        // Hàm tạo 1 phần tử Drag and Drop trong danh sách của tab tương ứng
+        const addProcedureDragItem = (text, targetContainer) => {
+            const container = targetContainer || getActiveProcedureList();
+            if (!container) return;
             const div = document.createElement('div');
             div.className = 'procedure-drag-item group flex items-center justify-between gap-3 p-3 rounded-lg bg-white hover:bg-slate-50 border border-slate-300 shadow-2xs transition-all select-none';
             div.setAttribute('draggable', 'true');
@@ -2061,90 +2214,102 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             `;
-            dynamicProcedureList.appendChild(div);
-            initProcedureDragAndDrop();
+            container.appendChild(div);
+            initProcedureDragAndDrop(container);
         };
 
-        // Kỹ thuật Drag and Drop mượt mà cập nhật vị trí
+        // Kỹ thuật Drag and Drop mượt mà cập nhật vị trí riêng biệt theo từng container
         let dragSource = null;
 
-        function initProcedureDragAndDrop() {
-            if (!dynamicProcedureList) return;
-            const items = dynamicProcedureList.querySelectorAll('.procedure-drag-item');
-            items.forEach(item => {
-                item.setAttribute('draggable', 'true');
+        function initProcedureDragAndDrop(specificContainer) {
+            const containers = specificContainer 
+                ? [specificContainer] 
+                : document.querySelectorAll('.dynamic-procedure-list');
 
-                item.ondragstart = (e) => {
-                    dragSource = item;
-                    e.dataTransfer.effectAllowed = 'move';
-                    e.dataTransfer.setData('text/plain', '');
-                    item.classList.add('dragging');
-                };
+            containers.forEach(container => {
+                const items = container.querySelectorAll('.procedure-drag-item');
+                items.forEach(item => {
+                    item.setAttribute('draggable', 'true');
 
-                item.ondragend = () => {
-                    item.classList.remove('dragging');
-                    dynamicProcedureList.querySelectorAll('.procedure-drag-item').forEach(el => {
-                        el.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
-                    });
-                    dragSource = null;
-                };
+                    item.ondragstart = (e) => {
+                        dragSource = item;
+                        e.dataTransfer.effectAllowed = 'move';
+                        e.dataTransfer.setData('text/plain', '');
+                        item.classList.add('dragging');
+                    };
 
-                item.ondragover = (e) => {
-                    e.preventDefault();
-                    e.dataTransfer.dropEffect = 'move';
-                    if (!dragSource || dragSource === item) return;
+                    item.ondragend = () => {
+                        item.classList.remove('dragging');
+                        container.querySelectorAll('.procedure-drag-item').forEach(el => {
+                            el.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
+                        });
+                        dragSource = null;
+                    };
 
-                    const rect = item.getBoundingClientRect();
-                    const midpoint = rect.top + rect.height / 2;
-                    if (e.clientY < midpoint) {
-                        item.classList.add('border-t-2', 'border-blue-500');
-                        item.classList.remove('border-b-2');
-                    } else {
-                        item.classList.add('border-b-2', 'border-blue-500');
-                        item.classList.remove('border-t-2');
-                    }
-                };
+                    item.ondragover = (e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        if (!dragSource || dragSource === item || dragSource.parentElement !== container) return;
 
-                item.ondragleave = () => {
-                    item.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
-                };
+                        const rect = item.getBoundingClientRect();
+                        const midpoint = rect.top + rect.height / 2;
+                        if (e.clientY < midpoint) {
+                            item.classList.add('border-t-2', 'border-blue-500');
+                            item.classList.remove('border-b-2');
+                        } else {
+                            item.classList.add('border-b-2', 'border-blue-500');
+                            item.classList.remove('border-t-2');
+                        }
+                    };
 
-                item.ondrop = (e) => {
-                    e.preventDefault();
-                    item.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
-                    if (!dragSource || dragSource === item) return;
+                    item.ondragleave = () => {
+                        item.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
+                    };
 
-                    const rect = item.getBoundingClientRect();
-                    const midpoint = rect.top + rect.height / 2;
-                    if (e.clientY < midpoint) {
-                        dynamicProcedureList.insertBefore(dragSource, item);
-                    } else {
-                        dynamicProcedureList.insertBefore(dragSource, item.nextSibling);
-                    }
-                };
+                    item.ondrop = (e) => {
+                        e.preventDefault();
+                        item.classList.remove('border-t-2', 'border-b-2', 'border-blue-500');
+                        if (!dragSource || dragSource === item || dragSource.parentElement !== container) return;
+
+                        const rect = item.getBoundingClientRect();
+                        const midpoint = rect.top + rect.height / 2;
+                        if (e.clientY < midpoint) {
+                            container.insertBefore(dragSource, item);
+                        } else {
+                            container.insertBefore(dragSource, item.nextSibling);
+                        }
+                    };
+                });
             });
         }
 
-        // Xử lý nút xóa dòng trong danh sách Drag and Drop
-        dynamicProcedureList?.addEventListener('click', (e) => {
+        // Xử lý nút xóa dòng trong danh sách Drag and Drop (áp dụng chung cho cả 2 tab)
+        document.addEventListener('click', (e) => {
             const btn = e.target.closest('.remove-drag-proc');
             if (btn) {
                 btn.closest('.procedure-drag-item')?.remove();
             }
         });
 
-        // Xác nhận bổ sung các bước đã chọn vào form dạng Drag and Drop List
+        // Xác nhận bổ sung các bước đã chọn vào tab tương ứng
         btnConfirmProcedureModal?.addEventListener('click', () => {
+            const targetContainer = getActiveProcedureList();
+            if (!targetContainer) return;
+
             const activeCheckboxes = modalProcedureItems?.querySelectorAll('.proc-checkbox:checked');
             activeCheckboxes?.forEach(chk => {
                 const row = chk.closest('.procedure-item-row');
                 if (!row) return;
                 const texts = getProcedureRowTexts(row);
                 texts.forEach(text => {
-                    addProcedureDragItem(text);
+                    addProcedureDragItem(text, targetContainer);
                 });
                 chk.checked = false;
             });
+
+            // Lưu trạng thái modal cho tab hiện tại
+            tabModalState[currentProcedureTab] = captureModalState();
+
             closeProcedureModal();
         });
 
