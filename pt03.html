@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT-03: PHIẾU KHÁM TIỀN MÊ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&subset=vietnamese&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 10mm;
+            }
+
+            body {
+                background: #fff !important;
+                color: #000 !important;
+                padding: 0 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .form-shell {
+                max-width: none !important;
+                padding: 0 !important;
+                border: 0 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+        }
+
+        body {
+            min-height: 100vh;
+            background: #f3f4f6;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        input,
+        select,
+        textarea {
+            transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.16);
+            outline: none;
+        }
+
+        input[readonly],
+        .readonly {
+            background-color: #f3f6fa;
+            color: #1f2937;
+        }
+
+        .field-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #334155;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+
+        .control {
+            width: 100%;
+            height: 38px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 12px;
+            color: #111827;
+            font-size: 14px;
+        }
+
+        textarea.control {
+            height: auto;
+            min-height: 76px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin: 0 0 14px;
+            color: #1e40af;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .section-title-badge {
+            display: flex;
+            width: 24px;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            border-radius: 999px;
+            background: #1e40af;
+            color: #fff;
+            font-size: 12px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .admin-field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stacked-field {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .stacked-field .admin-label {
+            min-height: 17px;
+            white-space: normal;
+        }
+
+        .stacked-field .control,
+        .stacked-field .admin-datetime {
+            width: 100%;
+            flex: none;
+        }
+
+        .admin-label {
+            color: #111827;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .admin-datetime {
+            height: 36px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 10px;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sub-title {
+            margin: 0 0 12px;
+            color: #111827;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .check-row {
+            display: inline-flex;
+            min-height: 28px;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+            font-size: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .check-row input[type="checkbox"],
+        .check-row input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            margin: 0;
+            accent-color: #2563eb;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .unit-input-box {
+            display: flex;
+            align-items: center;
+            height: 36px;
+            border: 1px solid #b8c5d6;
+            border-radius: 3px;
+            background: #fff;
+            padding: 0 10px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .unit-input-box:focus-within {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.16);
+        }
+
+        .unit-input-box input {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            padding: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .unit-input-box input:focus {
+            box-shadow: none;
+        }
+
+        .unit-input-box .unit-text {
+            margin-left: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748b;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800 font-sans leading-normal p-4 pb-28 md:p-8 md:pb-28">
+    <main class="form-shell max-w-5xl mx-auto bg-white p-6 md:p-10 shadow-xl rounded-lg border border-gray-200">
+        <div>
+            <!-- HEADER -->
+            <section class="mb-5">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-[1fr_1fr_300px]">
+                    <div class="space-y-2 text-base font-medium leading-normal text-gray-800">
+                        <div class="flex items-center space-x-2">
+                            <label for="chi_nhanh" class="font-medium whitespace-nowrap">Chi nhánh:</label>
+                            <select id="chi_nhanh" name="chi_nhanh"
+                                class="flex-1 border border-gray-300 rounded px-2 py-1 text-sm bg-white font-semibold text-blue-900">
+                                <option value="hcm">Nha khoa hồ chí minh</option>
+                                <option value="hanoi">Nha khoa hà nội</option>
+                            </select>
+                        </div>
+                        <input type="text" value="Sở Y Tế TP. Hồ Chí Minh" id="so_y_te"
+                            class="w-full border-0 bg-transparent p-0 text-base font-medium leading-normal text-gray-800 focus:shadow-none" readonly>
+                        <div>Công ty tnhh nha khoa nhân tâm</div>
+                        <div>Khoa : Răng hàm mặt</div>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-start pt-4">
+                        <h1 class="text-center text-xl font-bold uppercase tracking-wide text-blue-900">
+                            PHIẾU KHÁM TIỀN MÊ
+                        </h1>
+                        <span class="mt-1 text-sm font-medium text-gray-500">lần lưu cuối: 03/06/2026 16:20</span>
+                    </div>
+
+                    <div class="space-y-2 md:text-right">
+                        <div class="text-sm font-mono text-gray-600">MS: PT-03</div>
+                        <div class="flex items-center justify-start md:justify-end space-x-2">
+                            <label for="cong_tac_dieu_tri" class="font-medium whitespace-nowrap text-sm text-gray-700">Công tác điều trị:</label>
+                            <select id="cong_tac_dieu_tri" name="cong_tac_dieu_tri"
+                                class="border border-gray-300 rounded px-2 py-1 text-sm bg-white font-semibold text-blue-900 focus:border-blue-500 focus:outline-none">
+                                <option value="công tác điều trị 1" selected>công tác điều trị 1</option>
+                                <option value="công tác điều trị 2">công tác điều trị 2</option>
+                                <option value="công tác điều trị 3">công tác điều trị 3</option>
+                                <option value="công tác điều trị 4">công tác điều trị 4</option>
+                                <option value="công tác điều trị 5">công tác điều trị 5</option>
+                            </select>
+                        </div>
+                        <div class="text-sm font-mono text-gray-600">Số vào viện: <span class="font-semibold text-blue-900">260603001</span></div>
+                        <div class="text-sm font-mono text-gray-600">Mã người bệnh: <span class="font-semibold text-blue-900">NT260603001</span></div>
+                    </div>
+                </div>
+                <div class="mt-3 border-t-2 border-slate-300"></div>
+            </section>
+
+            <!-- 1. THÔNG TIN HÀNH CHÍNH & CHỈ SỐ CƠ BẢN -->
+            <section class="mb-7">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-4 md:grid-cols-12">
+                    <div class="admin-field md:col-span-5">
+                        <span class="admin-label font-bold">1. Họ và tên người bệnh:</span>
+                        <div class="whitespace-nowrap text-sm font-semibold leading-[1.35] text-blue-900 uppercase">NGÔ THU THỦY</div>
+                    </div>
+                    <div class="admin-field md:col-span-3">
+                        <span class="admin-label">Ngày sinh:</span>
+                        <div class="text-sm font-semibold leading-[1.35] text-blue-900">12/12/1999</div>
+                    </div>
+                    <div class="admin-field md:col-span-1">
+                        <span class="admin-label">Tuổi:</span>
+                        <div class="text-sm font-semibold leading-[1.35] text-blue-900">23</div>
+                    </div>
+                    <div class="admin-field md:col-span-3 justify-start md:justify-end gap-4">
+                        <span class="admin-label">Giới tính:</span>
+                        <label class="check-row">
+                            <input type="radio" name="gioi_tinh" value="Nam">
+                            <span>Nam</span>
+                        </label>
+                        <label class="check-row">
+                            <input type="radio" name="gioi_tinh" value="Nữ" checked>
+                            <span class="font-semibold text-blue-900">Nữ</span>
+                        </label>
+                    </div>
+
+                    <!-- Cân nặng, Chiều cao, Mang thai, Nhóm máu -->
+                    <div class="md:col-span-12 rounded-lg border border-slate-200 bg-slate-50/70 p-4">
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-12 items-end">
+                            <label class="stacked-field md:col-span-2">
+                                <span class="admin-label">Cân nặng:</span>
+                                <div class="unit-input-box">
+                                    <input type="number" step="0.1" min="0" id="can_nang" placeholder="0.0" value="52">
+                                    <span class="unit-text">kg</span>
+                                </div>
+                            </label>
+
+                            <label class="stacked-field md:col-span-2">
+                                <span class="admin-label">Chiều cao:</span>
+                                <div class="unit-input-box">
+                                    <input type="number" step="0.1" min="0" id="chieu_cao" placeholder="0" value="160">
+                                    <span class="unit-text">cm</span>
+                                </div>
+                            </label>
+
+                            <label class="stacked-field md:col-span-3">
+                                <span class="admin-label">Nhóm máu:</span>
+                                <select class="control h-9 text-sm font-semibold text-blue-900">
+                                    <option value="">Chọn nhóm máu</option>
+                                    <option value="O" selected>O (Rh+)</option>
+                                    <option value="A">A (Rh+)</option>
+                                    <option value="B">B (Rh+)</option>
+                                    <option value="AB">AB (Rh+)</option>
+                                    <option value="O-">O (Rh-)</option>
+                                    <option value="A-">A (Rh-)</option>
+                                    <option value="B-">B (Rh-)</option>
+                                    <option value="AB-">AB (Rh-)</option>
+                                    <option value="Chưa xác định">Chưa xác định</option>
+                                </select>
+                            </label>
+
+                            <div class="stacked-field md:col-span-5">
+                                <label class="check-row min-h-[17px]">
+                                    <input type="checkbox" id="chk_mang_thai">
+                                    <span class="admin-label">Mang thai, ghi rõ tuổi thai:</span>
+                                </label>
+                                <input type="text" id="input_tuoi_thai" class="control h-9 text-sm font-semibold text-blue-900 disabled:bg-slate-100 disabled:text-slate-400" placeholder="Nhập tuổi thai (ví dụ: 12 tuần)..." disabled>
+                            </div>
+
+                            <!-- Thói quen -->
+                            <div class="md:col-span-12 pt-2 border-t border-slate-200/80 flex flex-wrap items-center gap-x-6 gap-y-2">
+                                <span class="admin-label font-semibold text-slate-700">Thói quen:</span>
+                                <label class="check-row">
+                                    <input type="checkbox" name="thoi_quen" value="Hút thuốc">
+                                    <span>Hút thuốc</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" name="thoi_quen" value="Uống rượu">
+                                    <span>Uống rượu</span>
+                                </label>
+                                <div class="flex items-center gap-2 flex-1 min-w-[240px]">
+                                    <label class="check-row shrink-0">
+                                        <input type="checkbox" id="chk_thoi_quen_khac" name="thoi_quen" value="Khác">
+                                        <span>Khác:</span>
+                                    </label>
+                                    <input type="text" id="input_thoi_quen_khac" class="control h-8 flex-1 text-sm font-semibold text-blue-900 disabled:bg-slate-100 disabled:text-slate-400" placeholder="Ghi rõ thói quen khác..." disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Chẩn đoán (Link chẩn đoán) -->
+                    <label class="admin-field stacked-field md:col-span-12">
+                        <span class="admin-label font-bold">2. Chẩn đoán:</span>
+                        <textarea class="control min-h-[68px] flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="2">Sâu ngà răng - K02.1 - (42), Sâu ngà răng - K02.1 - (41), Hoại tử tuỷ răng - K04.1 - (28), Răng đốm màu - K00.3 - (25, 26), Răng đốm màu - K00.3 - (22, 23), Rối loạn tạo răng - K00.4 - (34), Răng đốm màu - K00.3 - (44)</textarea>
+                    </label>
+
+                    <!-- 3. Hướng xử trí (Cho phom nhập) -->
+                    <label class="admin-field stacked-field md:col-span-12">
+                        <span class="admin-label font-bold">3. Hướng xử trí:</span>
+                        <textarea class="control min-h-[68px] flex-1 min-w-0 resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập hướng xử trí phẫu thuật / thủ thuật và vô cảm..."></textarea>
+                    </label>
+                </div>
+            </section>
+
+            <!-- 4. TIỀN SỬ NỘI KHOA -->
+            <section class="mb-7">
+                <div class="rounded-lg border border-slate-300 overflow-hidden">
+                    <!-- Header Tiền sử nội khoa -->
+                    <div class="bg-slate-100 px-4 py-3 border-b border-slate-300 flex flex-wrap items-center justify-between gap-4">
+                        <span class="text-sm font-bold uppercase text-blue-900">4. Tiền sử nội khoa:</span>
+                        <div class="flex flex-wrap items-center gap-6">
+                            <label class="check-row font-semibold text-slate-800">
+                                <input type="radio" name="tien_su_noi_khoa" id="ts_noi_khoa_khong" value="khong" checked>
+                                <span>Không</span>
+                            </label>
+                            <label class="check-row font-semibold text-slate-800">
+                                <input type="radio" name="tien_su_noi_khoa" id="ts_noi_khoa_co" value="co">
+                                <span>Có, đánh giá tiếp các nội dung sau:</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Bảng chi tiết Tiền sử nội khoa -->
+                    <div id="medical-history-details" class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-300">
+                        <!-- Cột trái: Bệnh tim mạch & thận/nhận thức -->
+                        <div class="p-4 space-y-3" data-history-group="tim_mach">
+                            <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                <span class="font-bold text-sm text-gray-800">Bệnh tim mạch:</span>
+                                <div class="flex items-center gap-5">
+                                    <label class="check-row text-sm">
+                                        <input type="radio" name="ts_tim_mach" value="khong" class="group-radio-no" checked>
+                                        <span>Không</span>
+                                    </label>
+                                    <label class="check-row text-sm">
+                                        <input type="radio" name="ts_tim_mach" value="co" class="group-radio-yes">
+                                        <span>Có:</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 pt-1">
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Tăng huyết áp">
+                                    <span>Tăng huyết áp</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Loạn nhịp tim">
+                                    <span>Loạn nhịp tim</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Bệnh van tim">
+                                    <span>Bệnh van tim</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Bệnh mạch vành">
+                                    <span>Bệnh mạch vành</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Suy tim mạn">
+                                    <span>Suy tim mạn</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Rối loạn chuyển hóa mỡ">
+                                    <span>Rối loạn chuyển hóa mỡ</span>
+                                </label>
+                            </div>
+
+                            <div class="flex items-center gap-2 pt-1">
+                                <span class="text-sm font-medium text-slate-700 whitespace-nowrap">Khác:</span>
+                                <input type="text" class="history-item-text control h-8 flex-1 text-sm font-semibold text-blue-900" placeholder="Nhập bệnh lý tim mạch khác...">
+                            </div>
+
+                            <div class="pt-2 border-t border-dashed border-slate-200 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Suy thận mạn">
+                                    <span>Suy thận mạn</span>
+                                </label>
+                                <label class="check-row">
+                                    <input type="checkbox" class="history-item-chk" name="tim_mach_item" value="Rối loạn nhận thức">
+                                    <span>Rối loạn nhận thức</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Cột phải: Bệnh hô hấp, Đái tháo đường, Rối loạn đông máu -->
+                        <div class="divide-y divide-slate-200">
+                            <!-- Bệnh hô hấp -->
+                            <div class="p-4 space-y-2.5" data-history-group="ho_hap">
+                                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                    <span class="font-bold text-sm text-gray-800">Bệnh hô hấp:</span>
+                                    <div class="flex items-center gap-5">
+                                        <label class="check-row text-sm">
+                                            <input type="radio" name="ts_ho_hap" value="khong" class="group-radio-no" checked>
+                                            <span>Không</span>
+                                        </label>
+                                        <label class="check-row text-sm">
+                                            <input type="radio" name="ts_ho_hap" value="co" class="group-radio-yes">
+                                            <span>Có:</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="check-row flex">
+                                        <input type="checkbox" class="history-item-chk" name="ho_hap_item" value="COPD">
+                                        <span>Bệnh phổi tắc nghẽn mạn tính - COPD</span>
+                                    </label>
+                                    <label class="check-row flex">
+                                        <input type="checkbox" class="history-item-chk" name="ho_hap_item" value="Suyễn/Hen phế quản">
+                                        <span>Suyễn/Hen phế quản</span>
+                                    </label>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-sm font-medium text-slate-700 whitespace-nowrap">Khác:</span>
+                                    <input type="text" class="history-item-text control h-8 flex-1 text-sm font-semibold text-blue-900" placeholder="Nhập bệnh lý hô hấp khác...">
+                                </div>
+                            </div>
+
+                            <!-- Đái tháo đường -->
+                            <div class="p-4 space-y-2" data-history-group="dai_thao_duong">
+                                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                    <span class="font-bold text-sm text-gray-800">Đái tháo đường:</span>
+                                    <div class="flex items-center gap-5">
+                                        <label class="check-row text-sm">
+                                            <input type="radio" name="ts_dtd" value="khong" class="group-radio-no" checked>
+                                            <span>Không</span>
+                                        </label>
+                                        <label class="check-row text-sm">
+                                            <input type="radio" name="ts_dtd" value="co" class="group-radio-yes">
+                                            <span>Có:</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="check-row flex">
+                                        <input type="checkbox" class="history-item-chk" name="dtd_item" value="Đái tháo đường phụ thuộc Insulin">
+                                        <span>Đái tháo đường phụ thuộc Insulin</span>
+                                    </label>
+                                    <label class="check-row flex">
+                                        <input type="checkbox" class="history-item-chk" name="dtd_item" value="Đái tháo đường không phụ thuộc Insulin">
+                                        <span>Đái tháo đường không phụ thuộc Insulin</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Rối loạn đông máu -->
+                            <div class="p-4 space-y-2" data-history-group="dong_mau">
+                                <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                                    <span class="font-bold text-sm text-gray-800">Rối loạn đông máu:</span>
+                                    <div class="flex items-center gap-5">
+                                        <label class="check-row text-sm">
+                                            <input type="radio" name="ts_dong_mau" value="khong" class="group-radio-no" checked>
+                                            <span>Không</span>
+                                        </label>
+                                        <label class="check-row text-sm">
+                                            <input type="radio" name="ts_dong_mau" value="co" class="group-radio-yes">
+                                            <span>Có:</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="check-row flex">
+                                        <input type="checkbox" class="history-item-chk" name="dong_mau_item" value="Dễ tụ máu">
+                                        <span>Dễ tụ máu</span>
+                                    </label>
+                                    <label class="check-row flex items-start">
+                                        <input type="checkbox" class="history-item-chk mt-1" name="dong_mau_item" value="Xuất huyết ngoại khoa bất thường">
+                                        <span class="leading-snug">Xuất huyết ngoại khoa bất thường (Tai-Mũi-Họng, Răng, Phụ khoa, lúc sinh)</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tiền sử nội khoa Khác -->
+                    <div class="border-t border-slate-300 bg-slate-50/60 px-4 py-3 flex flex-col sm:flex-row sm:items-center gap-2">
+                        <label for="ts_noi_khoa_khac_input" class="text-sm font-bold text-gray-800 whitespace-nowrap">Khác:</label>
+                        <input type="text" id="ts_noi_khoa_khac_input" class="control h-8 flex-1 text-sm font-semibold text-blue-900" placeholder="Nhập tiền sử nội khoa khác (dị ứng, bệnh lý thần kinh, nội tiết, tiêu hóa...)...">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5, 6, 7. TIỀN SỬ NGOẠI KHOA, GÂY MÊ/GÂY TÊ, THUỐC ĐANG ĐIỀU TRỊ -->
+            <section class="mb-7 space-y-4">
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">5. Tiền sử ngoại khoa:</span>
+                    <textarea class="control min-h-[60px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập tiền sử phẫu thuật / ngoại khoa trước đây (nếu có)..."></textarea>
+                </label>
+
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">6. Tiền sử gây mê, gây tê:</span>
+                    <textarea class="control min-h-[60px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập tiền sử gây mê, gây tê, tai biến hoặc dị ứng thuốc tê/thuốc mê (nếu có)..."></textarea>
+                </label>
+
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">7. Thuốc đang điều trị <span class="font-normal text-slate-600">(Tên, liều lượng, liều lần cuối)</span>:</span>
+                    <textarea class="control min-h-[68px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập tên thuốc, liều lượng và thời điểm dùng liều lần cuối..."></textarea>
+                </label>
+            </section>
+
+            <!-- 8. KHÁM LÂM SÀNG -->
+            <section class="mb-7">
+                <div class="mb-3">
+                    <h2 class="text-sm font-bold uppercase text-blue-900">8. Khám lâm sàng:</h2>
+                </div>
+
+                <!-- Chỉ số sinh hiệu -->
+                <div class="rounded-lg border border-blue-200 bg-blue-50/40 p-4 mb-4">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                        <label class="stacked-field">
+                            <span class="text-xs font-semibold text-slate-600">Nhiệt độ</span>
+                            <div class="unit-input-box">
+                                <input type="number" step="0.1" value="36.8" placeholder="37.0">
+                                <span class="unit-text">°C</span>
+                            </div>
+                        </label>
+
+                        <label class="stacked-field">
+                            <span class="text-xs font-semibold text-slate-600">Mạch</span>
+                            <div class="unit-input-box">
+                                <input type="number" value="78" placeholder="80">
+                                <span class="unit-text">lần/phút</span>
+                            </div>
+                        </label>
+
+                        <label class="stacked-field">
+                            <span class="text-xs font-semibold text-slate-600">Huyết áp (HA)</span>
+                            <div class="unit-input-box">
+                                <input type="text" value="120/80" placeholder="120/80">
+                                <span class="unit-text">mmHg</span>
+                            </div>
+                        </label>
+
+                        <label class="stacked-field">
+                            <span class="text-xs font-semibold text-slate-600">Nhịp thở</span>
+                            <div class="unit-input-box">
+                                <input type="number" value="18" placeholder="18">
+                                <span class="unit-text">lần/phút</span>
+                            </div>
+                        </label>
+
+                        <label class="stacked-field col-span-2 sm:col-span-1">
+                            <span class="text-xs font-semibold text-slate-600">SpO2</span>
+                            <div class="unit-input-box">
+                                <input type="number" min="0" max="100" value="99" placeholder="99">
+                                <span class="unit-text">%</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Khám cơ quan -->
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-12 mb-5">
+                    <label class="admin-field stacked-field md:col-span-6">
+                        <span class="admin-label">Tim mạch:</span>
+                        <input type="text" class="control h-9 text-sm font-semibold text-blue-900" value="T1, T2 đều rõ, chưa ghi nhận âm thổi bệnh lý" placeholder="Nhập kết quả khám tim mạch...">
+                    </label>
+
+                    <label class="admin-field stacked-field md:col-span-6">
+                        <span class="admin-label">Hô hấp:</span>
+                        <input type="text" class="control h-9 text-sm font-semibold text-blue-900" value="Rì rào phế nang êm dịu hai phế trường" placeholder="Nhập kết quả khám hô hấp...">
+                    </label>
+
+                    <!-- Cột sống -->
+                    <div class="md:col-span-12 flex flex-wrap items-center gap-x-6 gap-y-2 rounded border border-slate-200 bg-slate-50/50 px-3.5 py-2.5">
+                        <span class="admin-label font-semibold">Cột sống:</span>
+                        <label class="check-row">
+                            <input type="radio" name="cot_song" id="cot_song_bt" value="binh_thuong" checked>
+                            <span>Bình thường</span>
+                        </label>
+                        <div class="flex items-center gap-2 flex-1 min-w-[260px]">
+                            <label class="check-row shrink-0">
+                                <input type="radio" name="cot_song" id="cot_song_bat_thuong" value="bat_thuong">
+                                <span>Bất thường, ghi rõ:</span>
+                            </label>
+                            <input type="text" id="input_cot_song" class="control h-8 flex-1 text-sm font-semibold text-blue-900" placeholder="Mô tả bất thường cột sống...">
+                        </div>
+                    </div>
+
+                    <!-- Các dấu hiệu khác có liên quan -->
+                    <label class="admin-field stacked-field md:col-span-12">
+                        <span class="admin-label">Các dấu hiệu khác có liên quan:</span>
+                        <input type="text" class="control h-9 text-sm font-semibold text-blue-900" placeholder="Nhập các dấu hiệu lâm sàng khác có liên quan...">
+                    </label>
+
+                    <!-- Đường truyền tĩnh mạch khó -->
+                    <div class="md:col-span-12 flex flex-wrap items-center gap-x-6 gap-y-2 rounded border border-slate-200 bg-slate-50/50 px-3.5 py-2.5">
+                        <span class="admin-label font-semibold">Đường truyền tĩnh mạch khó:</span>
+                        <label class="check-row">
+                            <input type="radio" name="duong_truyen_tm" id="tm_kho_khong" value="khong" checked>
+                            <span>Không</span>
+                        </label>
+                        <div class="flex items-center gap-2 flex-1 min-w-[260px]">
+                            <label class="check-row shrink-0">
+                                <input type="radio" name="duong_truyen_tm" id="tm_kho_co" value="co">
+                                <span>Có, ghi rõ:</span>
+                            </label>
+                            <input type="text" id="input_tm_kho" class="control h-8 flex-1 text-sm font-semibold text-blue-900" placeholder="Ghi rõ tình trạng đường truyền tĩnh mạch...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Đánh giá đường thở & Phân loại ASA -->
+                <div class="rounded-lg border border-slate-300 overflow-hidden">
+                    <div class="bg-slate-100 px-4 py-2.5 border-b border-slate-300">
+                        <h3 class="text-sm font-bold uppercase text-slate-800">Đánh giá đường thở &amp; Phân loại ASA</h3>
+                    </div>
+
+                    <div class="p-4 space-y-4">
+                        <label class="admin-field stacked-field">
+                            <span class="admin-label">Cử động cổ:</span>
+                            <input type="text" class="control h-9 text-sm font-semibold text-blue-900" value="Bình thường, ngửa cổ tối đa không hạn chế" placeholder="Nhập đánh giá cử động cổ...">
+                        </label>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full border-collapse border border-slate-300 text-sm">
+                                <tbody>
+                                    <!-- Mallampati -->
+                                    <tr>
+                                        <th class="w-44 bg-slate-50 border border-slate-300 px-3 py-2.5 text-left font-bold text-gray-800">
+                                            Mallampati:
+                                        </th>
+                                        <td class="border border-slate-300 px-3 py-2.5" colspan="5">
+                                            <div class="flex flex-wrap items-center gap-8">
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="mallampati" value="I" checked>
+                                                    <span>I</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="mallampati" value="II">
+                                                    <span>II</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="mallampati" value="III">
+                                                    <span>III</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="mallampati" value="IV">
+                                                    <span>IV</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Há miệng & Khoảng cách cằm - sụn giáp -->
+                                    <tr>
+                                        <th class="bg-slate-50 border border-slate-300 px-3 py-2.5 text-left font-bold text-gray-800">
+                                            Há miệng:
+                                        </th>
+                                        <td class="border border-slate-300 px-3 py-2.5" colspan="5">
+                                            <div class="flex flex-wrap items-center gap-x-8 gap-y-3">
+                                                <div class="flex items-center gap-3">
+                                                    <div class="unit-input-box w-28">
+                                                        <input type="number" step="0.1" min="0" id="input_ha_mieng" placeholder="0.0" value="4.5">
+                                                        <span class="unit-text">cm</span>
+                                                    </div>
+                                                    <label class="check-row">
+                                                        <input type="checkbox" id="chk_ha_mieng_tren_3" checked>
+                                                        <span>Trên 3cm</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="h-5 w-px bg-slate-300 hidden sm:block"></div>
+
+                                                <div class="flex flex-wrap items-center gap-3">
+                                                    <span class="font-medium text-gray-800">Khoảng cách cằm - sụn giáp:</span>
+                                                    <div class="unit-input-box w-28">
+                                                        <input type="number" step="0.1" min="0" id="input_cam_sun_giap" placeholder="0.0" value="7.0">
+                                                        <span class="unit-text">cm</span>
+                                                    </div>
+                                                    <label class="check-row">
+                                                        <input type="checkbox" id="chk_cam_sun_giap_tren_65" checked>
+                                                        <span>Trên 6,5cm</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Răng giả -->
+                                    <tr>
+                                        <th class="bg-slate-50 border border-slate-300 px-3 py-2.5 text-left font-bold text-gray-800">
+                                            Răng giả:
+                                        </th>
+                                        <td class="border border-slate-300 px-3 py-2.5" colspan="5">
+                                            <div class="flex flex-wrap items-center gap-8">
+                                                <label class="check-row">
+                                                    <input type="radio" name="rang_gia" value="Không" checked>
+                                                    <span>Không</span>
+                                                </label>
+                                                <label class="check-row">
+                                                    <input type="radio" name="rang_gia" value="Có (tháo được)">
+                                                    <span>Có (tháo được)</span>
+                                                </label>
+                                                <label class="check-row">
+                                                    <input type="radio" name="rang_gia" value="Có (Cố định)">
+                                                    <span>Có (Cố định)</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Phân loại ASA -->
+                                    <tr>
+                                        <th class="bg-slate-50 border border-slate-300 px-3 py-2.5 text-left font-bold text-gray-800">
+                                            Phân loại ASA:
+                                        </th>
+                                        <td class="border border-slate-300 px-3 py-2.5" colspan="5">
+                                            <div class="flex flex-wrap items-center gap-8">
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="phan_loai_asa" value="Loại I" checked>
+                                                    <span>Loại I</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="phan_loai_asa" value="Loại II">
+                                                    <span>Loại II</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="phan_loai_asa" value="Loại III">
+                                                    <span>Loại III</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="phan_loai_asa" value="Loại IV">
+                                                    <span>Loại IV</span>
+                                                </label>
+                                                <label class="check-row font-semibold">
+                                                    <input type="radio" name="phan_loai_asa" value="Loại V">
+                                                    <span>Loại V</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9, 10, 11, 12. XÉT NGHIỆM, DỰ KIẾN VÔ CẢM, GIẢM ĐAU & ĐỀ NGHỊ KHÁC -->
+            <section class="mb-8 space-y-4">
+                <!-- 9. Xét nghiệm (Link kết quả CLS) -->
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">9. Xét nghiệm (bất thường cần lưu ý):</span>
+                    <textarea class="control min-h-[68px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Kết quả xét nghiệm cận lâm sàng cần lưu ý...">Công thức máu, đông máu huyết học (PT, aPTT, INR), sinh hóa máu trong giới hạn bình thường.</textarea>
+                </label>
+
+                <!-- 10. Dự kiến thuốc, cách vô cảm -->
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">10. Dự kiến thuốc, cách vô cảm:</span>
+                    <textarea class="control min-h-[68px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập dự kiến thuốc và phương pháp vô cảm (VD: Tiền mê tĩnh mạch + Gây tê tại chỗ bằng Lidocaine 2% / Articaine 4%)..."></textarea>
+                </label>
+
+                <!-- 11. Dự kiến giảm đau sau phẫu thuật -->
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">11. Dự kiến giảm đau sau phẫu thuật:</span>
+                    <textarea class="control min-h-[60px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập phương pháp và thuốc giảm đau dự kiến sau phẫu thuật..."></textarea>
+                </label>
+
+                <!-- 12. Đề nghị khác -->
+                <label class="admin-field stacked-field">
+                    <span class="admin-label font-bold">12. Đề nghị khác:</span>
+                    <textarea class="control min-h-[60px] resize-y text-sm font-semibold text-blue-900" rows="2" placeholder="Nhập các đề nghị chuẩn bị trước mổ khác (nhịn ăn uống, hội chẩn chuyên khoa, dự trữ máu...)..."></textarea>
+                </label>
+            </section>
+
+            <!-- NGÀY KHÁM & BÁC SĨ KHÁM -->
+            <section class="pt-4 border-t border-slate-200">
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-12 items-start">
+                    <div class="md:col-span-6"></div>
+                    <div class="md:col-span-6 flex flex-col items-center text-center space-y-2">
+                        <div class="flex items-center justify-center gap-2 text-sm text-gray-700">
+                            <span>Ngày khám:</span>
+                            <input type="datetime-local" id="ngay_kham" class="admin-datetime" value="2026-06-03T16:00">
+                        </div>
+                        <div class="font-bold uppercase text-gray-900 pt-1">Bác sỹ khám</div>
+                        <div class="text-xs italic text-gray-500">(Ký, ghi rõ họ tên)</div>
+                        <div class="w-full max-w-xs pt-2 no-print">
+                            <select id="select_bs_kham" class="control h-9 text-sm font-semibold text-blue-900 text-center">
+                                <option value="BS. Trần Hữu Quý" selected>BS. Trần Hữu Quý</option>
+                                <option value="BS. Nguyễn Văn An">BS. Nguyễn Văn An</option>
+                                <option value="BS. Lê Minh Tâm">BS. Lê Minh Tâm</option>
+                            </select>
+                        </div>
+                        <div id="print_bs_kham" class="pt-16 font-semibold text-blue-900 text-sm">BS. Trần Hữu Quý</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- THANH TÁC VỤ CỐ ĐỊNH PHÍA DƯỚI (GIỐNG PT12.HTML) -->
+    <div class="no-print fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 px-8 py-4 backdrop-blur">
+        <div class="mx-auto flex max-w-[1400px] items-center justify-between gap-4">
+            <button type="button" class="hidden h-9 border border-cyan-400 bg-white px-4 text-sm font-semibold text-cyan-500 hover:bg-cyan-50">
+                Cập nhật dữ liệu
+            </button>
+            <div class="flex justify-end gap-3 ml-auto">
+                <button type="button" class="h-9 min-w-[78px] rounded border border-slate-300 bg-white px-5 text-sm font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer">
+                    Hủy
+                </button>
+                <button type="button" class="h-9 min-w-[78px] rounded border border-cyan-400 bg-white px-5 text-sm font-semibold text-cyan-500 hover:bg-cyan-50 cursor-pointer">
+                    Lưu
+                </button>
+                <button type="button" onclick="window.print()" class="h-9 min-w-[96px] rounded bg-cyan-500 px-5 text-sm font-semibold text-white hover:bg-cyan-600 cursor-pointer">
+                    Lưu và in
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Đồng bộ Sở Y Tế theo Chi nhánh (giống pt12.html)
+        const branchSelect = document.getElementById('chi_nhanh');
+        const healthDepartment = document.getElementById('so_y_te');
+        const healthDepartmentByBranch = {
+            hcm: 'Sở Y Tế TP. Hồ Chí Minh',
+            hanoi: 'Sở Y Tế Hà Nội'
+        };
+
+        const updateHealthDepartment = () => {
+            if (!branchSelect || !healthDepartment) return;
+            healthDepartment.value = healthDepartmentByBranch[branchSelect.value] || healthDepartmentByBranch.hcm;
+        };
+
+        branchSelect?.addEventListener('change', updateHealthDepartment);
+        updateHealthDepartment();
+
+        // 2. Xử lý bật/tắt ô nhập Tuổi thai & Thói quen khác
+        const chkMangThai = document.getElementById('chk_mang_thai');
+        const inputTuoiThai = document.getElementById('input_tuoi_thai');
+        chkMangThai?.addEventListener('change', () => {
+            if (!inputTuoiThai) return;
+            inputTuoiThai.disabled = !chkMangThai.checked;
+            if (chkMangThai.checked) inputTuoiThai.focus();
+            else inputTuoiThai.value = '';
+        });
+
+        const chkThoiQuenKhac = document.getElementById('chk_thoi_quen_khac');
+        const inputThoiQuenKhac = document.getElementById('input_thoi_quen_khac');
+        chkThoiQuenKhac?.addEventListener('change', () => {
+            if (!inputThoiQuenKhac) return;
+            inputThoiQuenKhac.disabled = !chkThoiQuenKhac.checked;
+            if (chkThoiQuenKhac.checked) inputThoiQuenKhac.focus();
+            else inputThoiQuenKhac.value = '';
+        });
+
+        // 3. Đồng bộ thông minh Mục 4: Tiền sử nội khoa
+        const tsNoiKhoaKhong = document.getElementById('ts_noi_khoa_khong');
+        const tsNoiKhoaCo = document.getElementById('ts_noi_khoa_co');
+        const historyGroups = document.querySelectorAll('[data-history-group]');
+        const tsNoiKhoaKhacInput = document.getElementById('ts_noi_khoa_khac_input');
+
+        const syncOverallMedicalHistory = () => {
+            const anyGroupYes = Array.from(historyGroups).some(group => {
+                const yesRadio = group.querySelector('.group-radio-yes');
+                return yesRadio && yesRadio.checked;
+            });
+            const hasOtherText = tsNoiKhoaKhacInput && tsNoiKhoaKhacInput.value.trim() !== '';
+
+            if (anyGroupYes || hasOtherText) {
+                if (tsNoiKhoaCo) tsNoiKhoaCo.checked = true;
+            }
+        };
+
+        historyGroups.forEach(group => {
+            const noRadio = group.querySelector('.group-radio-no');
+            const yesRadio = group.querySelector('.group-radio-yes');
+            const checkboxes = group.querySelectorAll('.history-item-chk');
+            const textInputs = group.querySelectorAll('.history-item-text');
+
+            // Khi tích chọn bất kỳ bệnh lý con nào -> tự động chuyển nhóm sang "Có" và mục 4 sang "Có"
+            checkboxes.forEach(chk => {
+                chk.addEventListener('change', () => {
+                    const anyChecked = Array.from(checkboxes).some(c => c.checked);
+                    const anyText = Array.from(textInputs).some(t => t.value.trim() !== '');
+                    if (anyChecked || anyText) {
+                        if (yesRadio) yesRadio.checked = true;
+                        syncOverallMedicalHistory();
+                    }
+                });
+            });
+
+            textInputs.forEach(inp => {
+                inp.addEventListener('input', () => {
+                    if (inp.value.trim() !== '') {
+                        if (yesRadio) yesRadio.checked = true;
+                        syncOverallMedicalHistory();
+                    }
+                });
+            });
+
+            // Khi chọn "Không" ở nhóm -> bỏ tích các bệnh lý con trong nhóm
+            noRadio?.addEventListener('change', () => {
+                if (noRadio.checked) {
+                    checkboxes.forEach(c => { c.checked = false; });
+                    textInputs.forEach(t => { t.value = ''; });
+                }
+            });
+
+            yesRadio?.addEventListener('change', () => {
+                if (yesRadio.checked) {
+                    syncOverallMedicalHistory();
+                }
+            });
+        });
+
+        tsNoiKhoaKhacInput?.addEventListener('input', syncOverallMedicalHistory);
+
+        // Khi chọn "Không" ở tổng mục 4 -> đặt lại các nhóm về "Không"
+        tsNoiKhoaKhong?.addEventListener('change', () => {
+            if (tsNoiKhoaKhong.checked) {
+                historyGroups.forEach(group => {
+                    const noRadio = group.querySelector('.group-radio-no');
+                    if (noRadio) noRadio.checked = true;
+                    group.querySelectorAll('.history-item-chk').forEach(c => { c.checked = false; });
+                    group.querySelectorAll('.history-item-text').forEach(t => { t.value = ''; });
+                });
+                if (tsNoiKhoaKhacInput) tsNoiKhoaKhacInput.value = '';
+            }
+        });
+
+        // 4. Đồng bộ Cột sống & Đường truyền tĩnh mạch khó
+        const cotSongBatThuong = document.getElementById('cot_song_bat_thuong');
+        const cotSongBt = document.getElementById('cot_song_bt');
+        const inputCotSong = document.getElementById('input_cot_song');
+
+        inputCotSong?.addEventListener('input', () => {
+            if (inputCotSong.value.trim() !== '' && cotSongBatThuong) {
+                cotSongBatThuong.checked = true;
+            }
+        });
+        cotSongBt?.addEventListener('change', () => {
+            if (cotSongBt.checked && inputCotSong) inputCotSong.value = '';
+        });
+
+        const tmKhoCo = document.getElementById('tm_kho_co');
+        const tmKhoKhong = document.getElementById('tm_kho_khong');
+        const inputTmKho = document.getElementById('input_tm_kho');
+
+        inputTmKho?.addEventListener('input', () => {
+            if (inputTmKho.value.trim() !== '' && tmKhoCo) {
+                tmKhoCo.checked = true;
+            }
+        });
+        tmKhoKhong?.addEventListener('change', () => {
+            if (tmKhoKhong.checked && inputTmKho) inputTmKho.value = '';
+        });
+
+        // 5. Tự động tích chọn "Trên 3cm" và "Trên 6,5cm" khi nhập số đo đường thở
+        const inputHaMieng = document.getElementById('input_ha_mieng');
+        const chkHaMiengTren3 = document.getElementById('chk_ha_mieng_tren_3');
+        inputHaMieng?.addEventListener('input', () => {
+            const val = parseFloat(inputHaMieng.value);
+            if (!isNaN(val) && chkHaMiengTren3) {
+                chkHaMiengTren3.checked = val > 3;
+            }
+        });
+
+        const inputCamSunGiap = document.getElementById('input_cam_sun_giap');
+        const chkCamSunGiapTren65 = document.getElementById('chk_cam_sun_giap_tren_65');
+        inputCamSunGiap?.addEventListener('input', () => {
+            const val = parseFloat(inputCamSunGiap.value);
+            if (!isNaN(val) && chkCamSunGiapTren65) {
+                chkCamSunGiapTren65.checked = val > 6.5;
+            }
+        });
+
+        // 6. Đồng bộ tên Bác sỹ khám khi chọn dropdown
+        const selectBsKham = document.getElementById('select_bs_kham');
+        const printBsKham = document.getElementById('print_bs_kham');
+        selectBsKham?.addEventListener('change', () => {
+            if (printBsKham) printBsKham.textContent = selectBsKham.value;
+        });
+    </script>
+</body>
+
+</html>
