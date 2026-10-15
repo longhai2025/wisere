@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#087f73">
+  <title>Wisere Dental - Đánh giá dịch vụ sau điều trị</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap');
+
+    :root {
+      --ink: #172b27;
+      --muted: #647470;
+      --line: #e2edea;
+      --line-strong: #c2ded7;
+      --page: #f3f8f6;
+      --card: #ffffff;
+      --teal: #087f73;
+      --teal-dark: #06655c;
+      --teal-light: #e6f6f3;
+      --teal-glow: rgba(8, 127, 115, 0.16);
+      --coral: #e05638;
+      --coral-light: #fdf1ed;
+      --gold: #b27b18;
+      --gold-light: #fcf6e8;
+      --shadow: 0 10px 30px rgba(12, 64, 57, 0.08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { min-width: 320px; color-scheme: light; }
+    body {
+      margin: 0;
+      padding: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      padding: 0 18px;
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--teal-dark);
+      letter-spacing: -0.3px;
+    }
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #099486, #06675e);
+      color: white;
+      box-shadow: 0 4px 10px rgba(8, 127, 115, 0.25);
+    }
+    .brand-icon svg { width: 19px; height: 19px; }
+    .secure-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px;
+      border-radius: 99px;
+      background: var(--teal-light);
+      color: var(--teal-dark);
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .secure-pill svg { width: 13px; height: 13px; }
+
+    /* Main Container */
+    .container {
+      width: min(100%, 580px);
+      margin: 0 auto;
+      padding: 16px 14px 40px;
+    }
+
+    /* Appointment Info Card */
+    .appointment-card {
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .appointment-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      color: var(--teal);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .patient-greet {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .appointment-meta {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 5px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .meta-row svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      color: var(--teal);
+    }
+    .meta-row strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* Survey Form Card */
+    .survey-card {
+      padding: 20px 18px 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+
+    .section-title {
+      margin: 0 0 4px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .section-desc {
+      margin: 0 0 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .required-star { color: var(--coral); margin-left: 2px; }
+
+    /* 1. Overall CSAT Scale (Big touch-friendly emoji buttons) */
+    .csat-scale {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 7px;
+      margin-bottom: 22px;
+    }
+    .csat-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 2px 8px;
+      min-height: 86px;
+      border: 1.5px solid var(--line);
+      border-radius: 13px;
+      background: #fafcfb;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .csat-btn:active { transform: scale(0.96); }
+    .csat-btn:hover { border-color: var(--line-strong); background: #ffffff; }
+    .csat-btn.selected {
+      border-color: var(--teal);
+      background: var(--teal-light);
+      box-shadow: 0 4px 14px var(--teal-glow);
+      transform: translateY(-2px);
+    }
+    .csat-emoji {
+      font-size: 30px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+      filter: grayscale(0.2);
+      transition: transform 0.2s;
+    }
+    .csat-btn.selected .csat-emoji {
+      filter: none;
+      transform: scale(1.15);
+    }
+    .csat-text {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.25;
+    }
+    .csat-btn.selected .csat-text {
+      color: var(--teal-dark);
+      font-weight: 700;
+    }
+
+    /* Progressive Disclosure Section */
+    .details-section {
+      display: none;
+      animation: fadeIn 0.3s ease forwards;
+    }
+    .details-section.open {
+      display: block;
+    }
+
+    /* 2. Reason Tags */
+    .tags-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 22px;
+    }
+    .tag-chip {
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: #f7faf9;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.16s ease;
+    }
+    .tag-chip:active { transform: scale(0.97); }
+    .tag-chip.active {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #ffffff;
+      box-shadow: 0 2px 8px var(--teal-glow);
+    }
+
+    /* 3. Touchpoints Rating (Compact Rows) */
+    .touchpoints-wrap {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: #f8fbfa;
+      border: 1px solid var(--line);
+    }
+    .touchpoint-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .tp-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .tp-stars {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .star-btn {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #ffffff;
+      color: #b5c2bf;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.15s ease;
+    }
+    .star-btn.rated {
+      border-color: #ffd055;
+      background: #fffcee;
+      color: #f7a400;
+    }
+
+    /* 4. Comment Box */
+    .field-group {
+      margin-bottom: 18px;
+    }
+    .field-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .field-label span {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 11.5px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 84px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #ffffff;
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 14px; /* Tránh iOS tự zoom khi focus */
+      line-height: 1.45;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px var(--teal-glow);
+    }
+
+    /* 5. Recovery Box when CSAT <= 2 */
+    .recovery-box {
+      display: none;
+      padding: 13px 14px;
+      margin-bottom: 20px;
+      border: 1px solid #ffd8cf;
+      border-radius: 12px;
+      background: var(--coral-light);
+    }
+    .recovery-box.show {
+      display: block;
+      animation: fadeIn 0.25s ease forwards;
+    }
+    .recovery-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 4px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--coral);
+    }
+    .recovery-title svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .recovery-desc {
+      margin: 0 0 10px;
+      font-size: 11.5px;
+      color: #7b4234;
+      line-height: 1.4;
+    }
+    .consent-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .consent-label input {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      accent-color: var(--coral);
+    }
+
+    /* Submit Button (Thumb friendly) */
+    .submit-btn {
+      width: 100%;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 6px 18px var(--teal-glow);
+      transition: all 0.2s ease;
+    }
+    .submit-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    .submit-btn:not(:disabled):active {
+      transform: translateY(1px);
+    }
+    .submit-btn svg { width: 18px; height: 18px; }
+
+    /* Success / Completed / Expired States */
+    .state-screen {
+      display: none;
+      text-align: center;
+      padding: 36px 16px 28px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.3s ease;
+    }
+    .state-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--teal-light);
+      color: var(--teal);
+    }
+    .state-icon svg { width: 32px; height: 32px; }
+    .state-icon.warn { background: var(--gold-light); color: var(--gold); }
+    .state-title {
+      margin: 0 0 8px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .state-text {
+      margin: 0 auto 18px;
+      max-width: 380px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .res-code {
+      display: inline-block;
+      padding: 5px 12px;
+      margin-bottom: 24px;
+      border-radius: 8px;
+      background: #f1f6f4;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    /* Google 5-Star Conversion Card */
+    .google-promo {
+      display: none;
+      padding: 16px;
+      margin-top: 10px;
+      border: 1.5px dashed #4285F4;
+      border-radius: 14px;
+      background: #f8fbff;
+      text-align: center;
+    }
+    .google-promo.show { display: block; }
+    .google-promo p { margin: 0 0 12px; font-size: 13px; color: #202124; font-weight: 600; }
+    .google-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 18px;
+      border-radius: 10px;
+      background: #4285F4;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-decoration: none;
+    }
+    .google-btn svg { width: 16px; height: 16px; }
+
+    /* Hotline Support Card */
+    .hotline-box {
+      display: none;
+      padding: 14px;
+      margin-top: 10px;
+      border-radius: 12px;
+      background: #fff8f6;
+      border: 1px solid #ffd9cf;
+    }
+    .hotline-box.show { display: block; }
+    .hotline-box strong { color: var(--coral); display: block; margin-bottom: 4px; font-size: 13px; }
+    .hotline-box a { color: var(--coral); font-weight: 700; text-decoration: underline; font-size: 15px; }
+
+    /* Reset Demo Button */
+    .demo-reset {
+      margin-top: 26px;
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 11px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Footer */
+    .app-footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 11px;
+      color: #8c9c98;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 420px) {
+      .container { padding-inline: 10px; }
+      .survey-card { padding: 16px 14px 20px; }
+      .csat-scale { gap: 5px; }
+      .csat-btn { min-height: 80px; padding: 8px 1px 6px; }
+      .csat-emoji { font-size: 26px; }
+      .csat-text { font-size: 9.5px; }
+      .tp-label { font-size: 11.5px; }
+      .star-btn { width: 29px; height: 29px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal Brand Header -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7.5 3.8c1.5 0 2.6.8 4.5.8s3-.8 4.5-.8c2.7 0 4.5 2.1 4.5 5.1 0 4.2-2.3 11.3-5.1 11.3-1.5 0-1.8-2.7-3.9-2.7s-2.4 2.7-3.9 2.7C5.3 20.2 3 13.1 3 8.9c0-3 1.8-5.1 4.5-5.1Z"/></svg>
+      </span>
+      <span>Wisere Dental</span>
+    </div>
+    <div class="secure-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <span>Bảo mật</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 1. Form Đánh giá (Hiển thị mặc định) -->
+    <div id="survey-form-wrap">
+      <!-- Thẻ tóm tắt lịch hẹn gửi từ ZNS -->
+      <section class="appointment-card" aria-label="Thông tin lịch hẹn">
+        <span class="appointment-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="13" height="13"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          Đã hoàn thành buổi khám
+        </span>
+        <h1 class="patient-greet" id="patient-name">Chào Nguyễn V*** A.</h1>
+        <div class="appointment-meta">
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 2v2M5 2v2M5 3H3v5a5 5 0 0 0 10 0V3h-2"/><path d="M8 13a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="8" r="2"/></svg>
+            <span>Dịch vụ: <strong id="service-name">Trám răng thẩm mỹ</strong> · <span id="doctor-name">BS. Nguyễn Minh</span></span>
+          </div>
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+            <span>Thời gian: <strong id="time-text">15:30 · 15/10/2026</strong> (Mã <span id="apt-id">LH-240805</span>)</span>
+          </div>
+          <div class="meta-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2"/></svg>
+            <span id="branch-name">Nha khoa Wisere - Chi nhánh Quận 1</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Khảo sát 1 trang nhanh gọn -->
+      <section class="survey-card">
+        <form id="csat-form" onsubmit="event.preventDefault(); submitSurvey();">
+          
+          <!-- Câu 1: CSAT tổng thể (Tap 1 chạm) -->
+          <div class="field-group">
+            <h2 class="section-title">Bạn hài lòng thế nào về buổi khám hôm nay?<span class="required-star">*</span></h2>
+            <p class="section-desc">Chạm vào biểu tượng thể hiện đúng nhất cảm nhận của bạn</p>
+            <div class="csat-scale" role="radiogroup" aria-label="Đánh giá mức độ hài lòng">
+              <button type="button" class="csat-btn" data-score="1" aria-label="1 sao: Rất thất vọng">
+                <span class="csat-emoji">😣</span>
+                <span class="csat-text">Rất tệ</span>
+              </button>
+              <button type="button" class="csat-btn" data-score="2" aria-label="2 sao: Chưa hài lòng">
+                <span class="csat-emoji">🙁</span>
+                <span class="csat-text">Chưa tốt</span>
+              </button>
+              <button type="button" class="csat-btn" data-score="3" aria-label="3 sao: Bình thường">
+                <span class="csat-emoji">😐</span>
+                <span class="csat-text">Bình thường</span>
+              </button>
+              <button type="button" class="csat-btn" data-score="4" aria-label="4 sao: Hài lòng">
+                <span class="csat-emoji">🙂</span>
+                <span class="csat-text">Hài lòng</span>
+              </button>
+              <button type="button" class="csat-btn" data-score="5" aria-label="5 sao: Rất hài lòng">
+                <span class="csat-emoji">🤩</span>
+                <span class="csat-text">Rất tốt!</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Các câu hỏi mở rộng (Tự động bung ra mượt mà khi đã bấm chọn điểm) -->
+          <div id="details-section" class="details-section">
+            
+            <!-- Câu 2: Lý do nhanh (Nhiều lựa chọn dạng Tag Pill) -->
+            <div class="field-group">
+              <h3 class="section-title" id="reason-title">Điều gì khiến bạn ấn tượng?</h3>
+              <p class="section-desc">Chọn một hoặc nhiều nội dung phù hợp</p>
+              <div class="tags-group" id="tags-container"></div>
+            </div>
+
+            <!-- Câu 3: Điểm chạm chi tiết (Chấm sao cực nhanh) -->
+            <div class="field-group">
+              <h3 class="section-title">Chi tiết các khâu phục vụ</h3>
+              <p class="section-desc">Chạm vào số sao (1-5) để đánh giá nhanh</p>
+              <div class="touchpoints-wrap">
+                <div class="touchpoint-row" data-tp="doctor">
+                  <span class="tp-label">1. Bác sĩ điều trị</span>
+                  <div class="tp-stars" data-stars="5"></div>
+                </div>
+                <div class="touchpoint-row" data-tp="waiting">
+                  <span class="tp-label">2. Thời gian chờ khám</span>
+                  <div class="tp-stars" data-stars="5"></div>
+                </div>
+                <div class="touchpoint-row" data-tp="staff">
+                  <span class="tp-label">3. Lễ tân & Phục vụ</span>
+                  <div class="tp-stars" data-stars="5"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Câu 4: Ý kiến đóng góp tự do -->
+            <div class="field-group">
+              <label class="field-label" for="comment-text">Góp ý thêm cho phòng khám <span>(Không bắt buộc)</span></label>
+              <textarea id="comment-text" maxlength="500" placeholder="Chia sẻ thêm cảm nhận hoặc mong muốn cải thiện của bạn..."></textarea>
+            </div>
+
+            <!-- Hộp chăm sóc đặc biệt (Tự hiện khi điểm <= 2) -->
+            <div id="recovery-box" class="recovery-box">
+              <div class="recovery-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Phòng khám xin ghi nhận và chân thành xin lỗi
+              </div>
+              <p class="recovery-desc">Wisere cam kết luôn lắng nghe để nâng cao chất lượng điều trị và dịch vụ.</p>
+              <label class="consent-label">
+                <input type="checkbox" id="consent-check" checked>
+                <span>Tôi muốn Quản lý / Bác sĩ liên hệ hỗ trợ giải quyết vấn đề này</span>
+              </label>
+            </div>
+
+            <!-- Nút Gửi hoàn tất -->
+            <button type="submit" id="submit-btn" class="submit-btn">
+              <span>Gửi đánh giá dịch vụ</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <!-- 2. Màn hình Cảm ơn (Sau khi submit thành công) -->
+    <div id="success-screen" class="state-screen">
+      <div class="state-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2 class="state-title">Cảm ơn bạn đã đánh giá!</h2>
+      <p class="state-text">Mọi phản hồi từ bạn đều được chuyển trực tiếp đến Ban Quản lý Wisere để tiếp tục cải thiện trải nghiệm khách hàng.</p>
+      <span class="res-code" id="res-code">Mã tiếp nhận: RES-240805-891</span>
+
+      <!-- Box kéo Review 5 Sao Google nếu khách đánh giá 5 sao -->
+      <div id="google-promo" class="google-promo">
+        <p>🌟 Bạn cảm thấy tuyệt vời? Hãy chia sẻ 1 đánh giá 5 sao trên Google Maps để giúp phòng khám phát triển nhé!</p>
+        <a href="https://maps.google.com" target="_blank" rel="noopener" class="google-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Đánh giá trên Google Maps
+        </a>
+      </div>
+
+      <!-- Box Hotline hỗ trợ nhanh nếu khách chấm điểm thấp -->
+      <div id="hotline-box" class="hotline-box">
+        <strong>Bộ phận CSKH đã tiếp nhận phản hồi ưu tiên:</strong>
+        <p style="margin: 4px 0 8px; font-size: 12px; color: #555;">Chúng tôi sẽ gọi lại cho bạn trong vòng 2-4 giờ làm việc.</p>
+        <div>Hotline trực tiếp: <a href="tel:19006868">1900 6868</a></div>
+      </div>
+
+      <button type="button" class="demo-reset" onclick="resetDemo()">Mô phỏng: Đặt lại khảo sát</button>
+    </div>
+
+    <!-- 3. Màn hình Link Đã Dùng (Single-use token) -->
+    <div id="already-done-screen" class="state-screen">
+      <div class="state-icon warn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      </div>
+      <h2 class="state-title">Đường dẫn đã hoàn tất</h2>
+      <p class="state-text">Khảo sát cho lịch hẹn này đã được ghi nhận trước đó. Mỗi đường dẫn ZNS chỉ có hiệu lực cho một lần đánh giá duy nhất.</p>
+      <button type="button" class="demo-reset" onclick="resetDemo()">Mô phỏng: Thử lại đánh giá</button>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <div>Hệ thống Chăm sóc Khách hàng Tự động · Wisere Dental</div>
+    <div style="margin-top: 4px;">© 2026 Wisere. Bảo mật thông tin bệnh nhân.</div>
+  </footer>
+
+  <script>
+    (() => {
+      // Dữ liệu mock lịch hẹn (trong thực tế sẽ lấy từ API qua ?token=...)
+      const appointmentInfo = {
+        patientName: "Nguyễn V*** A.",
+        appointmentId: "LH-240805",
+        doctorName: "BS. Nguyễn Minh",
+        serviceName: "Trám răng thẩm mỹ",
+        branchName: "Nha khoa Wisere - Chi nhánh Quận 1",
+        timeText: "15:30 · 15/10/2026"
+      };
+
+      const positiveTags = ["Bác sĩ nhẹ nhàng, không đau", "Tư vấn rõ ràng, chu đáo", "Nhân viên thân thiện", "Đúng giờ hẹn", "Cơ sở vật chất sạch đẹp", "Chi phí hợp lý"];
+      const negativeTags = ["Thời gian chờ hơi lâu", "Điều trị còn ê buốt/đau", "Tư vấn chi phí chưa rõ", "Thái độ tiếp đón chưa tốt", "Phòng chờ đông", "Khác"];
+
+      // Trạng thái Form
+      const state = {
+        csat: null,
+        tags: [],
+        touchpoints: { doctor: 5, waiting: 5, staff: 5 },
+        comment: "",
+        consent: true
+      };
+
+      // DOM Elements
+      const formWrap = document.getElementById('survey-form-wrap');
+      const detailsSection = document.getElementById('details-section');
+      const tagsContainer = document.getElementById('tags-container');
+      const reasonTitle = document.getElementById('reason-title');
+      const recoveryBox = document.getElementById('recovery-box');
+      const submitBtn = document.getElementById('submit-btn');
+      const successScreen = document.getElementById('success-screen');
+      const alreadyDoneScreen = document.getElementById('already-done-screen');
+      const googlePromo = document.getElementById('google-promo');
+      const hotlineBox = document.getElementById('hotline-box');
+
+      // Khởi tạo thông tin lịch hẹn
+      function initAppointment() {
+        document.getElementById('patient-name').textContent = "Chào " + appointmentInfo.patientName;
+        document.getElementById('service-name').textContent = appointmentInfo.serviceName;
+        document.getElementById('doctor-name').textContent = appointmentInfo.doctorName;
+        document.getElementById('apt-id').textContent = appointmentInfo.appointmentId;
+        document.getElementById('time-text').textContent = appointmentInfo.timeText;
+        document.getElementById('branch-name').textContent = appointmentInfo.branchName;
+
+        // Khởi tạo các hàng sao điểm chạm
+        document.querySelectorAll('.touchpoint-row').forEach(row => {
+          const tpKey = row.dataset.tp;
+          const starsWrap = row.querySelector('.tp-stars');
+          renderStars(starsWrap, tpKey, state.touchpoints[tpKey]);
+        });
+
+        // Kiểm tra xem token này đã submit chưa
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token') || 'demo';
+        if (sessionStorage.getItem('submitted_' + token)) {
+          showAlreadyDone();
+        }
+      }
+
+      // Render 5 sao cho điểm chạm
+      function renderStars(container, key, currentScore) {
+        container.innerHTML = '';
+        for (let i = 1; i <= 5; i++) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `star-btn ${i <= currentScore ? 'rated' : ''}`;
+          btn.innerHTML = '★';
+          btn.title = `${i} sao`;
+          btn.onclick = () => {
+            state.touchpoints[key] = i;
+            renderStars(container, key, i);
+          };
+          container.appendChild(btn);
+        }
+      }
+
+      // Bắt sự kiện chọn điểm CSAT 1-5
+      document.querySelectorAll('.csat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const score = parseInt(btn.dataset.score, 10);
+          state.csat = score;
+
+          // Cập nhật giao diện active button
+          document.querySelectorAll('.csat-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+
+          // Mở rộng phần chi tiết mượt mà
+          onCsatSelected(score);
+        });
+      });
+
+      function onCsatSelected(score) {
+        detailsSection.classList.add('open');
+
+        // Đổi danh sách tag theo điểm số
+        const isPositive = score >= 4;
+        reasonTitle.textContent = isPositive ? "Điều gì khiến bạn hài lòng nhất?" : "Điều gì phòng khám cần cải thiện?";
+        const tagList = isPositive ? positiveTags : negativeTags;
+        state.tags = [];
+
+        tagsContainer.innerHTML = '';
+        tagList.forEach(text => {
+          const chip = document.createElement('span');
+          chip.className = 'tag-chip';
+          chip.textContent = text;
+          chip.onclick = () => {
+            if (chip.classList.contains('active')) {
+              chip.classList.remove('active');
+              state.tags = state.tags.filter(t => t !== text);
+            } else {
+              chip.classList.add('active');
+              state.tags.push(text);
+            }
+          };
+          tagsContainer.appendChild(chip);
+        });
+
+        // Hiển thị box khiếu nại nếu điểm thấp (<= 2 sao)
+        if (score <= 2) {
+          recoveryBox.classList.add('show');
+          // Điều chỉnh sao mặc định của các khâu tương ứng
+          state.touchpoints = { doctor: 2, waiting: 2, staff: 3 };
+        } else {
+          recoveryBox.classList.remove('show');
+          if (score === 5) state.touchpoints = { doctor: 5, waiting: 5, staff: 5 };
+        }
+
+        // Cập nhật lại UI các sao
+        document.querySelectorAll('.touchpoint-row').forEach(row => {
+          const tpKey = row.dataset.tp;
+          renderStars(row.querySelector('.tp-stars'), tpKey, state.touchpoints[tpKey]);
+        });
+
+        // Cuộn nhẹ tới chi tiết
+        setTimeout(() => {
+          detailsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      }
+
+      // Xử lý gửi khảo sát
+      window.submitSurvey = function() {
+        if (!state.csat) {
+          alert('Vui lòng chọn mức độ hài lòng của bạn');
+          return;
+        }
+
+        state.comment = document.getElementById('comment-text').value.trim();
+        const consentEl = document.getElementById('consent-check');
+        state.consent = consentEl ? consentEl.checked : false;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg style="animation: spin 0.8s linear infinite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10"/></svg>
+          <span>Đang gửi phản hồi...</span>
+        `;
+
+        // Payload chuẩn gửi về Backend Wisere (sẽ lưu vào database để hiện lên tab Đánh giá & Nhận xét)
+        const payload = {
+          appointmentId: appointmentInfo.appointmentId,
+          csatOverall: state.csat,
+          touchpoints: state.touchpoints,
+          tags: state.tags,
+          comment: state.comment,
+          requestSupport: state.csat <= 2 ? state.consent : false,
+          submittedAt: new Date().toISOString()
+        };
+
+        console.log("Wisere Feedback Payload Ready:", payload);
+
+        // Giả lập lưu API
+        setTimeout(() => {
+          const urlParams = new URLSearchParams(window.location.search);
+          const token = urlParams.get('token') || 'demo';
+          sessionStorage.setItem('submitted_' + token, 'true');
+
+          formWrap.style.display = 'none';
+          successScreen.style.display = 'block';
+
+          // Hiển thị smart CTA tương ứng
+          if (state.csat === 5) {
+            googlePromo.classList.add('show');
+          } else if (state.csat <= 2) {
+            hotlineBox.classList.add('show');
+          }
+
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 600);
+      };
+
+      function showAlreadyDone() {
+        formWrap.style.display = 'none';
+        successScreen.style.display = 'none';
+        alreadyDoneScreen.style.display = 'block';
+      }
+
+      window.resetDemo = function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token') || 'demo';
+        sessionStorage.removeItem('submitted_' + token);
+        location.reload();
+      };
+
+      initAppointment();
+    })();
+  </script>
+</body>
+</html>
