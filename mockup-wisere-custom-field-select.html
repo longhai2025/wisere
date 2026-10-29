@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng thu thập dữ liệu cho Công tác lần 1 - Wisere</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    body {
+      background-color: #525861;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .theme-teal-bg {
+      background-color: #00a2b8;
+    }
+    .theme-teal-bg:hover {
+      background-color: #008f9f;
+    }
+    .theme-teal-text {
+      color: #00a2b8;
+    }
+    .theme-teal-border {
+      border-color: #00a2b8;
+    }
+    .wisere-input {
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      height: 38px;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #272b2f;
+      outline: none;
+      transition: all 0.2s;
+      width: 100%;
+      background-color: #ffffff;
+    }
+    .wisere-input:focus {
+      border-color: #00a2b8;
+      box-shadow: 0 0 0 2px rgba(0, 162, 184, 0.15);
+    }
+    .wisere-header-th {
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      padding: 12px 14px;
+      user-select: none;
+    }
+    /* Tooth chart box styling matching user screenshot */
+    .tooth-box {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: #334155;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease-in-out;
+    }
+    .tooth-box:hover {
+      border-color: #00a2b8;
+      background-color: #f0fdfa;
+      color: #00a2b8;
+    }
+    .tooth-box.selected {
+      background-color: #4f46e5;
+      border-color: #4338ca;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(79, 70, 229, 0.3);
+    }
+    .tooth-quick-btn {
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #334155;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tooth-quick-btn:hover {
+      background-color: #f8fafc;
+      border-color: #94a3b8;
+    }
+  </style>
+</head>
+<body class="p-2 md:p-6 w-full">
+
+  <!-- ======================================================== -->
+  <!-- MODAL CHÍNH: BẢNG THU THẬP DỮ LIỆU CÔNG TÁC LẦN 1 -->
+  <!-- ======================================================== -->
+  <div class="relative w-full max-w-[1360px] bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-300 mx-auto flex flex-col min-h-[720px]">
+    
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-white relative">
+      <div class="w-full text-center">
+        <h2 class="text-base md:text-lg font-bold text-gray-900 tracking-tight">
+          Bảng thu thập dữ liệu cho Công tác lần 1
+        </h2>
+      </div>
+      <button type="button" class="text-gray-400 hover:text-gray-700 text-2xl font-light leading-none absolute right-5 top-4 cursor-pointer" title="Đóng">
+        &times;
+      </button>
+    </div>
+
+    <!-- Thông tin Bệnh nhân (Họ tên & Mã hồ sơ) -->
+    <div class="px-8 pt-4 pb-3 flex items-center justify-between text-xs">
+      <div>
+        <div class="text-[12px] text-gray-500 font-medium mb-0.5">Họ tên</div>
+        <div class="text-sm font-bold text-gray-950 tracking-wide">LÊ TRỌNG TÚ</div>
+      </div>
+      <div class="text-right">
+        <div class="text-[12px] text-gray-500 font-medium mb-0.5">Mã hồ sơ</div>
+        <div class="text-sm font-bold text-gray-950 tracking-wide font-mono">2610200016</div>
+      </div>
+    </div>
+
+    <!-- HÀNG TABS: Chuyển đổi qua lại giữa các tab & Nút [+ Thêm mới] -->
+    <div class="px-8 flex items-center border-b border-gray-200 gap-1 overflow-x-auto text-xs" id="tabs-container">
+      <!-- Dynamic Tabs -->
+    </div>
+
+    <!-- KHU VỰC BẢNG DỮ LIỆU CHÍNH (DATA TABLE) -->
+    <div class="p-8 flex-1 overflow-y-auto">
+      <div class="overflow-x-auto border border-gray-200 rounded-md bg-white custom-scroll shadow-2xs">
+        <table class="w-full text-left text-xs border-collapse" id="main-data-table">
+          <thead id="table-head">
+            <!-- Dynamic Headers -->
+          </thead>
+          <tbody class="divide-y divide-gray-100 text-gray-700" id="table-body">
+            <!-- Dynamic Rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Thao tác + Thêm dòng & chỉ dẫn -->
+      <div class="mt-4 flex items-center justify-between">
+        <button type="button" onclick="addNewTableRow()" class="theme-teal-text hover:text-cyan-800 text-xs font-medium flex items-center gap-1.5 transition cursor-pointer">
+          <span class="text-base font-bold leading-none">+</span>
+          <span>Thêm dòng</span>
+        </button>
+        <div class="text-[11px] text-gray-400 flex items-center gap-2">
+          <span>* Bấm vào ô cột <b>Vị trí răng</b> để mở modal Sơ đồ răng; bấm nút <b>[+]</b> trên thanh tiêu đề để thêm cột mới</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer: Đóng & Lưu -->
+    <div class="px-8 py-4 bg-white border-t border-gray-200 flex items-center justify-end gap-3">
+      <button type="button" class="px-7 py-2 border border-gray-300 rounded text-xs font-medium text-gray-700 bg-white hover:bg-gray-100 transition shadow-2xs">
+        Đóng
+      </button>
+      <button type="button" class="px-8 py-2 theme-teal-bg text-white rounded text-xs font-semibold shadow-sm transition">
+        Lưu
+      </button>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- DIALOG POPUP: CHỌN SƠ ĐỒ RĂNG (TOOTH CHART MODAL) -->
+    <!-- Tái hiện 100% hình ảnh người dùng đính kèm -->
+    <!-- ======================================================== -->
+    <div id="tooth-chart-modal" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+      <div class="w-full max-w-[700px] bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        
+        <!-- Header Modal Sơ đồ răng -->
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-white">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">🦷</span>
+            <h3 class="text-base font-bold text-gray-900">Chọn vị trí răng</h3>
+          </div>
+          <button type="button" onclick="closeToothChartModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-light leading-none cursor-pointer">
+            &times;
+          </button>
+        </div>
+
+        <!-- Body Modal Sơ đồ răng (Khớp ảnh đính kèm) -->
+        <div class="p-6 space-y-5">
+          
+          <!-- Hàng 1: Radio Chọn Đối tượng (Người lớn / Trẻ em) -->
+          <div class="flex items-center gap-6 text-sm text-gray-800">
+            <label class="flex items-center gap-2 cursor-pointer font-medium">
+              <input type="radio" name="tooth_patient_type" id="radio-adult" checked onchange="switchToothPatientType('adult')" class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 cursor-pointer">
+              <span>Người lớn</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer font-medium text-gray-600 hover:text-gray-900">
+              <input type="radio" name="tooth_patient_type" id="radio-child" onchange="switchToothPatientType('child')" class="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500 cursor-pointer">
+              <span>Trẻ em</span>
+            </label>
+          </div>
+
+          <!-- Hàng 2: Các nút chọn nhanh (Hàm trên / Hàm dưới / Hai hàm / Bỏ chọn) -->
+          <div class="flex items-center gap-3">
+            <button type="button" onclick="quickSelectTeeth('upper')" class="tooth-quick-btn hover:border-indigo-500 hover:text-indigo-600">
+              Hàm trên
+            </button>
+            <button type="button" onclick="quickSelectTeeth('lower')" class="tooth-quick-btn hover:border-indigo-500 hover:text-indigo-600">
+              Hàm dưới
+            </button>
+            <button type="button" onclick="quickSelectTeeth('both')" class="tooth-quick-btn hover:border-indigo-500 hover:text-indigo-600">
+              Hai hàm
+            </button>
+            <button type="button" onclick="quickSelectTeeth('clear')" class="tooth-quick-btn text-gray-500 hover:text-red-600 hover:border-red-300 ml-auto">
+              Bỏ chọn tất cả
+            </button>
+          </div>
+
+          <!-- Hàng 3: Khung các ô răng tương tác (Adult / Child) -->
+          <div class="p-4 bg-gray-50/70 border border-gray-200 rounded-lg overflow-x-auto custom-scroll space-y-2.5" id="tooth-grid-container">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <!-- Thông tin tóm tắt răng đã chọn -->
+          <div class="pt-2 flex items-center justify-between text-xs text-gray-600 border-t border-gray-100">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="font-medium text-gray-700">Răng đã chọn:</span>
+              <span id="selected-teeth-display" class="font-semibold text-indigo-600">Chưa chọn răng nào</span>
+            </div>
+            <span class="text-[11px] text-gray-400">* Bấm vào số răng để chọn/bỏ chọn</span>
+          </div>
+
+        </div>
+
+        <!-- Footer Modal Sơ đồ răng -->
+        <div class="px-6 py-3.5 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeToothChartModal()" class="px-5 py-2 border border-gray-300 rounded-md text-xs font-medium text-gray-700 bg-white hover:bg-gray-100 transition">
+            Hủy
+          </button>
+          <button type="button" onclick="confirmToothSelection()" class="px-6 py-2 theme-teal-bg text-white rounded-md text-xs font-semibold shadow-sm transition">
+            Xác nhận
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- DIALOG POPUP: THÊM BẢNG THU THẬP MỚI (TAB MỚI) -->
+    <!-- ======================================================== -->
+    <div id="new-tab-modal" class="hidden absolute inset-0 bg-slate-900/50 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+      <div class="w-full max-w-[420px] bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        <div class="px-6 py-4 flex items-center justify-between border-b border-gray-100">
+          <h3 class="text-base font-bold text-gray-900">Thêm bảng thu thập mới</h3>
+          <button type="button" onclick="closeNewTabModal()" class="text-gray-400 hover:text-gray-600 text-xl font-light leading-none cursor-pointer">
+            &times;
+          </button>
+        </div>
+        <div class="p-6 space-y-4 text-xs">
+          <div>
+            <label class="block font-medium text-gray-700 mb-1.5">Tên bảng thu thập <span class="text-red-500">*</span></label>
+            <input type="text" id="new-tab-name-input" placeholder="VD: Theo dõi hậu phẫu, Chỉnh nha..." 
+              onkeydown="if(event.key === 'Enter') submitCreateNewTab()"
+              class="wisere-input">
+          </div>
+          <div>
+            <label class="block font-medium text-gray-700 mb-1.5">Khởi tạo dữ liệu</label>
+            <select id="new-tab-template-select" class="wisere-input bg-white cursor-pointer">
+              <option value="empty">Tạo bảng trống hoàn toàn</option>
+              <option value="clone" selected>Tạo bảng mẫu có sẵn cột Sơ đồ răng & Select</option>
+            </select>
+          </div>
+        </div>
+        <div class="px-6 py-3.5 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-2.5">
+          <button type="button" onclick="closeNewTabModal()" class="px-4 py-2 border border-gray-300 rounded text-xs font-medium text-gray-700 bg-white hover:bg-gray-100 transition">
+            Hủy
+          </button>
+          <button type="button" onclick="submitCreateNewTab()" class="px-5 py-2 theme-teal-bg text-white rounded text-xs font-semibold shadow-sm transition">
+            Tạo bảng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- DIALOG POPUP: CẤU HÌNH CỘT / THÊM MỚI CỘT (SUB-MODAL) -->
+    <!-- ======================================================== -->
+    <div id="column-config-modal" class="hidden absolute inset-0 bg-slate-900/50 backdrop-blur-[1px] z-50 flex items-center justify-center p-4">
+      <div class="w-full max-w-[480px] bg-white rounded-lg shadow-2xl border border-gray-200 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+        
+        <div class="px-6 py-4 flex items-center justify-between bg-white border-b border-gray-100">
+          <h3 class="text-base font-bold text-gray-900" id="cfg-modal-header-title">Cấu hình cột</h3>
+          <button type="button" onclick="closeColumnConfig()" class="text-gray-400 hover:text-gray-600 text-xl font-light leading-none cursor-pointer">
+            &times;
+          </button>
+        </div>
+
+        <div class="p-6 space-y-4 max-h-[75vh] overflow-y-auto custom-scroll text-xs">
+          <!-- Tên cột -->
+          <div>
+            <label class="block font-medium text-gray-700 mb-1.5">Tên cột <span class="text-red-500">*</span></label>
+            <input type="text" id="cfg-col-name" class="wisere-input" placeholder="Nhập tên cột (VD: Vị trí răng, Loại trụ...)">
+          </div>
+
+          <!-- Loại dữ liệu (Đã bổ sung loại Sơ đồ răng) -->
+          <div>
+            <label class="block font-medium text-gray-700 mb-1.5">Loại dữ liệu <span class="text-red-500">*</span></label>
+            <div class="relative">
+              <select id="cfg-col-type" onchange="handleDataTypeChange(this.value)" class="wisere-input pr-8 bg-white appearance-none cursor-pointer">
+                <option value="tooth-chart">🦷 Sơ đồ răng (Tooth chart) ⭐ Mới</option>
+                <option value="single-select">Chọn một (Single-select)</option>
+                <option value="multi-select">Chọn nhiều (Multi-select)</option>
+                <option value="text">Văn bản</option>
+                <option value="number">Số</option>
+                <option value="date">Ngày</option>
+                <option value="datetime">Ngày giờ</option>
+                <option value="boolean">Có/Không</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ghi chú khi chọn Sơ đồ răng -->
+          <div id="cfg-tooth-info-wrapper" class="p-3 bg-indigo-50/60 rounded-md border border-indigo-100 flex items-start gap-2.5">
+            <span class="text-base leading-none">🦷</span>
+            <div class="text-[12px] text-indigo-900 leading-relaxed">
+              <b>Loại trường Sơ đồ răng:</b> Khi người dùng bấm vào ô nhập liệu ở cột này, hệ thống sẽ mở bảng đồ răng trực quan (Người lớn 32 răng & Trẻ em 20 răng) để chọn một hoặc nhiều răng nhanh chóng.
+            </div>
+          </div>
+
+          <!-- Khai báo danh sách tùy chọn cho Single/Multi-select -->
+          <div id="cfg-options-wrapper" class="hidden pt-3 border-t border-gray-100 space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <label class="font-semibold text-gray-800">Danh sách tùy chọn</label>
+                <p class="text-[11px] text-gray-400">Khai báo các lựa chọn cho người dùng</p>
+              </div>
+              <span id="cfg-opt-count" class="text-[11px] font-medium theme-teal-text bg-cyan-50 px-2 py-0.5 rounded">0 tùy chọn</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="relative flex-1">
+                <input type="text" id="cfg-new-opt-input" placeholder="Nhập giá trị tùy chọn..." 
+                  onkeydown="if(event.key === 'Enter') addOptionRow()"
+                  class="wisere-input text-xs" style="height: 36px;">
+              </div>
+
+              <!-- Color Picker mini -->
+              <div class="relative group">
+                <button type="button" id="cfg-color-indicator" class="w-9 h-9 rounded-md border border-gray-300 flex items-center justify-center bg-cyan-500 shadow-2xs" title="Gán màu nhãn">
+                  <span class="w-3 h-3 rounded-full bg-white/90"></span>
+                </button>
+                <div class="hidden group-hover:flex absolute top-10 right-0 z-50 bg-white p-2 rounded-lg shadow-xl border border-gray-200 gap-1.5">
+                  <div onclick="setOptionColor('bg-cyan-500')" class="w-5 h-5 rounded-full bg-cyan-500 cursor-pointer hover:scale-110 transition"></div>
+                  <div onclick="setOptionColor('bg-emerald-500')" class="w-5 h-5 rounded-full bg-emerald-500 cursor-pointer hover:scale-110 transition"></div>
+                  <div onclick="setOptionColor('bg-blue-500')" class="w-5 h-5 rounded-full bg-blue-500 cursor-pointer hover:scale-110 transition"></div>
+                  <div onclick="setOptionColor('bg-purple-500')" class="w-5 h-5 rounded-full bg-purple-500 cursor-pointer hover:scale-110 transition"></div>
+                  <div onclick="setOptionColor('bg-amber-500')" class="w-5 h-5 rounded-full bg-amber-500 cursor-pointer hover:scale-110 transition"></div>
+                  <div onclick="setOptionColor('bg-rose-500')" class="w-5 h-5 rounded-full bg-rose-500 cursor-pointer hover:scale-110 transition"></div>
+                </div>
+              </div>
+
+              <button type="button" onclick="addOptionRow()" class="h-9 px-3.5 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-800 font-medium rounded-md text-xs transition cursor-pointer">
+                + Thêm
+              </button>
+            </div>
+
+            <!-- List items -->
+            <div id="cfg-options-list" class="space-y-1.5 max-h-48 overflow-y-auto custom-scroll border border-gray-200 rounded-md p-2 bg-gray-50/60">
+              <!-- Options dynamic -->
+            </div>
+
+            <div class="pt-1 flex items-center justify-between text-[11px] text-gray-600">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="cfg-allow-other-check" class="w-3.5 h-3.5 rounded text-cyan-600 border-gray-300">
+                <span>Cho phép người dùng nhập giá trị khác</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Độ rộng cột -->
+          <div>
+            <label class="block font-medium text-gray-700 mb-1.5">Độ rộng cột (px)</label>
+            <input type="number" id="cfg-col-width" value="160" class="wisere-input" placeholder="150">
+          </div>
+        </div>
+
+        <div class="px-6 py-4 bg-white border-t border-gray-100 flex items-center justify-between">
+          <button type="button" id="cfg-btn-delete-col" onclick="deleteCurrentColumn()" class="px-5 py-2 border border-red-500 text-red-500 hover:bg-red-50 rounded-md text-xs font-medium transition cursor-pointer">
+            Xóa
+          </button>
+          <button type="button" onclick="saveColumnConfig()" class="px-6 py-2 theme-teal-bg text-white rounded-md text-xs font-semibold shadow-sm transition cursor-pointer">
+            Lưu
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT: QUẢN LÝ SƠ ĐỒ RĂNG, TABS, CỘT ĐỘNG VÀ DỮ LIỆU -->
+  <script>
+    // Định nghĩa danh sách các răng FDI chuẩn
+    const ADULT_UPPER_TEETH = ['18', '17', '16', '15', '14', '13', '12', '11', '21', '22', '23', '24', '25', '26', '27', '28'];
+    const ADULT_LOWER_TEETH = ['48', '47', '46', '45', '44', '43', '42', '41', '31', '32', '33', '34', '35', '36', '37', '38'];
+    const CHILD_UPPER_TEETH = ['55', '54', '53', '52', '51', '61', '62', '63', '64', '65'];
+    const CHILD_LOWER_TEETH = ['85', '84', '83', '82', '81', '71', '72', '73', '74', '75'];
+
+    // State chọn răng hiện tại
+    let activeToothRowIdx = null;
+    let activeToothColId = null;
+    let currentSelectedTeeth = [];
+    let currentPatientType = 'adult'; // 'adult' | 'child'
+
+    // Dữ liệu các Tabs (Cột 1 là Sơ đồ răng)
+    const tabsData = [
+      {
+        id: 'tab-1',
+        name: 'Bảng Implant + ghép xương',
+        columns: [
+          { id: 'c1', name: 'Vị trí răng', type: 'tooth-chart', width: '160' },
+          { id: 'c2', name: 'Vùng Implant', type: 'text', width: '170' },
+          { id: 'c3', name: 'Loại trụ Implant', type: 'single-select', width: '200',
+            options: [
+              { name: 'Straumann BLX', color: 'bg-cyan-500' },
+              { name: 'Dentium SuperLine', color: 'bg-emerald-500' },
+              { name: 'Osstem TSIII', color: 'bg-blue-500' },
+              { name: 'Nobel Biocare CC', color: 'bg-purple-500' },
+              { name: 'Megagen AnyRidge', color: 'bg-amber-500' }
+            ]
+          },
+          { id: 'c4', name: 'Vật liệu ghép', type: 'multi-select', width: '240',
+            options: [
+              { name: 'Xương nhân tạo Bio-Oss', color: 'bg-indigo-500' },
+              { name: 'Màng sinh học Bio-Gide', color: 'bg-purple-500' },
+              { name: 'Màng PRF (Huyết tương)', color: 'bg-emerald-500' },
+              { name: 'Xương tự thân (Autograft)', color: 'bg-amber-500' },
+              { name: 'Pin cố định màng Titan', color: 'bg-blue-500' }
+            ]
+          },
+          { id: 'c5', name: 'Thẩm mỹ nướu', type: 'boolean', width: '120' }
+        ],
+        rows: [
+          {
+            c1: ['16'],
+            c2: 'Xương ổ góc hàm',
+            c3: { value: 'Straumann BLX', color: 'bg-cyan-500' },
+            c4: ['Xương Bio-Oss', 'Màng Bio-Gide'],
+            c5: true
+          },
+          {
+            c1: ['21', '22'],
+            c2: 'Vùng thẩm mỹ phía trước',
+            c3: { value: 'Dentium SuperLine', color: 'bg-emerald-500' },
+            c4: ['Màng PRF', 'Xương tự thân'],
+            c5: false
+          },
+          {
+            c1: ['36'],
+            c2: 'Vùng răng cối lớn',
+            c3: { value: 'Osstem TSIII', color: 'bg-blue-500' },
+            c4: ['Xương Bio-Oss'],
+            c5: true
+          },
+          { c1: [], c2: '', c3: null, c4: [], c5: false },
+          { c1: [], c2: '', c3: null, c4: [], c5: false }
+        ]
+      },
+      {
+        id: 'tab-2',
+        name: 'Ghép xương khối',
+        columns: [
+          { id: 'c21', name: 'Vị trí răng', type: 'tooth-chart', width: '150' },
+          { id: 'c22', name: 'Vùng nhận xương', type: 'text', width: '170' },
+          { id: 'c23', name: 'Nguồn xương ghép', type: 'single-select', width: '190',
+            options: [
+              { name: 'Xương cằm tự thân', color: 'bg-amber-500' },
+              { name: 'Xương góc hàm (Ramus)', color: 'bg-emerald-500' },
+              { name: 'Xương khối đồng loại (Allograft)', color: 'bg-blue-500' },
+              { name: 'Xương mào chậu', color: 'bg-purple-500' }
+            ]
+          },
+          { id: 'c24', name: 'Vật liệu cố định', type: 'multi-select', width: '220',
+            options: [
+              { name: 'Vít cố định xương 1.5mm', color: 'bg-indigo-500' },
+              { name: 'Màng Collagen phủ ngoài', color: 'bg-cyan-500' },
+              { name: 'Keo dán sinh học', color: 'bg-rose-500' }
+            ]
+          },
+          { id: 'c25', name: 'Khâu kín vạt', type: 'boolean', width: '120' }
+        ],
+        rows: [
+          {
+            c21: ['12', '11'],
+            c22: 'Khuyết hổng xương mặt ngoài',
+            c23: { value: 'Xương góc hàm (Ramus)', color: 'bg-emerald-500' },
+            c24: ['Vít cố định xương 1.5mm', 'Màng Collagen phủ ngoài'],
+            c25: true
+          },
+          {
+            c21: ['23'],
+            c22: 'Tiêu xương chiều ngang',
+            c23: { value: 'Xương khối đồng loại (Allograft)', color: 'bg-blue-500' },
+            c24: ['Vít cố định xương 1.5mm'],
+            c25: true
+          },
+          { c21: [], c22: '', c23: null, c24: [], c25: false }
+        ]
+      },
+      {
+        id: 'tab-3',
+        name: 'Ghép nướu',
+        columns: [
+          { id: 'c31', name: 'Vị trí răng', type: 'tooth-chart', width: '150' },
+          { id: 'c32', name: 'Tình trạng tụt nướu', type: 'single-select', width: '180',
+            options: [
+              { name: 'Miller Độ I', color: 'bg-emerald-500' },
+              { name: 'Miller Độ II', color: 'bg-amber-500' },
+              { name: 'Miller Độ III', color: 'bg-rose-500' },
+              { name: 'Miller Độ IV', color: 'bg-purple-500' }
+            ]
+          },
+          { id: 'c33', name: 'Kỹ thuật ghép', type: 'single-select', width: '200',
+            options: [
+              { name: 'Ghép mô liên kết (CTG)', color: 'bg-cyan-500' },
+              { name: 'Ghép nướu rời (FGG)', color: 'bg-blue-500' },
+              { name: 'Vạt trượt về phía thân răng (CAF)', color: 'bg-purple-500' }
+            ]
+          },
+          { id: 'c34', name: 'Chỉ khâu phẫu thuật', type: 'multi-select', width: '210',
+            options: [
+              { name: 'Chỉ Prolene 6-0', color: 'bg-blue-500' },
+              { name: 'Chỉ Vicryl 5-0', color: 'bg-purple-500' },
+              { name: 'Màng PRF', color: 'bg-emerald-500' }
+            ]
+          },
+          { id: 'c35', name: 'Đạt độ dày > 2mm', type: 'boolean', width: '130' }
+        ],
+        rows: [
+          {
+            c31: ['13', '14'],
+            c32: { value: 'Miller Độ I', color: 'bg-emerald-500' },
+            c33: { value: 'Ghép mô liên kết (CTG)', color: 'bg-cyan-500' },
+            c34: ['Chỉ Prolene 6-0'],
+            c35: true
+          },
+          { c31: [], c32: null, c33: null, c34: [], c35: false }
+        ]
+      }
+    ];
+
+    let currentActiveTabId = 'tab-1';
+    let currentConfigColId = null;
+    let isCreatingNewColumn = false;
+    let activeBadgeColor = 'bg-cyan-500';
+
+    // RENDER HÀNG TABS
+    function renderTabs() {
+      const container = document.getElementById('tabs-container');
+      let html = '';
+
+      tabsData.forEach(tab => {
+        const isActive = tab.id === currentActiveTabId;
+        if (isActive) {
+          html += `
+            <div onclick="switchTab('${tab.id}')" class="flex items-center gap-2.5 py-3 px-3.5 font-semibold theme-teal-text border-b-2 theme-teal-border cursor-pointer transition select-none flex-shrink-0">
+              <span>${tab.name}</span>
+              <span onclick="event.stopPropagation(); removeTab('${tab.id}')" class="text-gray-400 hover:text-red-500 text-sm font-normal leading-none" title="Đóng tab">&times;</span>
+            </div>
+          `;
+        } else {
+          html += `
+            <div onclick="switchTab('${tab.id}')" class="flex items-center gap-2.5 py-3 px-3.5 text-gray-600 hover:text-gray-900 cursor-pointer transition select-none flex-shrink-0">
+              <span>${tab.name}</span>
+              <span onclick="event.stopPropagation(); removeTab('${tab.id}')" class="text-gray-400 hover:text-red-500 text-sm font-normal leading-none" title="Đóng tab">&times;</span>
+            </div>
+          `;
+        }
+      });
+
+      html += `
+        <button type="button" onclick="openNewTabModal()" class="ml-3 px-3.5 py-1.5 text-xs text-gray-700 hover:text-cyan-700 hover:border-cyan-500 bg-white hover:bg-gray-50 border border-gray-300 rounded-md flex items-center gap-1.5 transition shadow-2xs cursor-pointer flex-shrink-0">
+          <span class="font-bold text-xs leading-none theme-teal-text">+</span>
+          <span>Thêm mới</span>
+        </button>
+      `;
+
+      container.innerHTML = html;
+    }
+
+    function switchTab(tabId) {
+      currentActiveTabId = tabId;
+      renderTabs();
+      renderActiveTable();
+    }
+
+    function removeTab(tabId) {
+      if (tabsData.length <= 1) {
+        alert('Phải giữ lại ít nhất 1 bảng dữ liệu thu thập.');
+        return;
+      }
+      const idx = tabsData.findIndex(t => t.id === tabId);
+      if (idx !== -1) {
+        tabsData.splice(idx, 1);
+        if (currentActiveTabId === tabId) {
+          currentActiveTabId = tabsData[Math.max(0, idx - 1)].id;
+        }
+        renderTabs();
+        renderActiveTable();
+      }
+    }
+
+    // ========================================================
+    // MODAL SƠ ĐỒ RĂNG (TOOTH CHART CONTROLLER)
+    // ========================================================
+    function openToothChartModal(rowIdx, colId) {
+      activeToothRowIdx = rowIdx;
+      activeToothColId = colId;
+
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      const existing = tab.rows[rowIdx][colId];
+      currentSelectedTeeth = Array.isArray(existing) ? [...existing] : (existing ? [existing] : []);
+
+      // Check if current teeth are child teeth
+      const hasChildTeeth = currentSelectedTeeth.some(t => parseInt(t) > 50);
+      currentPatientType = hasChildTeeth ? 'child' : 'adult';
+      document.getElementById('radio-adult').checked = (currentPatientType === 'adult');
+      document.getElementById('radio-child').checked = (currentPatientType === 'child');
+
+      renderToothGrid();
+      updateSelectedTeethSummary();
+
+      document.getElementById('tooth-chart-modal').classList.remove('hidden');
+    }
+
+    function closeToothChartModal() {
+      document.getElementById('tooth-chart-modal').classList.add('hidden');
+    }
+
+    function switchToothPatientType(type) {
+      currentPatientType = type;
+      renderToothGrid();
+    }
+
+    function renderToothGrid() {
+      const container = document.getElementById('tooth-grid-container');
+      const isAdult = currentPatientType === 'adult';
+
+      const upperList = isAdult ? ADULT_UPPER_TEETH : CHILD_UPPER_TEETH;
+      const lowerList = isAdult ? ADULT_LOWER_TEETH : CHILD_LOWER_TEETH;
+
+      let html = `
+        <!-- Hàng hàm trên -->
+        <div class="flex items-center justify-center gap-1.5 flex-nowrap">
+      `;
+      upperList.forEach(tooth => {
+        const isSelected = currentSelectedTeeth.includes(tooth);
+        html += `
+          <div class="tooth-box ${isSelected ? 'selected' : ''}" onclick="toggleTooth('${tooth}')">
+            ${tooth}
+          </div>
+        `;
+      });
+      html += `</div>`;
+
+      // Đường phân cách giữa 2 hàm
+      html += `<div class="w-full border-t border-dashed border-gray-300 my-1"></div>`;
+
+      // Hàng hàm dưới
+      html += `<div class="flex items-center justify-center gap-1.5 flex-nowrap">`;
+      lowerList.forEach(tooth => {
+        const isSelected = currentSelectedTeeth.includes(tooth);
+        html += `
+          <div class="tooth-box ${isSelected ? 'selected' : ''}" onclick="toggleTooth('${tooth}')">
+            ${tooth}
+          </div>
+        `;
+      });
+      html += `</div>`;
+
+      container.innerHTML = html;
+    }
+
+    function toggleTooth(tooth) {
+      if (currentSelectedTeeth.includes(tooth)) {
+        currentSelectedTeeth = currentSelectedTeeth.filter(t => t !== tooth);
+      } else {
+        currentSelectedTeeth.push(tooth);
+      }
+      renderToothGrid();
+      updateSelectedTeethSummary();
+    }
+
+    function quickSelectTeeth(mode) {
+      const isAdult = currentPatientType === 'adult';
+      const upper = isAdult ? ADULT_UPPER_TEETH : CHILD_UPPER_TEETH;
+      const lower = isAdult ? ADULT_LOWER_TEETH : CHILD_LOWER_TEETH;
+
+      if (mode === 'upper') {
+        const allUpperSelected = upper.every(t => currentSelectedTeeth.includes(t));
+        if (allUpperSelected) {
+          currentSelectedTeeth = currentSelectedTeeth.filter(t => !upper.includes(t));
+        } else {
+          upper.forEach(t => { if (!currentSelectedTeeth.includes(t)) currentSelectedTeeth.push(t); });
+        }
+      } else if (mode === 'lower') {
+        const allLowerSelected = lower.every(t => currentSelectedTeeth.includes(t));
+        if (allLowerSelected) {
+          currentSelectedTeeth = currentSelectedTeeth.filter(t => !lower.includes(t));
+        } else {
+          lower.forEach(t => { if (!currentSelectedTeeth.includes(t)) currentSelectedTeeth.push(t); });
+        }
+      } else if (mode === 'both') {
+        const all = [...upper, ...lower];
+        currentSelectedTeeth = [...all];
+      } else if (mode === 'clear') {
+        currentSelectedTeeth = [];
+      }
+      renderToothGrid();
+      updateSelectedTeethSummary();
+    }
+
+    function updateSelectedTeethSummary() {
+      const display = document.getElementById('selected-teeth-display');
+      if (currentSelectedTeeth.length === 0) {
+        display.innerText = 'Chưa chọn răng nào';
+        display.className = 'font-normal text-gray-400 italic';
+      } else {
+        // Sort teeth naturally
+        const sorted = [...currentSelectedTeeth].sort((a, b) => parseInt(a) - parseInt(b));
+        display.innerText = sorted.map(t => `Răng ${t}`).join(', ');
+        display.className = 'font-semibold text-indigo-600';
+      }
+    }
+
+    function confirmToothSelection() {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && activeToothRowIdx !== null && activeToothColId) {
+        tab.rows[activeToothRowIdx][activeToothColId] = [...currentSelectedTeeth];
+        renderActiveTable();
+      }
+      closeToothChartModal();
+    }
+
+    // ========================================================
+    // RENDER BẢNG DỮ LIỆU ĐỘNG THEO KIỂU DỮ LIỆU ĐÃ CHỌN
+    // ========================================================
+    function renderActiveTable() {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (!tab) return;
+
+      const thead = document.getElementById('table-head');
+      const tbody = document.getElementById('table-body');
+
+      // 1. Render Table Head
+      let headHtml = `<tr class="bg-gray-50/90 text-gray-700 border-b border-gray-200 select-none">
+        <th class="w-11 py-3 px-2 text-center text-gray-400"></th>`;
+
+      tab.columns.forEach((col) => {
+        let badgeHtml = '';
+        let colBg = '';
+
+        if (col.type === 'tooth-chart') {
+          badgeHtml = `<span class="text-[10px] text-indigo-700 bg-indigo-100/80 px-1.5 py-0.2 rounded font-normal">Sơ đồ răng</span>`;
+          colBg = 'bg-indigo-50/40 border-x border-indigo-100/80';
+        } else if (col.type === 'single-select') {
+          badgeHtml = `<span class="text-[10px] text-cyan-700 bg-cyan-100/80 px-1.5 py-0.2 rounded font-normal">Chọn 1</span>`;
+          colBg = 'bg-cyan-50/30 border-x border-cyan-100/70';
+        } else if (col.type === 'multi-select') {
+          badgeHtml = `<span class="text-[10px] text-indigo-700 bg-indigo-100/80 px-1.5 py-0.2 rounded font-normal">Chọn nhiều</span>`;
+          colBg = 'bg-indigo-50/30 border-r border-indigo-100/70';
+        } else if (col.type === 'boolean') {
+          badgeHtml = `<span class="text-[10px] text-gray-500 bg-gray-100 px-1.5 py-0.2 rounded font-normal">Có/Không</span>`;
+        } else if (col.type === 'number') {
+          badgeHtml = `<span class="text-[10px] text-emerald-700 bg-emerald-100/80 px-1.5 py-0.2 rounded font-normal">Số</span>`;
+        } else if (col.type === 'date') {
+          badgeHtml = `<span class="text-[10px] text-amber-700 bg-amber-100/80 px-1.5 py-0.2 rounded font-normal">Ngày</span>`;
+        } else if (col.type === 'datetime') {
+          badgeHtml = `<span class="text-[10px] text-purple-700 bg-purple-100/80 px-1.5 py-0.2 rounded font-normal">Ngày giờ</span>`;
+        }
+
+        headHtml += `
+          <th style="min-width: ${col.width || 150}px;" class="wisere-header-th ${colBg} group cursor-pointer hover:bg-gray-100/90 transition" 
+              onclick="openEditColumnConfig('${col.id}')" title="Bấm để cấu hình / sửa cột này">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="${col.type.includes('select') || col.type === 'tooth-chart' ? 'font-semibold' : ''}">${col.name}</span>
+                ${badgeHtml}
+              </div>
+              <svg class="w-3.5 h-3.5 text-gray-400 group-hover:scale-110 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
+            </div>
+          </th>
+        `;
+      });
+
+      // Nút Thêm mới cột [+] trên Header
+      headHtml += `
+        <th class="w-12 py-3 px-2 text-center theme-teal-text hover:bg-cyan-50 cursor-pointer font-bold text-lg select-none" title="Thêm mới cột" onclick="openCreateNewColumnConfig()">
+          +
+        </th>
+      </tr>`;
+      thead.innerHTML = headHtml;
+
+      // 2. Render Table Rows
+      let bodyHtml = '';
+      tab.rows.forEach((row, rIdx) => {
+        bodyHtml += `
+          <tr class="hover:bg-gray-50/80 transition group">
+            <td class="p-2 text-center">
+              <button type="button" onclick="deleteTableRow(${rIdx})" class="text-gray-300 group-hover:text-red-400 hover:text-red-600 transition p-1" title="Xóa dòng">
+                <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </td>
+        `;
+
+        tab.columns.forEach(col => {
+          const val = row[col.id];
+
+          // 1. KIỂU SƠ ĐỒ RĂNG (TOOTH CHART)
+          if (col.type === 'tooth-chart') {
+            const teeth = Array.isArray(val) ? val : (val ? [val] : []);
+            bodyHtml += `
+              <td class="p-2.5">
+                <div onclick="openToothChartModal(${rIdx}, '${col.id}')" class="wisere-input min-h-[38px] h-auto py-1 flex items-center justify-between cursor-pointer hover:border-indigo-500 shadow-2xs bg-white group/cell">
+                  <div class="flex flex-wrap items-center gap-1 max-w-[200px]">
+                    ${teeth.length > 0
+                      ? teeth.map(t => `
+                          <span class="inline-flex items-center px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-bold">
+                            ${t}
+                          </span>
+                        `).join('')
+                      : `<span class="text-gray-400 flex items-center gap-1.5"><span class="text-xs">🦷</span> -- Chọn răng --</span>`
+                    }
+                  </div>
+                  <div class="flex items-center gap-1 text-gray-400 group-hover/cell:text-indigo-600 transition">
+                    <span class="text-[10px] font-mono">${teeth.length > 0 ? `(${teeth.length})` : ''}</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </div>
+                </div>
+              </td>
+            `;
+          }
+          // 2. KIỂU VĂN BẢN
+          else if (col.type === 'text') {
+            bodyHtml += `
+              <td class="p-2.5">
+                <input type="text" value="${val || ''}" onchange="updateCellVal(${rIdx}, '${col.id}', this.value)" class="wisere-input" placeholder="Nhập...">
+              </td>
+            `;
+          } 
+          // 3. KIỂU SỐ
+          else if (col.type === 'number') {
+            bodyHtml += `
+              <td class="p-2.5">
+                <input type="number" value="${val || ''}" onchange="updateCellVal(${rIdx}, '${col.id}', this.value)" class="wisere-input" placeholder="0">
+              </td>
+            `;
+          } 
+          // 4. KIỂU NGÀY
+          else if (col.type === 'date') {
+            bodyHtml += `
+              <td class="p-2.5">
+                <input type="date" value="${val || ''}" onchange="updateCellVal(${rIdx}, '${col.id}', this.value)" class="wisere-input cursor-pointer">
+              </td>
+            `;
+          } 
+          // 5. KIỂU NGÀY GIỜ
+          else if (col.type === 'datetime') {
+            bodyHtml += `
+              <td class="p-2.5">
+                <input type="datetime-local" value="${val || ''}" onchange="updateCellVal(${rIdx}, '${col.id}', this.value)" class="wisere-input cursor-pointer">
+              </td>
+            `;
+          } 
+          // 6. KIỂU CÓ / KHÔNG (BOOLEAN)
+          else if (col.type === 'boolean') {
+            bodyHtml += `
+              <td class="p-2.5 text-center">
+                <input type="checkbox" ${val ? 'checked' : ''} onchange="updateCellVal(${rIdx}, '${col.id}', this.checked)" class="w-4 h-4 rounded text-cyan-600 border-gray-300 focus:ring-cyan-500 cursor-pointer">
+              </td>
+            `;
+          } 
+          // 7. KIỂU CHỌN MỘT (SINGLE-SELECT)
+          else if (col.type === 'single-select') {
+            const hasVal = val && val.value;
+            const options = col.options || [];
+            bodyHtml += `
+              <td class="p-2.5 relative">
+                <div onclick="toggleSingleDropdownCell(${rIdx}, '${col.id}')" class="wisere-input flex items-center justify-between cursor-pointer hover:border-cyan-500 shadow-2xs bg-white">
+                  <div class="flex items-center gap-2 overflow-hidden">
+                    ${hasVal ? `<span class="w-2.5 h-2.5 rounded-full ${val.color || 'bg-cyan-500'} flex-shrink-0"></span>` : ''}
+                    <span class="${hasVal ? 'font-medium text-gray-800' : 'text-gray-400'} truncate">${hasVal ? val.value : '-- Chọn --'}</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    ${hasVal ? `<span onclick="event.stopPropagation(); clearSingleCell(${rIdx}, '${col.id}')" class="text-gray-300 hover:text-gray-600 text-xs px-1">&times;</span>` : ''}
+                    <svg class="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  </div>
+                </div>
+
+                <div id="pop-single-${rIdx}-${col.id}" class="hidden absolute top-12 left-2.5 z-30 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-1.5 text-xs animate-in fade-in duration-100">
+                  <div class="px-2.5 pb-2 pt-1 border-b border-gray-100">
+                    <input type="text" placeholder="Tìm kiếm..." class="w-full px-2 py-1 text-xs border border-gray-200 rounded focus:border-cyan-500 focus:outline-none">
+                  </div>
+                  <div class="max-h-48 overflow-y-auto custom-scroll py-1">
+                    ${options.length === 0 ? `<div class="px-3 py-2 text-gray-400 text-center">Chưa có tùy chọn</div>` : ''}
+                    ${options.map(opt => `
+                      <div onclick="setSingleCellValue(${rIdx}, '${col.id}', '${opt.name}', '${opt.color}')" class="px-3 py-1.5 hover:bg-cyan-50 cursor-pointer flex items-center gap-2 text-gray-700">
+                        <span class="w-2.5 h-2.5 rounded-full ${opt.color}"></span>
+                        <span>${opt.name}</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              </td>
+            `;
+          } 
+          // 8. KIỂU CHỌN NHIỀU (MULTI-SELECT)
+          else if (col.type === 'multi-select') {
+            const tags = Array.isArray(val) ? val : [];
+            const options = col.options || [];
+            bodyHtml += `
+              <td class="p-2.5 relative">
+                <div onclick="toggleMultiDropdownCell(${rIdx}, '${col.id}')" class="wisere-input min-h-[38px] h-auto py-1 flex items-center justify-between cursor-pointer hover:border-indigo-500 shadow-2xs bg-white">
+                  <div class="flex flex-wrap items-center gap-1.5 max-w-[210px]">
+                    ${tags.length > 0 
+                      ? tags.map(t => `
+                          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-medium">
+                            ${t}
+                            <span onclick="event.stopPropagation(); removeMultiTagCell(${rIdx}, '${col.id}', '${t}')" class="hover:text-indigo-900 text-xs cursor-pointer font-bold">&times;</span>
+                          </span>
+                        `).join('')
+                      : `<span class="text-gray-400">-- Chọn nhiều --</span>`
+                    }
+                  </div>
+                  <svg class="w-3.5 h-3.5 text-gray-400 flex-shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+
+                <div id="pop-multi-${rIdx}-${col.id}" class="hidden absolute top-12 left-2.5 z-30 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 text-xs animate-in fade-in duration-100">
+                  <div class="px-3 pb-2 border-b border-gray-100 flex items-center justify-between">
+                    <span class="font-semibold text-gray-800">Chọn các mục</span>
+                    <span class="text-[11px] text-indigo-600 font-medium">Đã chọn: ${tags.length}</span>
+                  </div>
+                  <div class="max-h-48 overflow-y-auto custom-scroll p-1 space-y-0.5">
+                    ${options.length === 0 ? `<div class="px-3 py-2 text-gray-400 text-center">Chưa có tùy chọn</div>` : ''}
+                    ${options.map(opt => {
+                      const isChecked = tags.includes(opt.name);
+                      return `
+                        <label class="flex items-center gap-2.5 px-2.5 py-1.5 rounded hover:bg-gray-50 cursor-pointer text-gray-800">
+                          <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleMultiCheck(${rIdx}, '${col.id}', '${opt.name}', this.checked)" class="w-4 h-4 rounded text-indigo-600 border-gray-300">
+                          <span>${opt.name}</span>
+                        </label>
+                      `;
+                    }).join('')}
+                  </div>
+                  <div class="pt-2 px-2.5 border-t border-gray-100 flex justify-end">
+                    <button type="button" onclick="toggleMultiDropdownCell(${rIdx}, '${col.id}')" class="px-3 py-1 rounded bg-indigo-600 text-white font-medium hover:bg-indigo-700">Đóng</button>
+                  </div>
+                </div>
+              </td>
+            `;
+          }
+        });
+
+        bodyHtml += `<td></td></tr>`;
+      });
+
+      tbody.innerHTML = bodyHtml;
+    }
+
+    // HANDLERS CELL VALUE UPDATES
+    function updateCellVal(rowIdx, colId, newVal) {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && tab.rows[rowIdx]) tab.rows[rowIdx][colId] = newVal;
+    }
+
+    function toggleSingleDropdownCell(rowIdx, colId) {
+      const pop = document.getElementById(`pop-single-${rowIdx}-${colId}`);
+      if (pop) pop.classList.toggle('hidden');
+    }
+
+    function setSingleCellValue(rowIdx, colId, text, colorClass) {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && tab.rows[rowIdx]) {
+        tab.rows[rowIdx][colId] = { value: text, color: colorClass };
+        renderActiveTable();
+      }
+    }
+
+    function clearSingleCell(rowIdx, colId) {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && tab.rows[rowIdx]) {
+        tab.rows[rowIdx][colId] = null;
+        renderActiveTable();
+      }
+    }
+
+    function toggleMultiDropdownCell(rowIdx, colId) {
+      const pop = document.getElementById(`pop-multi-${rowIdx}-${colId}`);
+      if (pop) pop.classList.toggle('hidden');
+    }
+
+    function toggleMultiCheck(rowIdx, colId, optName, isChecked) {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && tab.rows[rowIdx]) {
+        let list = tab.rows[rowIdx][colId] || [];
+        if (isChecked && !list.includes(optName)) list.push(optName);
+        else if (!isChecked) list = list.filter(i => i !== optName);
+        tab.rows[rowIdx][colId] = list;
+        renderActiveTable();
+      }
+    }
+
+    function removeMultiTagCell(rowIdx, colId, optName) {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && tab.rows[rowIdx]) {
+        let list = tab.rows[rowIdx][colId] || [];
+        tab.rows[rowIdx][colId] = list.filter(i => i !== optName);
+        renderActiveTable();
+      }
+    }
+
+    function addNewTableRow() {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab) {
+        let newRow = {};
+        tab.columns.forEach(col => {
+          if (col.type === 'tooth-chart') newRow[col.id] = [];
+          else if (col.type === 'multi-select') newRow[col.id] = [];
+          else if (col.type === 'boolean') newRow[col.id] = false;
+          else if (col.type === 'single-select') newRow[col.id] = null;
+          else newRow[col.id] = '';
+        });
+        tab.rows.push(newRow);
+        renderActiveTable();
+      }
+    }
+
+    function deleteTableRow(rowIdx) {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (tab && tab.rows) {
+        tab.rows.splice(rowIdx, 1);
+        renderActiveTable();
+      }
+    }
+
+    // ========================================================
+    // QUẢN LÝ CẤU HÌNH CỘT: THÊM MỚI [+] & CHỈNH SỬA
+    // ========================================================
+    let currentConfigOptions = [];
+
+    function openCreateNewColumnConfig() {
+      isCreatingNewColumn = true;
+      currentConfigColId = null;
+
+      const modal = document.getElementById('column-config-modal');
+      const title = document.getElementById('cfg-modal-header-title');
+      const nameInput = document.getElementById('cfg-col-name');
+      const typeSelect = document.getElementById('cfg-col-type');
+      const widthInput = document.getElementById('cfg-col-width');
+      const optSection = document.getElementById('cfg-options-wrapper');
+      const toothInfo = document.getElementById('cfg-tooth-info-wrapper');
+      const deleteBtn = document.getElementById('cfg-btn-delete-col');
+
+      title.innerText = 'Thêm mới cột';
+      nameInput.value = '';
+      typeSelect.value = 'tooth-chart';
+      widthInput.value = '160';
+      deleteBtn.innerText = 'Hủy';
+      deleteBtn.className = 'px-5 py-2 border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-md text-xs font-medium transition cursor-pointer';
+
+      toothInfo.classList.remove('hidden');
+      optSection.classList.add('hidden');
+
+      modal.classList.remove('hidden');
+      setTimeout(() => nameInput.focus(), 50);
+    }
+
+    function openEditColumnConfig(colId) {
+      isCreatingNewColumn = false;
+      currentConfigColId = colId;
+
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (!tab) return;
+      const col = tab.columns.find(c => c.id === colId);
+      if (!col) return;
+
+      const modal = document.getElementById('column-config-modal');
+      const title = document.getElementById('cfg-modal-header-title');
+      const nameInput = document.getElementById('cfg-col-name');
+      const typeSelect = document.getElementById('cfg-col-type');
+      const widthInput = document.getElementById('cfg-col-width');
+      const optSection = document.getElementById('cfg-options-wrapper');
+      const toothInfo = document.getElementById('cfg-tooth-info-wrapper');
+      const deleteBtn = document.getElementById('cfg-btn-delete-col');
+
+      title.innerText = 'Cấu hình cột';
+      nameInput.value = col.name;
+      typeSelect.value = col.type;
+      widthInput.value = col.width || '150';
+      deleteBtn.innerText = 'Xóa';
+      deleteBtn.className = 'px-5 py-2 border border-red-500 text-red-500 hover:bg-red-50 rounded-md text-xs font-medium transition cursor-pointer';
+
+      if (col.type === 'tooth-chart') {
+        toothInfo.classList.remove('hidden');
+        optSection.classList.add('hidden');
+      } else if (col.type === 'single-select' || col.type === 'multi-select') {
+        toothInfo.classList.add('hidden');
+        currentConfigOptions = JSON.parse(JSON.stringify(col.options || []));
+        optSection.classList.remove('hidden');
+        renderConfigOptionsList();
+      } else {
+        toothInfo.classList.add('hidden');
+        currentConfigOptions = [];
+        optSection.classList.add('hidden');
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeColumnConfig() {
+      document.getElementById('column-config-modal').classList.add('hidden');
+    }
+
+    function handleDataTypeChange(val) {
+      const optSection = document.getElementById('cfg-options-wrapper');
+      const toothInfo = document.getElementById('cfg-tooth-info-wrapper');
+      const widthInput = document.getElementById('cfg-col-width');
+
+      if (val === 'tooth-chart') {
+        toothInfo.classList.remove('hidden');
+        optSection.classList.add('hidden');
+        widthInput.value = '160';
+      } else if (val === 'single-select' || val === 'multi-select') {
+        toothInfo.classList.add('hidden');
+        optSection.classList.remove('hidden');
+        widthInput.value = val === 'single-select' ? '190' : '230';
+        if (currentConfigOptions.length === 0) {
+          currentConfigOptions = [
+            { name: 'Mục lựa chọn A', color: 'bg-cyan-500' },
+            { name: 'Mục lựa chọn B', color: 'bg-emerald-500' }
+          ];
+        }
+        renderConfigOptionsList();
+      } else {
+        toothInfo.classList.add('hidden');
+        optSection.classList.add('hidden');
+        if (val === 'boolean') widthInput.value = '120';
+        else if (val === 'date') widthInput.value = '150';
+        else if (val === 'datetime') widthInput.value = '180';
+        else widthInput.value = '160';
+      }
+    }
+
+    function renderConfigOptionsList() {
+      const container = document.getElementById('cfg-options-list');
+      container.innerHTML = currentConfigOptions.map((opt, idx) => `
+        <div class="flex items-center justify-between p-2 bg-white rounded border border-gray-200 shadow-2xs group hover:border-gray-300">
+          <div class="flex items-center gap-2">
+            <span class="cursor-grab text-gray-300 hover:text-gray-500 select-none">⠿</span>
+            <span class="w-2.5 h-2.5 rounded-full ${opt.color} flex-shrink-0"></span>
+            <span class="font-medium text-gray-800 opt-item-name">${opt.name}</span>
+          </div>
+          <button type="button" onclick="removeOptionRow(${idx})" class="p-1 text-gray-300 hover:text-red-500 transition" title="Xóa">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+          </button>
+        </div>
+      `).join('');
+      document.getElementById('cfg-opt-count').innerText = `${currentConfigOptions.length} tùy chọn`;
+    }
+
+    function setOptionColor(colorClass) {
+      activeBadgeColor = colorClass;
+      document.getElementById('cfg-color-indicator').className = `w-9 h-9 rounded-md border border-gray-300 flex items-center justify-center ${colorClass} shadow-2xs`;
+    }
+
+    function addOptionRow() {
+      const input = document.getElementById('cfg-new-opt-input');
+      const val = input.value.trim();
+      if (!val) return;
+
+      currentConfigOptions.push({
+        name: val,
+        color: activeBadgeColor
+      });
+      input.value = '';
+      renderConfigOptionsList();
+    }
+
+    function removeOptionRow(idx) {
+      currentConfigOptions.splice(idx, 1);
+      renderConfigOptionsList();
+    }
+
+    function saveColumnConfig() {
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (!tab) return;
+
+      const colName = document.getElementById('cfg-col-name').value.trim();
+      if (!colName) {
+        alert('Vui lòng nhập tên cột.');
+        return;
+      }
+      const colType = document.getElementById('cfg-col-type').value;
+      const colWidth = document.getElementById('cfg-col-width').value || '160';
+
+      if ((colType === 'single-select' || colType === 'multi-select') && currentConfigOptions.length === 0) {
+        alert('Vui lòng thêm ít nhất 1 tùy chọn cho cột.');
+        return;
+      }
+
+      if (isCreatingNewColumn) {
+        const newColId = 'col-' + Date.now();
+        const newCol = {
+          id: newColId,
+          name: colName,
+          type: colType,
+          width: colWidth,
+          options: (colType === 'single-select' || colType === 'multi-select') ? JSON.parse(JSON.stringify(currentConfigOptions)) : []
+        };
+        tab.columns.push(newCol);
+
+        tab.rows.forEach(r => {
+          if (colType === 'tooth-chart') r[newColId] = [];
+          else if (colType === 'multi-select') r[newColId] = [];
+          else if (colType === 'boolean') r[newColId] = false;
+          else if (colType === 'single-select') r[newColId] = null;
+          else r[newColId] = '';
+        });
+      } else {
+        const col = tab.columns.find(c => c.id === currentConfigColId);
+        if (col) {
+          col.name = colName;
+          col.type = colType;
+          col.width = colWidth;
+          if (colType === 'single-select' || colType === 'multi-select') {
+            col.options = JSON.parse(JSON.stringify(currentConfigOptions));
+          } else {
+            col.options = [];
+          }
+        }
+      }
+
+      closeColumnConfig();
+      renderActiveTable();
+    }
+
+    function deleteCurrentColumn() {
+      if (isCreatingNewColumn) {
+        closeColumnConfig();
+        return;
+      }
+      const tab = tabsData.find(t => t.id === currentActiveTabId);
+      if (!tab || !currentConfigColId) return;
+
+      if (confirm('Bạn có chắc chắn muốn xóa cột này?')) {
+        tab.columns = tab.columns.filter(c => c.id !== currentConfigColId);
+        tab.rows.forEach(r => {
+          delete r[currentConfigColId];
+        });
+        closeColumnConfig();
+        renderActiveTable();
+      }
+    }
+
+    // THÊM TAB MỚI MODAL
+    function openNewTabModal() {
+      const modal = document.getElementById('new-tab-modal');
+      const input = document.getElementById('new-tab-name-input');
+      input.value = `Bảng thu thập lần ${tabsData.length + 1}`;
+      modal.classList.remove('hidden');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeNewTabModal() {
+      document.getElementById('new-tab-modal').classList.add('hidden');
+    }
+
+    function submitCreateNewTab() {
+      const input = document.getElementById('new-tab-name-input');
+      const name = input.value.trim();
+      if (!name) {
+        alert('Vui lòng nhập tên bảng thu thập.');
+        return;
+      }
+      const template = document.getElementById('new-tab-template-select').value;
+      const newId = 'tab-' + Date.now();
+
+      let newTabObj = {
+        id: newId,
+        name: name,
+        columns: [],
+        rows: []
+      };
+
+      if (template === 'clone') {
+        newTabObj.columns = [
+          { id: 'nc1', name: 'Vị trí răng', type: 'tooth-chart', width: '160' },
+          { id: 'nc2', name: 'Phân loại lâm sàng', type: 'single-select', width: '190',
+            options: [
+              { name: 'Độ I (Nhẹ)', color: 'bg-emerald-500' },
+              { name: 'Độ II (Trung bình)', color: 'bg-amber-500' },
+              { name: 'Độ III (Nặng)', color: 'bg-rose-500' }
+            ]
+          },
+          { id: 'nc3', name: 'Thuốc chỉ định', type: 'multi-select', width: '220',
+            options: [
+              { name: 'Kháng sinh Augmentin', color: 'bg-blue-500' },
+              { name: 'Giảm đau Paracetamol', color: 'bg-cyan-500' }
+            ]
+          },
+          { id: 'nc4', name: 'Hẹn tái khám', type: 'boolean', width: '120' }
+        ];
+        newTabObj.rows = [
+          { nc1: ['16', '17'], nc2: { value: 'Độ I (Nhẹ)', color: 'bg-emerald-500' }, nc3: ['Kháng sinh Augmentin'], nc4: true },
+          { nc1: [], nc2: null, nc3: [], nc4: false },
+          { nc1: [], nc2: null, nc3: [], nc4: false }
+        ];
+      } else {
+        newTabObj.columns = [
+          { id: 'nc1', name: 'Vị trí răng', type: 'tooth-chart', width: '160' },
+          { id: 'nc2', name: 'Tình trạng', type: 'single-select', width: '180', options: [{ name: 'Bình thường', color: 'bg-emerald-500' }] },
+          { id: 'nc3', name: 'Có chỉ định', type: 'boolean', width: '120' }
+        ];
+        newTabObj.rows = [
+          { nc1: [], nc2: null, nc3: false },
+          { nc1: [], nc2: null, nc3: false }
+        ];
+      }
+
+      tabsData.push(newTabObj);
+      currentActiveTabId = newId;
+      closeNewTabModal();
+      renderTabs();
+      renderActiveTable();
+    }
+
+    // INIT TRANG
+    window.addEventListener('DOMContentLoaded', () => {
+      renderTabs();
+      renderActiveTable();
+    });
+  </script>
+</body>
+</html>
