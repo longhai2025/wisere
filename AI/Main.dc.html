@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Wisere — Bệnh án với AI ghi bằng giọng nói</title>
+<script src="./_runtime/react.js"></script>
+<script src="./_runtime/react-dom.js"></script>
+<script src="./_runtime/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Sans+3:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#EEF0F5}
+button{font-family:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid #7D8BFE;outline-offset:2px}
+@keyframes wpulse{0%{box-shadow:0 0 0 0 rgba(179,38,30,.45)}100%{box-shadow:0 0 0 14px rgba(179,38,30,0)}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #EEF0F5; color: #414361; font-family: 'Inter', Arial, sans-serif; font-size: 15px; line-height: 1.5">
+
+<div style="background: #FFFFFF; border-bottom: 1px solid #E1DDE9; height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px">
+<span style="font-size: 18px; color: #414361" aria-hidden="true">⤢</span>
+<span style="font-family: 'Source Sans 3', Arial, sans-serif; font-size: 22px; font-weight: 700; color: #1B1C4A">Chi Tiết Khách Hàng</span>
+<span style="font-size: 20px; color: #414361" aria-hidden="true">✕</span>
+</div>
+
+<div style="background: #FFFFFF; padding: 20px 28px 0">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap">
+<span style="width: 48px; height: 48px; border-radius: 50%; background: #EEF0FF; color: #3D4BD8; font-weight: 700; display: inline-flex; align-items: center; justify-content: center">NA</span>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 17px; font-weight: 700; color: #1B1C4A">Nguyễn Văn A</span>
+<span style="font-size: 13px; color: #414361">BN-0001 · Nam · 42 tuổi</span>
+</div>
+<div style="display: flex; gap: 10px; margin-left: 12px">
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #F5F7FB; display: inline-flex; align-items: center; justify-content: center" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#414361" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg></span>
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #F5F7FB; display: inline-flex; align-items: center; justify-content: center" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#414361" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"></path></svg></span>
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #F5F7FB; display: inline-flex; align-items: center; justify-content: center" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#414361" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"></path></svg></span>
+<span style="width: 40px; height: 40px; border-radius: 50%; background: #F5F7FB; display: inline-flex; align-items: center; justify-content: center" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#414361" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></span>
+</div>
+<span style="font-size: 12px; font-weight: 600; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 3px 10px">Dữ liệu minh họa</span>
+</div>
+<div style="display: flex; gap: 40px; text-align: right">
+<div><div style="font-size: 22px; font-weight: 700; color: #1B1C4A">2.500.000 đ</div><div style="font-size: 13px; color: #414361">Doanh số</div></div>
+<div><div style="font-size: 22px; font-weight: 700; color: #B3261E">0 đ</div><div style="font-size: 13px; color: #414361">Công nợ</div></div>
+<div><div style="font-size: 22px; font-weight: 700; color: #1B1C4A">500.000 đ</div><div style="font-size: 13px; color: #414361">Số dư ví</div></div>
+</div>
+</div>
+<nav style="display: flex; gap: 6px; padding: 14px 0 16px; flex-wrap: wrap" aria-label="Các tab khách hàng">
+<span style="padding: 6px 14px; font-size: 15px; color: #414361">Thông tin</span>
+<span aria-current="page" style="padding: 6px 16px; font-size: 15px; font-weight: 600; color: #FFFFFF; background: #4E60FD; border-radius: 999px">Bệnh án</span>
+<span style="padding: 6px 14px; font-size: 15px; color: #414361">Giao dịch</span>
+<span style="padding: 6px 14px; font-size: 15px; color: #414361">Hóa đơn</span>
+<span style="padding: 6px 14px; font-size: 15px; color: #414361">Bảo hành</span>
+<span style="padding: 6px 14px; font-size: 15px; color: #414361">Hoạt động</span>
+<span style="padding: 6px 14px; font-size: 15px; color: #414361">Lịch hẹn</span>
+</nav>
+</div>
+
+<main style="padding: 20px 28px 24px; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 22px; flex-wrap: wrap">
+<span style="font-weight: 700; color: #1B1C4A; border-bottom: 3px solid #1B1C4A; padding-bottom: 6px">Đợt 3</span>
+<span style="color: #6B6D88; padding-bottom: 9px">Đợt 2 ✓</span>
+<span style="color: #6B6D88; padding-bottom: 9px">Đợt 1 ✓</span>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<span style="background: #FFFFFF; border-radius: 4px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: #3D4BD8">+ Thêm đợt điều trị</span>
+<span style="background: #FFFFFF; border-radius: 4px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: #1B1C4A">Chỉnh nha</span>
+<span style="background: #FFFFFF; border-radius: 4px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: #1B1C4A">Lịch sử</span>
+<span style="background: #FFFFFF; border-radius: 4px; padding: 8px 14px; font-size: 14px; font-weight: 600; color: #1B1C4A">Bệnh sử</span>
+</div>
+</div>
+
+<section id="sec-0" style="background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 2px rgba(27,28,74,0.06); padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px" aria-label="Thông tin khám bệnh">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; font-size: 22px; font-weight: 700; color: #1B1C4A">Thông tin khám bệnh</h2>
+<sc-if value="{{S0.saved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 2px 8px">{{S0.savedLabel}}</span></sc-if>
+<span style="flex: 1"></span>
+<button type="button" onClick="{{S0.start}}" style="{{S0.micBtn}}" aria-label="Ghi phần Thông tin khám bệnh bằng giọng nói"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>{{S0.micLabel}}</button>
+<span style="font-size: 14px; color: #414361" aria-hidden="true">⇕</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-family: 'Source Sans 3', Arial, sans-serif; font-size: 20px; font-weight: 700; color: #1B1C4A">Lý do vào viện, vấn đề sức khỏe</span>
+<sc-if value="{{F.lydo.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.lydo.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.lydo.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.lydo.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.lydo.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.lydo.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.lydo.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.lydo.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.lydo.editLabel}}</button>
+</span></sc-if>
+</div>
+
+<sc-if value="{{F.lydo.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.lydo.label}}" value="{{F.lydo.value}}" onChange="{{F.lydo.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.lydo.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.lydo.box}}"><span style="{{F.lydo.textStyle}}">{{F.lydo.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.lydo.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.lydo.quote}}”</span></sc-if>
+</div>
+<h3 style="margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; font-size: 20px; font-weight: 700; color: #1B1C4A">Hỏi bệnh</h3>
+<div style="border: 1px solid #E1DDE9; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Quá trình bệnh lý và diễn biến lâm sàng</span>
+<sc-if value="{{F.quatrinh.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.quatrinh.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.quatrinh.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.quatrinh.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.quatrinh.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.quatrinh.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.quatrinh.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.quatrinh.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.quatrinh.editLabel}}</button>
+</span></sc-if>
+</div>
+
+<sc-if value="{{F.quatrinh.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.quatrinh.label}}" value="{{F.quatrinh.value}}" onChange="{{F.quatrinh.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.quatrinh.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.quatrinh.box}}"><span style="{{F.quatrinh.textStyle}}">{{F.quatrinh.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.quatrinh.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.quatrinh.quote}}”</span></sc-if>
+</div></div>
+<div style="border: 1px solid #E1DDE9; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+<span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Tiền sử bệnh</span>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-size: 13px; font-weight: 600; color: #1B1C4A">Dị ứng</span>
+<sc-if value="{{F.diung.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.diung.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.diung.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.diung.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.diung.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.diung.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.diung.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.diung.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.diung.editLabel}}</button>
+</span></sc-if>
+</div>
+
+<sc-if value="{{F.diung.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.diung.label}}" value="{{F.diung.value}}" onChange="{{F.diung.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.diung.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.diung.box}}"><span style="{{F.diung.textStyle}}">{{F.diung.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.diung.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.diung.quote}}”</span></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-size: 13px; font-weight: 600; color: #1B1C4A">Bản thân</span>
+<sc-if value="{{F.banthan.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.banthan.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.banthan.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.banthan.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.banthan.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.banthan.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.banthan.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.banthan.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.banthan.editLabel}}</button>
+</span></sc-if>
+</div>
+
+<sc-if value="{{F.banthan.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.banthan.label}}" value="{{F.banthan.value}}" onChange="{{F.banthan.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.banthan.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.banthan.box}}"><span style="{{F.banthan.textStyle}}">{{F.banthan.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.banthan.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.banthan.quote}}”</span></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-size: 13px; font-weight: 600; color: #1B1C4A">Gia đình</span>
+<sc-if value="{{F.giadinh.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.giadinh.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.giadinh.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.giadinh.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.giadinh.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.giadinh.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.giadinh.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.giadinh.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.giadinh.editLabel}}</button>
+</span></sc-if>
+</div>
+
+<sc-if value="{{F.giadinh.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.giadinh.label}}" value="{{F.giadinh.value}}" onChange="{{F.giadinh.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.giadinh.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.giadinh.box}}"><span style="{{F.giadinh.textStyle}}">{{F.giadinh.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.giadinh.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.giadinh.quote}}”</span></sc-if>
+</div>
+</div>
+</div>
+<h3 style="margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; font-size: 20px; font-weight: 700; color: #1B1C4A">Khám bệnh</h3>
+<div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 16px">
+<div style="border: 1px solid #E1DDE9; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Khám toàn thân</span>
+<sc-if value="{{F.toanthan.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.toanthan.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.toanthan.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.toanthan.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.toanthan.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.toanthan.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.toanthan.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.toanthan.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.toanthan.editLabel}}</button>
+</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; font-size: 13px; color: #414361">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.toanthan.r1}}"></span>Bình thường</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.toanthan.r2}}"></span>Bất thường, ghi rõ:</span></div>
+<sc-if value="{{F.toanthan.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.toanthan.label}}" value="{{F.toanthan.value}}" onChange="{{F.toanthan.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.toanthan.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.toanthan.box}}"><span style="{{F.toanthan.textStyle}}">{{F.toanthan.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.toanthan.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.toanthan.quote}}”</span></sc-if>
+</div></div>
+<div style="border: 1px solid #E1DDE9; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+<span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Khám chuyên khoa</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px">
+<sc-if value="{{F.ngoaimieng.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.ngoaimieng.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.ngoaimieng.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.ngoaimieng.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.ngoaimieng.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.ngoaimieng.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.ngoaimieng.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.ngoaimieng.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.ngoaimieng.editLabel}}</button>
+</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; font-size: 13px; color: #414361"><span style="font-size: 13px; font-weight: 600; color: #1B1C4A">Ngoài miệng:</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.ngoaimieng.r1}}"></span>Bình thường</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.ngoaimieng.r2}}"></span>Bất thường, ghi rõ:</span></div>
+<sc-if value="{{F.ngoaimieng.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.ngoaimieng.label}}" value="{{F.ngoaimieng.value}}" onChange="{{F.ngoaimieng.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.ngoaimieng.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.ngoaimieng.box}}"><span style="{{F.ngoaimieng.textStyle}}">{{F.ngoaimieng.text}}</span></div></sc-if>
+<sc-if value="{{F.ngoaimieng.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.ngoaimieng.quote}}”</span></sc-if>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px">
+<sc-if value="{{F.trongmieng.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.trongmieng.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.trongmieng.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.trongmieng.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.trongmieng.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.trongmieng.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.trongmieng.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.trongmieng.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.trongmieng.editLabel}}</button>
+</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; font-size: 13px; color: #414361"><span style="font-size: 13px; font-weight: 600; color: #1B1C4A">Trong miệng:</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.trongmieng.r1}}"></span>Bình thường</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.trongmieng.r2}}"></span>Bất thường, ghi rõ:</span></div>
+<sc-if value="{{F.trongmieng.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.trongmieng.label}}" value="{{F.trongmieng.value}}" onChange="{{F.trongmieng.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.trongmieng.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.trongmieng.box}}"><span style="{{F.trongmieng.textStyle}}">{{F.trongmieng.text}}</span></div></sc-if>
+<sc-if value="{{F.trongmieng.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.trongmieng.quote}}”</span></sc-if>
+</div>
+</div>
+</div>
+</div>
+<div style="border: 1px solid #E1DDE9; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0"><div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Các xét nghiệm cận lâm sàng</span>
+<sc-if value="{{F.canlam.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.canlam.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.canlam.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.canlam.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.canlam.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.canlam.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.canlam.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.canlam.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.canlam.editLabel}}</button>
+</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap; font-size: 13px; color: #414361">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.canlam.r1}}"></span>Có, ghi rõ:</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="{{F.canlam.r2}}"></span>Không</span></div>
+<sc-if value="{{F.canlam.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.canlam.label}}" value="{{F.canlam.value}}" onChange="{{F.canlam.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.canlam.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.canlam.box}}"><span style="{{F.canlam.textStyle}}">{{F.canlam.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.canlam.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.canlam.quote}}”</span></sc-if>
+</div></div>
+<div style="display: flex; flex-direction: column; gap: 8px; min-width: 0">
+<div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-height: 30px"><span style="font-family: 'Source Sans 3', Arial, sans-serif; font-size: 20px; font-weight: 700; color: #1B1C4A">Tổng kết</span>
+<sc-if value="{{F.tongket.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.tongket.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.tongket.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.tongket.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.tongket.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if>
+<sc-if value="{{F.tongket.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.tongket.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.tongket.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.tongket.editLabel}}</button>
+</span></sc-if>
+</div>
+
+<sc-if value="{{F.tongket.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="{{F.tongket.label}}" value="{{F.tongket.value}}" onChange="{{F.tongket.onInput}}" style="font-family: inherit; font-size: 15px; color: #1B1C4A; border: 2px solid #4E60FD; border-radius: 4px; height: 44px; padding: 0 12px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.tongket.notEditing}}" hint-placeholder-val="{{true}}"><div style="{{F.tongket.box}}"><span style="{{F.tongket.textStyle}}">{{F.tongket.text}}</span><span style="font-size: 11px; color: #414361">▼</span></div></sc-if>
+<sc-if value="{{F.tongket.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic">Câu gốc: “{{F.tongket.quote}}”</span></sc-if>
+</div>
+<div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex-wrap: wrap">
+<sc-if value="{{S0.showPending}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #5A2BD9; font-weight: 600">{{S0.pendingText}}</span>
+<button type="button" onClick="{{S0.acceptAll}}" style="height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid #6F38F6; background: #FFFFFF; color: #5A2BD9; font-size: 14px; font-weight: 600; cursor: pointer">Chấp nhận tất cả gợi ý</button></sc-if>
+<button type="button" onClick="{{S0.cancel}}" style="height: 44px; width: 140px; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 15px; font-weight: 600; cursor: pointer">Hủy</button>
+<button type="button" onClick="{{S0.save}}" disabled="{{S0.noSave}}" style="{{S0.saveStyle}}">Lưu</button>
+</div>
+</section>
+
+<section id="sec-1" style="background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 2px rgba(27,28,74,0.06); padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px" aria-label="Chẩn đoán">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; font-size: 22px; font-weight: 700; color: #1B1C4A">Chẩn đoán</h2>
+<sc-if value="{{S1.saved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 2px 8px">{{S1.savedLabel}}</span></sc-if>
+<span style="flex: 1"></span>
+<button type="button" onClick="{{S1.start}}" style="{{S1.micBtn}}" aria-label="Ghi phần Chẩn đoán bằng giọng nói"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>{{S1.micLabel}}</button>
+<span style="font-size: 14px; color: #414361" aria-hidden="true">⇕</span>
+</div>
+<div style="background: #F5F7FB; border-radius: 4px; display: flex; align-items: center; gap: 16px; padding: 0 16px; height: 48px">
+<span style="font-weight: 600; color: #1B1C4A; border-bottom: 2px solid #4E60FD; line-height: 46px">Bệnh chính</span>
+<span style="color: #6B6D88; font-size: 14px">⌕ Tìm chẩn đoán và tình trạng</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="12"><div style="{{c.style}}"><span>{{c.label}}</span><span style="{{c.dot}}"></span></div></sc-for>
+</div>
+<div style="background: #F5F7FB; border-radius: 6px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap"><span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Bộ răng</span>
+<sc-if value="{{toothNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI: răng 36</span></sc-if></div>
+<div style="display: inline-flex; background: #E1DDE9; border-radius: 4px; padding: 2px"><span style="background: #4E60FD; color: #FFFFFF; border-radius: 3px; padding: 4px 12px; font-size: 13px; font-weight: 600">Người lớn</span><span style="padding: 4px 12px; font-size: 13px; color: #414361">Trẻ em</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{upper}}" as="t" hint-placeholder-count="16">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+<sc-if value="{{t.below}}" hint-placeholder-val="{{false}}"><span style="{{t.numStyle}}">{{t.num}}</span></sc-if>
+<svg width="34" height="56" viewBox="0 0 36 60" aria-hidden="true"><g transform="{{t.tf}}" fill="{{t.fill}}" stroke="{{t.stroke}}" stroke-width="1.6" stroke-linejoin="round">
+<sc-if value="{{t.molar}}" hint-placeholder-val="{{false}}"><path d="M8 32 L9 8 Q11 3 14 8 L16 28 L20 28 L22 8 Q25 3 27 8 L28 32 Z"></path></sc-if>
+<sc-if value="{{t.single}}" hint-placeholder-val="{{true}}"><path d="M13 32 L15 6 Q18 1 21 6 L23 32 Z"></path></sc-if>
+<path d="M5 38 Q5 28 18 28 Q31 28 31 38 L31 47 Q31 58 18 58 Q5 58 5 47 Z"></path>
+<path d="M9 43 Q18 38 27 43" fill="none"></path>
+</g></svg>
+<sc-if value="{{t.above}}" hint-placeholder-val="{{true}}"><span style="{{t.numStyle}}">{{t.num}}</span></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{lower}}" as="t" hint-placeholder-count="16">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+<sc-if value="{{t.below}}" hint-placeholder-val="{{false}}"><span style="{{t.numStyle}}">{{t.num}}</span></sc-if>
+<svg width="34" height="56" viewBox="0 0 36 60" aria-hidden="true"><g transform="{{t.tf}}" fill="{{t.fill}}" stroke="{{t.stroke}}" stroke-width="1.6" stroke-linejoin="round">
+<sc-if value="{{t.molar}}" hint-placeholder-val="{{false}}"><path d="M8 32 L9 8 Q11 3 14 8 L16 28 L20 28 L22 8 Q25 3 27 8 L28 32 Z"></path></sc-if>
+<sc-if value="{{t.single}}" hint-placeholder-val="{{true}}"><path d="M13 32 L15 6 Q18 1 21 6 L23 32 Z"></path></sc-if>
+<path d="M5 38 Q5 28 18 28 Q31 28 31 38 L31 47 Q31 58 18 58 Q5 58 5 47 Z"></path>
+<path d="M9 43 Q18 38 27 43" fill="none"></path>
+</g></svg>
+<sc-if value="{{t.above}}" hint-placeholder-val="{{true}}"><span style="{{t.numStyle}}">{{t.num}}</span></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 0; overflow-x: auto">
+<div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 10px"><span style="font-size: 15px; font-weight: 600; color: #1B1C4A">Lịch sử chẩn đoán</span></div>
+<div style="display: grid; grid-template-columns: 64px 64px minmax(140px, 1.3fr) minmax(100px, 1fr) minmax(90px, 0.9fr) 120px minmax(140px, 1.3fr) 104px 200px; gap: 8px; align-items: center; background: #F5F7FB; padding: 10px 12px; font-size: 13px; font-weight: 600; color: #414361; min-width: 1090px">
+<span>Số răng</span><span>Vùng</span><span>Bệnh chính</span><span>Bệnh kèm theo</span><span>Biến chứng</span><span>Trạng thái</span><span>Ghi chú</span><span>Ngày tạo</span><span></span></div>
+<div style="display: grid; grid-template-columns: 64px 64px minmax(140px, 1.3fr) minmax(100px, 1fr) minmax(90px, 0.9fr) 120px minmax(140px, 1.3fr) 104px 200px; gap: 8px; align-items: center; padding: 12px; border-bottom: 1px solid #E1DDE9; font-size: 14px; color: #1B1C4A; min-width: 1090px">
+<span>21</span><span>M</span><span>Sâu ngà - K02.1</span><span>-/-</span><span>-/-</span><span style="font-size: 13px"><span style="color: #0E7C66">●</span> Hoàn thành</span><span>Trám composite</span><span>15/05/2026</span><span></span></div>
+<sc-if value="{{dxShow}}" hint-placeholder-val="{{false}}">
+<div style="{{dxRow}}">
+<span>36</span><span>O</span><span style="font-weight: 600">Viêm tủy - K04.0</span><span>-/-</span><span>-/-</span><span style="font-size: 13px"><span style="color: #6B6D88">●</span> Mới</span>
+<sc-if value="{{F.dx.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="Ghi chú chẩn đoán" value="{{F.dx.value}}" onChange="{{F.dx.onInput}}" style="font-family: inherit; font-size: 14px; border: 2px solid #4E60FD; border-radius: 4px; height: 36px; padding: 0 8px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{F.dx.notEditing}}" hint-placeholder-val="{{true}}"><span>{{F.dx.text}}</span></sc-if>
+<span>22/11/2026</span>
+<span style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start"><sc-if value="{{F.dx.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{F.dx.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{F.dx.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{F.dx.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{F.dx.showNote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ chưa nhắc tới · AI giữ nguyên</span></sc-if><sc-if value="{{F.dx.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px; margin-left: auto">
+<button type="button" onClick="{{F.dx.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{F.dx.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{F.dx.editLabel}}</button>
+</span></sc-if></span>
+</div>
+<sc-if value="{{F.dx.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #6B6D88; font-style: italic; padding: 6px 12px">Câu gốc: “{{F.dx.quote}}”</span></sc-if>
+</sc-if>
+<span style="padding: 12px; font-size: 14px; font-weight: 600; color: #3D4BD8">+ Thêm lịch sử chẩn đoán</span>
+</div>
+<div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex-wrap: wrap">
+<sc-if value="{{S1.showPending}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #5A2BD9; font-weight: 600">{{S1.pendingText}}</span>
+<button type="button" onClick="{{S1.acceptAll}}" style="height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid #6F38F6; background: #FFFFFF; color: #5A2BD9; font-size: 14px; font-weight: 600; cursor: pointer">Chấp nhận tất cả gợi ý</button></sc-if>
+<button type="button" onClick="{{S1.cancel}}" style="height: 44px; width: 140px; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 15px; font-weight: 600; cursor: pointer">Hủy</button>
+<button type="button" onClick="{{S1.save}}" disabled="{{S1.noSave}}" style="{{S1.saveStyle}}">Lưu</button>
+</div>
+</section>
+
+<section id="sec-2" style="background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 2px rgba(27,28,74,0.06); padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px" aria-label="Kế hoạch điều trị">
+<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; font-size: 22px; font-weight: 700; color: #1B1C4A">Kế hoạch điều trị</h2>
+<sc-if value="{{S2.saved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 2px 8px">{{S2.savedLabel}}</span></sc-if>
+<span style="flex: 1"></span><span style="height: 40px; padding: 0 20px; border-radius: 4px; background: #4E60FD; color: #FFFFFF; font-size: 14px; font-weight: 600; display: inline-flex; align-items: center">Tạo mới</span>
+<button type="button" onClick="{{S2.start}}" style="{{S2.micBtn}}" aria-label="Ghi phần Kế hoạch điều trị bằng giọng nói"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg>{{S2.micLabel}}</button>
+<span style="font-size: 14px; color: #414361" aria-hidden="true">⇕</span>
+</div>
+<sc-if value="{{planEmpty}}" hint-placeholder-val="{{true}}"><span style="color: #414361">Không có thông tin</span></sc-if>
+<sc-if value="{{planShow}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; overflow-x: auto">
+<div style="display: grid; grid-template-columns: 56px 64px minmax(220px, 2fr) minmax(140px, 1fr) 130px 210px; gap: 8px; align-items: center; background: #F5F7FB; padding: 10px 12px; font-size: 13px; font-weight: 600; color: #414361; min-width: 900px"><span>Bước</span><span>Răng</span><span>Nội dung điều trị</span><span>Thời gian</span><span>Trạng thái</span><span></span></div>
+<sc-for list="{{plan}}" as="p" hint-placeholder-count="3">
+<div style="{{p.row}}">
+<span>{{p.step}}</span><span>36</span>
+<span style="display: flex; flex-direction: column; gap: 4px">
+<sc-if value="{{p.f.isEditing}}" hint-placeholder-val="{{false}}"><input type="text" aria-label="Nội dung điều trị" value="{{p.f.value}}" onChange="{{p.f.onInput}}" style="font-family: inherit; font-size: 14px; border: 2px solid #4E60FD; border-radius: 4px; height: 36px; padding: 0 8px; width: 100%; box-sizing: border-box"></sc-if>
+<sc-if value="{{p.f.notEditing}}" hint-placeholder-val="{{true}}"><span style="font-weight: 500">{{p.f.text}}</span></sc-if>
+<sc-if value="{{p.f.showQuote}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; color: #6B6D88; font-style: italic">Câu gốc: “{{p.f.quote}}”</span></sc-if>
+</span>
+<span>{{p.time}}</span>
+<span style="font-size: 13px"><span style="color: #B25E00">●</span> Chờ thực hiện</span>
+<span style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start">
+<sc-if value="{{p.f.tagAI}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #5A2BD9; background: #F1EBFF; border: 1px solid #D5C4FD; border-radius: 4px; padding: 0 8px; line-height: 20px">Gợi ý AI</span></sc-if>
+<sc-if value="{{p.f.tagOK}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã chấp nhận</span></sc-if>
+<sc-if value="{{p.f.tagEdited}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #3D4BD8; background: #EEF0FF; border-radius: 4px; padding: 0 8px; line-height: 20px">Bác sĩ đã sửa</span></sc-if>
+<sc-if value="{{p.f.tagSaved}}" hint-placeholder-val="{{false}}"><span style="font-size: 12px; font-weight: 700; color: #0E7C66; background: #E7F6F1; border-radius: 4px; padding: 0 8px; line-height: 20px">Đã lưu</span></sc-if>
+<sc-if value="{{p.f.canAct}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; gap: 6px">
+<button type="button" onClick="{{p.f.accept}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #0E7C66; background: #FFFFFF; color: #0E7C66; font-size: 13px; font-weight: 600; cursor: pointer">Chấp nhận</button>
+<button type="button" onClick="{{p.f.edit}}" style="height: 30px; padding: 0 12px; white-space: nowrap; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 13px; font-weight: 600; cursor: pointer">{{p.f.editLabel}}</button>
+</span></sc-if>
+</span>
+</div>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: #6B6D88">AI chỉ ghi lại chỉ định bác sĩ đọc: không tự đề xuất kế hoạch, không điền giá, không tạo lịch hẹn.</span>
+<div style="display: flex; align-items: center; justify-content: flex-end; gap: 12px; flex-wrap: wrap">
+<sc-if value="{{S2.showPending}}" hint-placeholder-val="{{false}}"><span style="font-size: 13px; color: #5A2BD9; font-weight: 600">{{S2.pendingText}}</span>
+<button type="button" onClick="{{S2.acceptAll}}" style="height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid #6F38F6; background: #FFFFFF; color: #5A2BD9; font-size: 14px; font-weight: 600; cursor: pointer">Chấp nhận tất cả gợi ý</button></sc-if>
+<button type="button" onClick="{{S2.cancel}}" style="height: 44px; width: 140px; border-radius: 4px; border: 1px solid #E1DDE9; background: #FFFFFF; color: #1B1C4A; font-size: 15px; font-weight: 600; cursor: pointer">Hủy</button>
+<button type="button" onClick="{{S2.save}}" disabled="{{S2.noSave}}" style="{{S2.saveStyle}}">Lưu</button>
+</div>
+</sc-if>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 8px; box-shadow: 0 1px 2px rgba(27,28,74,0.06); padding: 24px 28px; display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 16px" aria-label="Công tác điều trị">
+<div style="display: flex; align-items: center; gap: 12px"><h2 style="margin: 0; font-family: 'Source Sans 3', Arial, sans-serif; font-size: 22px; font-weight: 700; color: #1B1C4A">Công tác điều trị</h2><span style="font-size: 12px; color: #6B6D88; border: 1px dashed #B9BACB; border-radius: 4px; padding: 0 8px">Ngoài phạm vi MVP</span></div>
+<span style="color: #414361">Không có thông tin</span>
+</section>
+
+<p style="margin: 0; font-size: 13px; color: #6B6D88">Demo minh họa luồng MVP trong đề xuất của Wisere, dựng trên màn hình Bệnh án hiện tại của Wisere. Lời đọc và lệnh giọng nói được mô phỏng sẵn; không ghi âm thật và không có dữ liệu người bệnh thật. Trợ lý đọc thành tiếng nếu trình duyệt có giọng tiếng Việt. Có thể thay lệnh giọng nói bằng bàn đạp chân (đạp để ghi hoặc dừng, giữ để xác nhận).</p>
+</main>
+
+<div style="position: sticky; bottom: 0; z-index: 5; background: #FFFFFF; border-top: 1px solid #E1DDE9; box-shadow: 0 -4px 16px rgba(27,28,74,0.08); padding: 12px 28px">
+<div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap">
+<button type="button" onClick="{{dockMic}}" aria-label="Nhấn để ghi bằng giọng nói" style="{{micStyle}}"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"></rect><path d="M5 11a7 7 0 0 0 14 0"></path><path d="M12 18v3"></path></svg></button>
+<div style="display: flex; flex-direction: column; min-width: 220px" role="status">
+<span style="font-size: 12px; font-weight: 700; color: #5A2BD9; letter-spacing: 0.04em">TRỢ LÝ WISERE AI</span>
+<span style="display: flex; align-items: center; gap: 8px"><span style="{{dotStyle}}"></span><span style="font-size: 14px; font-weight: 600; color: #1B1C4A">{{statusText}}</span></span>
+</div>
+<div style="flex: 1 1 320px; min-width: 0; max-height: 66px; overflow-y: auto; background: #F5F7FB; border: 1px solid #E1DDE9; border-radius: 4px; padding: 8px 12px; font-size: 14px; color: {{heardColor}}">{{heard}}</div>
+<button type="button" onClick="{{dockWake}}" style="height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid #6F38F6; background: #FFFFFF; color: #5A2BD9; font-size: 14px; font-weight: 600; cursor: pointer">Mô phỏng “Hey Wisere”</button>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3"><span style="{{s.style}}">{{s.label}}</span></sc-for>
+</div>
+<sc-if value="{{allDone}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{reset}}" style="height: 44px; padding: 0 16px; border-radius: 4px; border: 1px solid #0E7C66; background: #E7F6F1; color: #0E7C66; font-size: 14px; font-weight: 600; cursor: pointer">Chạy lại demo</button></sc-if>
+</div>
+<sc-if value="{{showReply}}" hint-placeholder-val="{{false}}"><div role="status" style="margin-top: 10px; display: flex; gap: 10px; align-items: flex-start; background: #F1EBFF; border-left: 3px solid #6F38F6; border-radius: 4px; padding: 8px 12px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#5A2BD9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none; margin-top: 2px"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg>
+<span style="font-size: 14px; color: #1B1C4A"><strong style="color: #5A2BD9">Trợ lý đọc:</strong> {{reply}}</span></div></sc-if>
+<sc-if value="{{showCmds}}" hint-placeholder-val="{{false}}"><div style="margin-top: 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap">
+<span style="font-size: 12px; font-weight: 700; color: #6B6D88">{{cmdLabel}}</span>
+<sc-for list="{{cmds}}" as="c" hint-placeholder-count="4"><button type="button" onClick="{{c.run}}" style="{{c.style}}">“Hey Wisere, {{c.t}}”</button></sc-for>
+</div></sc-if>
+<sc-if value="{{showToast}}" hint-placeholder-val="{{false}}"><div style="margin-top: 8px; font-size: 13px; font-weight: 600; color: {{toastColor}}">{{toast}}</div></sc-if>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+const DEF = {
+  lydo: { label: 'Lý do vào viện, vấn đề sức khỏe', ph: 'Chọn' },
+  quatrinh: { label: 'Quá trình bệnh lý', ph: 'Chọn' },
+  diung: { label: 'Dị ứng', d: 'Không' },
+  banthan: { label: 'Bản thân', d: 'Không' },
+  giadinh: { label: 'Gia đình', d: 'Không' },
+  toanthan: { label: 'Khám toàn thân', ph: 'Chọn', r: 'a' },
+  ngoaimieng: { label: 'Ngoài miệng', ph: 'Nhập', r: 'a' },
+  trongmieng: { label: 'Trong miệng', ph: 'Nhập', r: 'a' },
+  canlam: { label: 'Cận lâm sàng', ph: 'Chọn', r: 'a' },
+  tongket: { label: 'Tổng kết', ph: 'Chọn' },
+  dx: { label: 'Ghi chú chẩn đoán', ph: '-/-' },
+  p1: { label: 'Bước 1', ph: '' }, p2: { label: 'Bước 2', ph: '' }, p3: { label: 'Bước 3', ph: '' }
+};
+const GROUPS = [
+  {
+    name: 'Thông tin khám bệnh',
+    fields: ['lydo', 'quatrinh', 'diung', 'banthan', 'giadinh', 'toanthan', 'ngoaimieng', 'trongmieng', 'canlam', 'tongket'],
+    transcript: 'Lý do đến khám: đau nhức răng hàm dưới bên trái ba ngày nay. Đau âm ỉ, tăng về đêm và khi nhai, chưa uống thuốc gì. Dị ứng penicillin, bản thân không có bệnh lý gì. Toàn thân bình thường, mạch bảy mươi tám, huyết áp một trăm hai mươi trên tám mươi. Ngoài miệng bình thường. Trong miệng: răng ba sáu sâu mặt nhai, lỗ sâu sát tủy, gõ đau. Cho chụp phim cận chóp răng ba sáu.',
+    ai: {
+      lydo: { v: 'Đau nhức răng hàm dưới bên trái 3 ngày', q: 'đau nhức răng hàm dưới bên trái ba ngày nay' },
+      quatrinh: { v: 'Đau âm ỉ, tăng về đêm và khi nhai; chưa dùng thuốc', q: 'đau âm ỉ, tăng về đêm và khi nhai, chưa uống thuốc gì' },
+      diung: { v: 'Penicillin', q: 'dị ứng penicillin' },
+      banthan: { v: 'Không', q: 'bản thân không có bệnh lý gì' },
+      toanthan: { v: 'Mạch 78 lần/phút · Huyết áp 120/80 mmHg', q: 'toàn thân bình thường, mạch bảy mươi tám, huyết áp một trăm hai mươi trên tám mươi', r: 'a' },
+      ngoaimieng: { v: '', q: 'ngoài miệng bình thường', r: 'a' },
+      trongmieng: { v: 'Răng 36 sâu mặt nhai, lỗ sâu sát tủy, gõ đau (+)', q: 'răng ba sáu sâu mặt nhai, lỗ sâu sát tủy, gõ đau', r: 'b' },
+      canlam: { v: 'X-quang cận chóp răng 36', q: 'cho chụp phim cận chóp răng ba sáu', r: 'a' }
+    }
+  },
+  {
+    name: 'Chẩn đoán',
+    fields: ['dx'],
+    transcript: 'Chẩn đoán: viêm tủy không hồi phục răng ba sáu, mặt nhai. Không có bệnh kèm theo, chưa có biến chứng.',
+    ai: { dx: { v: 'Viêm tủy không hồi phục', q: 'viêm tủy không hồi phục răng ba sáu, mặt nhai' } }
+  },
+  {
+    name: 'Kế hoạch điều trị',
+    fields: ['p1', 'p2', 'p3'],
+    transcript: 'Kế hoạch điều trị: điều trị tủy răng ba sáu, hai lần hẹn. Sau đó phục hồi mão sứ răng ba sáu. Hẹn tái khám sau một tuần.',
+    ai: {
+      p1: { v: 'Điều trị tủy răng 36 (2 lần hẹn)', q: 'điều trị tủy răng ba sáu, hai lần hẹn' },
+      p2: { v: 'Phục hồi mão sứ răng 36', q: 'sau đó phục hồi mão sứ răng ba sáu' },
+      p3: { v: 'Tái khám', q: 'hẹn tái khám sau một tuần' }
+    }
+  }
+];
+const PLAN_META = { p1: { step: '1', time: 'Bắt đầu đợt này' }, p2: { step: '2', time: 'Sau điều trị tủy' }, p3: { step: '3', time: 'Sau 1 tuần' } };
+const GROUP_OF = {};
+GROUPS.forEach((g, i) => g.fields.forEach((f) => { GROUP_OF[f] = i; }));
+const CHIPS = [
+  ['Sâu giới hạn ở men - K02.0', '#B3261E'], ['Sâu ngà - K02.1', '#B3261E'], ['Sâu chất xương răng - K02.2', '#B3261E'],
+  ['Sâu răng ngưng tiến triển - K02.3', '#B3261E'], ['Mòn răng quá mức - K03.0', '#9A9CB3'], ['Mòn răng cơ học - K03.1', '#9A9CB3'],
+  ['Viêm tủy - K04.0', '#B25E00'], ['Hoại tử tủy - K04.1', '#B25E00'], ['Viêm quanh chóp cấp do tủy - K04.4', '#B25E00'],
+  ['Viêm quanh chóp mạn - K04.5', '#B25E00'], ['Áp xe quanh chóp - K04.7', '#B25E00'], ['Viêm lợi cấp - K05.0', '#0E7C66']
+];
+const UPPER = ['18','17','16','15','14','13','12','11','21','22','23','24','25','26','27','28'];
+const LOWER = ['48','47','46','45','44','43','42','41','31','32','33','34','35','36','37','38'];
+const FRESH = () => ({ group: 0, phase: 'idle', heard: '', values: {}, radio: {}, status: {}, editing: null, saved: [false, false, false], toast: '', toastBad: false, reply: '', savedBy: [null, null, null], undo: null, edits: [false, false, false], p3time: null });
+const EDIT_CMD = [
+  { t: 'sửa huyết áp thành 125 trên 80', f: 'toanthan', v: 'Mạch 78 lần/phút · Huyết áp 125/80 mmHg', say: 'Đã sửa Khám toàn thân: huyết áp 125/80 mmHg.' },
+  { t: 'thêm ghi chú đau tự phát về đêm', f: 'dx', v: 'Viêm tủy không hồi phục; đau tự phát về đêm', say: 'Đã thêm vào ghi chú chẩn đoán: đau tự phát về đêm.' },
+  { t: 'sửa tái khám thành sau 5 ngày', f: 'p3', v: 'Tái khám', time: 'Sau 5 ngày', say: 'Đã đổi ghi chú tái khám thành sau 5 ngày.' }
+];
+
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = FRESH(); }
+  componentWillUnmount() { this.clearTimers(); clearInterval(this.t5); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} }
+  clearTimers() { clearInterval(this.t1); clearTimeout(this.t2); clearTimeout(this.t3); clearTimeout(this.t4); }
+  busy() { const p = this.state.phase; return p === 'listening' || p === 'processing' || p === 'wake' || p === 'command'; }
+  inDraft() { const p = this.state.phase; return p === 'review' || p === 'confirm'; }
+  say(msg, bad) { this.setState({ toast: msg, toastBad: !!bad }); }
+  scrollTo(i) {
+    try { const el = document.getElementById('sec-' + i); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+  }
+  canStart(i) {
+    const st = this.state;
+    if (this.busy()) return false;
+    if (this.inDraft() && st.group !== i) { this.say('Hãy bấm Lưu hoặc Hủy phần “' + GROUPS[st.group].name + '” trước khi đọc phần khác.', true); return false; }
+    if (this.inDraft()) return false;
+    if (st.saved[i]) { this.say('Phần “' + GROUPS[i].name + '” đã lưu.', false); return false; }
+    return true;
+  }
+  run(i, wake) {
+    const words = GROUPS[i].transcript.split(' ');
+    let n = 0;
+    this.clearTimers();
+    this.setState({ group: i, phase: 'listening', heard: '', toast: '', reply: '', editing: null });
+    this.scrollTo(i);
+    this.t1 = setInterval(() => {
+      n += 1;
+      this.setState({ heard: words.slice(0, n).join(' ') });
+      if (n >= words.length) {
+        clearInterval(this.t1);
+        this.setState({ phase: 'processing' });
+        this.t2 = setTimeout(() => this.fill(), 1200);
+      }
+    }, wake ? 140 : 110);
+  }
+  start(i) { if (this.canStart(i)) this.run(i, false); }
+  wake() {
+    const st = this.state;
+    let i = st.saved[st.group] ? st.saved.indexOf(false) : st.group;
+    if (i === -1) { this.say('Hồ sơ đã hoàn tất. Bấm “Chạy lại demo” để xem lại.', false); return; }
+    if (!this.canStart(i)) return;
+    this.clearTimers();
+    this.setState({ group: i, phase: 'wake', heard: '', toast: '', reply: '' });
+    this.t3 = setTimeout(() => this.run(i, true), 900);
+  }
+  fill() {
+    const g = GROUPS[this.state.group];
+    const values = Object.assign({}, this.state.values);
+    const radio = Object.assign({}, this.state.radio);
+    const status = Object.assign({}, this.state.status);
+    g.fields.forEach((f) => {
+      const a = g.ai[f];
+      if (a) { values[f] = a.v; if (a.r) radio[f] = a.r; status[f] = 'ai'; } else { status[f] = 'untouched'; }
+    });
+    this.setState({ phase: 'review', values: values, radio: radio, status: status });
+  }
+  pending(i) { const s = this.state.status; return GROUPS[i].fields.filter((f) => s[f] === 'ai').length; }
+  acceptAll(i) {
+    if (!this.inDraft() || this.state.group !== i) return 0;
+    const status = Object.assign({}, this.state.status);
+    let n = 0;
+    GROUPS[i].fields.forEach((f) => { if (status[f] === 'ai') { status[f] = 'accepted'; n += 1; } });
+    this.setState({ status: status, editing: null, phase: 'review' });
+    return n;
+  }
+  cancel(i) {
+    const st = this.state;
+    if (st.group !== i || (!this.inDraft() && !this.busy())) return;
+    this.clearTimers();
+    const values = Object.assign({}, st.values), radio = Object.assign({}, st.radio), status = Object.assign({}, st.status);
+    GROUPS[i].fields.forEach((f) => { delete values[f]; delete radio[f]; delete status[f]; });
+    const edits = st.edits.slice(); edits[i] = false;
+    this.setState({ phase: 'idle', heard: '', reply: '', values: values, radio: radio, status: status, editing: null, edits: edits, p3time: i === 2 ? null : st.p3time });
+    this.say('Đã hủy bản nháp phần “' + GROUPS[i].name + '”. Không có gì được lưu.', false);
+  }
+  save(i, by) {
+    const st = this.state;
+    if (!this.inDraft() || st.group !== i || this.pending(i) > 0) return;
+    const snap = { values: st.values, radio: st.radio, status: st.status, saved: st.saved, savedBy: st.savedBy, group: i };
+    const status = Object.assign({}, st.status);
+    GROUPS[i].fields.forEach((f) => { status[f] = status[f] === 'untouched' ? undefined : 'saved'; });
+    const saved = st.saved.slice(); saved[i] = true;
+    const savedBy = st.savedBy.slice(); savedBy[i] = by || 'click';
+    const next = saved.indexOf(false);
+    const now = new Date();
+    const hhmm = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+    this.setState({ status: status, saved: saved, savedBy: savedBy, editing: null, heard: '', phase: 'idle', group: next === -1 ? i : next, undo: { left: 10, snap: snap } });
+    this.say('Đã lưu “' + GROUPS[i].name + '” lúc ' + hhmm + (by === 'voice' ? ' · bác sĩ duyệt bằng giọng nói (ghi vào nhật ký)' : '') + '.' + (next === -1 ? ' Hồ sơ đợt 3 đã đủ ba phần.' : ' Tiếp theo: “' + GROUPS[next].name + '”.'), false);
+    clearInterval(this.t5);
+    this.t5 = setInterval(() => {
+      const u = this.state.undo;
+      if (!u) { clearInterval(this.t5); return; }
+      if (u.left <= 1) { clearInterval(this.t5); this.setState({ undo: null }); return; }
+      this.setState({ undo: { left: u.left - 1, snap: u.snap } });
+    }, 1000);
+  }
+  undoSave() {
+    const u = this.state.undo;
+    if (!u || this.busy() || this.inDraft()) return;
+    clearInterval(this.t5);
+    const s = u.snap;
+    this.setState({ values: s.values, radio: s.radio, status: s.status, saved: s.saved, savedBy: s.savedBy, group: s.group, phase: 'review', undo: null, toast: '' });
+    this.reply('Đã hoàn tác. Phần ' + GROUPS[s.group].name + ' trở lại bản nháp chờ duyệt.');
+  }
+  speak(text) {
+    try {
+      const ss = window.speechSynthesis;
+      if (!ss || typeof SpeechSynthesisUtterance === 'undefined') return;
+      const v = ss.getVoices().find((x) => /^vi/i.test(x.lang));
+      if (!v) return;
+      ss.cancel();
+      const u = new SpeechSynthesisUtterance(text); u.voice = v; u.lang = v.lang; u.rate = 1.05;
+      ss.speak(u);
+    } catch (e) {}
+  }
+  reply(text) { this.setState({ reply: text }); this.speak(text); }
+  summary(i) {
+    const st = this.state;
+    const parts = [];
+    GROUPS[i].fields.forEach((f) => {
+      const s = st.status[f];
+      if (s === 'ai' || s === 'accepted' || s === 'edited') {
+        const v = st.values[f];
+        let txt = v;
+        if (!txt && DEF[f].r) txt = 'bình thường';
+        if (f === 'canlam' && v) txt = 'có, ' + v;
+        if (f === 'trongmieng' && v) txt = 'bất thường, ' + v;
+        if (f === 'p3') txt = v + ' ' + (st.p3time || PLAN_META.p3.time).toLowerCase();
+        if (txt) parts.push(DEF[f].label + ': ' + txt);
+      }
+    });
+    if (i === 1 && parts.length) parts.unshift('Răng 36, mặt nhai, Viêm tủy K04.0');
+    const left = GROUPS[i].fields.filter((f) => st.status[f] === 'untouched').map((f) => DEF[f].label.toLowerCase());
+    return parts.join('. ') + '.' + (left.length ? ' Chưa nhắc tới: ' + left.join(', ') + '.' : '');
+  }
+  voice(text, fn) {
+    if (this.busy()) return;
+    const prev = this.state.phase;
+    this.clearTimers();
+    this.setState({ heard: 'Hey Wisere, ' + text + '.', phase: 'command', toast: '' });
+    this.t4 = setTimeout(() => { this.setState({ phase: prev }); fn(); }, 700);
+  }
+  cmdRead(i) { this.reply(this.summary(i)); }
+  cmdEdit(i) {
+    const c = EDIT_CMD[i];
+    const values = Object.assign({}, this.state.values); values[c.f] = c.v;
+    const status = Object.assign({}, this.state.status); status[c.f] = 'edited';
+    const edits = this.state.edits.slice(); edits[i] = true;
+    const patch = { values: values, status: status, edits: edits, phase: 'review' };
+    if (c.time) patch.p3time = c.time;
+    this.setState(patch);
+    this.reply(c.say);
+  }
+  cmdAcceptAll(i) { const n = this.acceptAll(i); this.reply(n ? 'Đã chấp nhận ' + n + ' gợi ý còn lại.' : 'Không còn gợi ý nào chờ duyệt.'); }
+  cmdSave(i) {
+    const p = this.pending(i);
+    if (p > 0) { this.reply('Còn ' + p + ' gợi ý chưa duyệt. Hãy nói “chấp nhận tất cả” hoặc “đọc lại” trước khi lưu.'); return; }
+    const n = GROUPS[i].fields.filter((f) => this.state.status[f] && this.state.status[f] !== 'untouched').length;
+    this.setState({ phase: 'confirm' });
+    this.reply('Lưu ' + n + ' trường phần ' + GROUPS[i].name + ' vào hồ sơ? Nói “đúng” để lưu, hoặc “không” để quay lại.');
+  }
+  cmdYes(i) { this.save(i, 'voice'); this.setState({ reply: 'Đã lưu. Nói “hoàn tác” trong 10 giây nếu cần.' }); this.speak('Đã lưu.'); }
+  cmdNo() { this.setState({ phase: 'review' }); this.reply('Đã quay lại bản nháp, chưa lưu gì.'); }
+  fo(id) {
+    const st = this.state;
+    const d = DEF[id];
+    const s = st.status[id];
+    const editing = st.editing === id;
+    const val = st.values[id] !== undefined ? st.values[id] : (d.d || '');
+    const inReview = (st.phase === 'review' || st.phase === 'confirm') && GROUP_OF[id] === st.group;
+    const actable = s === 'ai' || s === 'accepted' || s === 'edited';
+    const g = GROUPS[GROUP_OF[id]];
+    const q = g.ai[id] ? g.ai[id].q : '';
+    const r = st.radio[id] !== undefined ? st.radio[id] : d.r;
+    const rc = s === 'ai' ? '#6F38F6' : '#4E60FD';
+    const on = 'width: 16px; height: 16px; border-radius: 50%; box-sizing: border-box; background: #FFFFFF; display: inline-block; border: 5px solid ' + rc + ';';
+    const off = 'width: 16px; height: 16px; border-radius: 50%; box-sizing: border-box; background: #FFFFFF; display: inline-block; border: 1.5px solid #B9BACB;';
+    let box = 'min-height: 44px; border-radius: 4px; padding: 10px 14px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 15px; ';
+    box += s === 'ai' ? 'border: 2px solid #6F38F6; background: #F1EBFF;' : 'border: 1px solid #E1DDE9; background: #FFFFFF;';
+    return {
+      label: d.label,
+      value: val,
+      text: val || d.ph || '',
+      textStyle: val ? 'color: #1B1C4A;' : 'color: #9A9CB3;',
+      box: box,
+      isEditing: editing, notEditing: !editing,
+      tagAI: s === 'ai', tagOK: s === 'accepted', tagEdited: s === 'edited', tagSaved: s === 'saved', showNote: s === 'untouched',
+      canAct: inReview && actable,
+      showQuote: inReview && actable && !!q,
+      quote: q,
+      editLabel: editing ? 'Xong' : 'Sửa',
+      r1: r === 'a' ? on : off,
+      r2: r === 'b' ? on : off,
+      accept: () => { const status = Object.assign({}, this.state.status); status[id] = 'accepted'; this.setState({ status: status, editing: null }); },
+      edit: () => { this.setState({ editing: this.state.editing === id ? null : id }); },
+      onInput: (e) => {
+        const values = Object.assign({}, this.state.values); values[id] = e.target.value;
+        const status = Object.assign({}, this.state.status); status[id] = 'edited';
+        this.setState({ values: values, status: status });
+      }
+    };
+  }
+  renderVals() {
+    const st = this.state;
+    const F = {};
+    Object.keys(DEF).forEach((k) => { F[k] = this.fo(k); });
+    const dxS = st.status.dx;
+    const dxOn = !!dxS && dxS !== 'untouched';
+    const S = {};
+    [0, 1, 2].forEach((i) => {
+      const review = (st.phase === 'review' || st.phase === 'confirm') && st.group === i;
+      const p = review ? this.pending(i) : 0;
+      const rec = st.group === i && (st.phase === 'listening' || st.phase === 'wake');
+      const proc = st.group === i && st.phase === 'processing';
+      const canSave = review && p === 0;
+      S['S' + i] = {
+        saved: st.saved[i],
+        savedLabel: st.savedBy[i] === 'voice' ? 'Đã lưu · duyệt bằng giọng nói' : 'Đã lưu',
+        start: () => this.start(i),
+        micLabel: rec ? 'Đang ghi…' : (proc ? 'AI đang xử lý…' : (review ? 'Đang duyệt' : (st.saved[i] ? 'Đọc lại' : 'Đọc phần này'))),
+        micBtn: 'height: 36px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; ' + (rec ? 'background: #B3261E; color: #FFFFFF; border: 1px solid #B3261E;' : (proc || review ? 'background: #F1EBFF; color: #5A2BD9; border: 1px solid #D5C4FD;' : 'background: #FFFFFF; color: #3D4BD8; border: 1px solid #C9CEFF;')),
+        showPending: p > 0,
+        pendingText: 'Còn ' + p + ' gợi ý AI chưa duyệt',
+        acceptAll: () => this.acceptAll(i),
+        cancel: () => this.cancel(i),
+        save: () => this.save(i, 'click'),
+        noSave: !canSave,
+        saveStyle: 'height: 44px; width: 140px; border-radius: 4px; border: none; font-size: 15px; font-weight: 600; ' + (canSave ? 'background: #4E60FD; color: #FFFFFF; cursor: pointer;' : 'background: #E1DDE9; color: #6B6D88; cursor: not-allowed;')
+      };
+    });
+    const chips = CHIPS.map((c) => {
+      const hit = dxOn && c[0].indexOf('K04.0') !== -1;
+      const ai = hit && dxS === 'ai';
+      let style = 'min-height: 52px; border-radius: 4px; padding: 6px 10px; font-size: 13px; display: flex; align-items: center; justify-content: space-between; gap: 6px; box-sizing: border-box; ';
+      style += ai ? 'border: 2px solid #6F38F6; background: #F1EBFF; color: #1B1C4A; font-weight: 700;' : (hit ? 'border: 2px solid #4E60FD; background: #FFFFFF; color: #1B1C4A; font-weight: 700;' : 'border: 1px solid #E1DDE9; background: #FFFFFF; color: #414361;');
+      return { label: c[0], style: style, dot: 'width: 10px; height: 10px; border-radius: 50%; flex: none; background: ' + c[1] + ';' };
+    });
+    const mkTooth = (n, lower) => {
+      const hit = dxOn && n === '36';
+      const ai = hit && dxS === 'ai';
+      const molar = ['6', '7', '8'].indexOf(n.charAt(1)) !== -1;
+      return {
+        num: n, molar: molar, single: !molar, above: !lower, below: lower,
+        tf: lower ? 'translate(0,60) scale(1,-1)' : '',
+        fill: ai ? '#F1EBFF' : (hit ? '#EEF0FF' : '#FFFFFF'),
+        stroke: ai ? '#6F38F6' : (hit ? '#4E60FD' : '#9A9CB3'),
+        numStyle: 'font-size: 14px; font-weight: ' + (hit ? '700' : '500') + '; color: ' + (ai ? '#5A2BD9' : (hit ? '#3D4BD8' : '#414361')) + ';'
+      };
+    };
+    const GRIDROW = 'display: grid; grid-template-columns: 64px 64px minmax(140px, 1.3fr) minmax(100px, 1fr) minmax(90px, 0.9fr) 120px minmax(140px, 1.3fr) 104px 200px; gap: 8px; align-items: center; padding: 12px; font-size: 14px; color: #1B1C4A; min-width: 1090px; border-bottom: 1px solid #E1DDE9; ';
+    const PROW = 'display: grid; grid-template-columns: 56px 64px minmax(220px, 2fr) minmax(140px, 1fr) 130px 210px; gap: 8px; align-items: center; padding: 12px; font-size: 14px; color: #1B1C4A; min-width: 900px; border-bottom: 1px solid #E1DDE9; ';
+    const planOn = !!st.status.p1 && st.status.p1 !== 'untouched';
+    const plan = ['p1', 'p2', 'p3'].map((k) => ({
+      step: PLAN_META[k].step, time: k === 'p3' && st.p3time ? st.p3time : PLAN_META[k].time, f: F[k],
+      row: PROW + (st.status[k] === 'ai' ? 'background: #F1EBFF; box-shadow: inset 3px 0 0 #6F38F6;' : 'background: #FFFFFF;')
+    }));
+    const ph = st.phase;
+    const g = GROUPS[st.group];
+    let statusText = 'Sẵn sàng · nói “Hey Wisere” hoặc nhấn mic';
+    let dot = '#9A9CB3';
+    if (ph === 'wake') { statusText = 'Đã nghe “Hey Wisere” · bắt đầu ghi'; dot = '#6F38F6'; }
+    if (ph === 'listening') { statusText = 'Đang ghi · ' + g.name; dot = '#B3261E'; }
+    if (ph === 'processing') { statusText = 'AI đang chép lời và điền nháp'; dot = '#6F38F6'; }
+    if (ph === 'review') { statusText = 'Bản nháp sẵn sàng · duyệt bằng lệnh giọng nói hoặc chuột'; dot = '#0E7C66'; }
+    if (ph === 'command') { statusText = 'Đã nghe lệnh · đang thực hiện'; dot = '#6F38F6'; }
+    if (ph === 'confirm') { statusText = 'Chờ bác sĩ xác nhận lưu'; dot = '#B25E00'; }
+    const allDone = st.saved.every((x) => x);
+    if (allDone && ph === 'idle') { statusText = 'Hồ sơ đợt 3 đã hoàn tất'; dot = '#0E7C66'; }
+    const rec = ph === 'listening' || ph === 'wake';
+    const steps = GROUPS.map((x, i) => {
+      const active = i === st.group && !st.saved[i];
+      return {
+        label: (st.saved[i] ? '✓ ' : (i + 1) + '. ') + x.name,
+        style: 'font-size: 12px; font-weight: 600; border-radius: 999px; padding: 4px 10px; ' + (st.saved[i] ? 'background: #E7F6F1; color: #0E7C66;' : (active ? 'background: #1B1C4A; color: #FFFFFF;' : 'background: #F5F7FB; color: #6B6D88;'))
+      };
+    });
+    const CB = 'height: 34px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: pointer; ';
+    const cmds = [];
+    const add = (t, fn, kind) => cmds.push({ t: t, run: () => this.voice(t, fn), style: CB + (kind === 'go' ? 'background: #4E60FD; color: #FFFFFF; border: 1px solid #4E60FD;' : (kind === 'warn' ? 'background: #FFF3E0; color: #8A4B00; border: 1px solid #B25E00;' : 'background: #FFFFFF; color: #5A2BD9; border: 1px solid #D5C4FD;')) });
+    const gi = st.group;
+    if (ph === 'review') {
+      add('đọc lại', () => this.cmdRead(gi));
+      if (!st.edits[gi]) add(EDIT_CMD[gi].t, () => this.cmdEdit(gi));
+      if (this.pending(gi) > 0) add('chấp nhận tất cả', () => this.cmdAcceptAll(gi));
+      add('lưu', () => this.cmdSave(gi), 'go');
+    } else if (ph === 'confirm') {
+      add('đúng', () => this.cmdYes(gi), 'go');
+      add('không', () => this.cmdNo());
+    } else if (ph === 'idle') {
+      if (st.undo) add('hoàn tác (' + st.undo.left + ' giây)', () => this.undoSave(), 'warn');
+      const nx = st.saved.indexOf(false);
+      if (nx !== -1) add('ghi ' + GROUPS[nx].name.toLowerCase(), () => { if (this.canStart(nx)) this.run(nx, true); }, st.undo ? '' : 'go');
+    }
+    return Object.assign({
+      cmds: cmds,
+      cmdLabel: (ph === 'review' || ph === 'confirm') ? 'DUYỆT RẢNH TAY (TÙY CHỌN) · bấm để mô phỏng bác sĩ nói:' : 'LỆNH GIỌNG NÓI · bấm để mô phỏng bác sĩ nói:',
+      showCmds: cmds.length > 0,
+      showReply: !!st.reply,
+      reply: st.reply,
+      F: F,
+      chips: chips,
+      upper: UPPER.map((n) => mkTooth(n, false)),
+      lower: LOWER.map((n) => mkTooth(n, true)),
+      toothNote: dxOn && dxS === 'ai',
+      dxShow: dxOn,
+      dxRow: GRIDROW + (dxS === 'ai' ? 'background: #F1EBFF; box-shadow: inset 3px 0 0 #6F38F6;' : 'background: #FFFFFF;'),
+      planEmpty: !planOn,
+      planShow: planOn,
+      plan: plan,
+      statusText: statusText,
+      dotStyle: 'width: 10px; height: 10px; border-radius: 50%; display: inline-block; background: ' + dot + ';',
+      micStyle: 'width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer; flex: none; display: inline-flex; align-items: center; justify-content: center; ' + (rec ? 'background: #B3261E; animation: wpulse 1.2s infinite;' : 'background: #4E60FD;'),
+      heard: st.heard || (ph === 'wake' ? '…' : 'Lời bác sĩ đọc sẽ hiện ở đây. Bấm “Đọc phần này” ở từng phần, nhấn mic, hoặc nói “Hey Wisere”.'),
+      heardColor: st.heard ? '#1B1C4A' : '#6B6D88',
+      dockMic: () => { const i = st.saved[st.group] ? st.saved.indexOf(false) : st.group; if (i !== -1) this.start(i); else this.say('Hồ sơ đã hoàn tất. Bấm “Chạy lại demo” để xem lại.', false); },
+      dockWake: () => this.wake(),
+      steps: steps,
+      allDone: allDone,
+      reset: () => { this.clearTimers(); clearInterval(this.t5); try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) {} this.setState(FRESH()); this.scrollTo(0); },
+      showToast: !!st.toast,
+      toast: st.toast,
+      toastColor: st.toastBad ? '#8A4B00' : '#0E7C66'
+    }, S);
+  }
+}
+</script>
+</body>
+</html>
